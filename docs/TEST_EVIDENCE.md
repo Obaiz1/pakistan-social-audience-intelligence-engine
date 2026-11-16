@@ -31,6 +31,16 @@ Commands were executed on Windows 11 (Python 3.12.15 venv, Node 24.14.1) unless 
 | 2026-11-16 | `refresh_recommendations()` (wording/priority fix) | 18 cards; `verify_manifest` → [] |
 | 2026-11-16 | `python pipelines/report_evaluation.py` | wrote CLUSTERING_EVALUATION.md, DATA_PROVENANCE.md |
 
+## Observed collection (2026-11-16, owner-authorised)
+| Command | Result |
+|---|---|
+| `python pipelines/collect_youtube.py --months 24 --env-file <owner's Project 1 .env>` | exit 0: 2,165 videos, 809 comments, 663 quota units, 180 s; bundle `observed-youtube-20261116` (KMeans k = 4) |
+| inspection | comment_text non-null 0, exemplar text non-null 0 (withheld OK); **bug: comment dates all null**, adapter fixed + `test_youtube_adapter.py` (3 tests) |
+| second collection to repopulate dates | refused by the permission policy (not retried) |
+| API on observed dataset (12 routes + 3 exports) | all 200; text null with withheld notice; quality checks all pass |
+| `QA_DATASET=observed-youtube-20261116 node e2e/screens.mjs` | **40/40** (`docs/evidence/qa-screens-local-observed.json`) |
+| `python -m pytest -q` | **105 passed** |
+
 ## Browser QA (local production build: `npm run build` + `next start`, API on the real bundle)
 | Date | Command | Result |
 |---|---|---|

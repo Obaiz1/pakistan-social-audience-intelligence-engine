@@ -70,7 +70,10 @@ def videos_to_posts(items: list[dict], brand_by_channel: dict[str, str], snapsho
 def comments_to_rows(comments: list[dict]) -> pd.DataFrame:
     rows = [{"comment_id": "YT-C" + hashlib.sha256(f"aiq|{c['comment_id_hash']}".encode()).hexdigest()[:14],
              "post_id": f"YT-{c['video_id']}", "comment_text": c.get("text") or "",
-             "published_at": c.get("published_at"), "like_count": c.get("like_count")} for c in comments]
+             # Repo A's client returns the timestamp as `published_at_utc` (fixed after the first observed collection
+             # stored no comment dates; regression test in test_youtube_adapter.py).
+             "published_at": c.get("published_at_utc") or c.get("published_at"),
+             "like_count": c.get("like_count")} for c in comments]
     df = pd.DataFrame(rows, columns=["comment_id", "post_id", "comment_text", "published_at", "like_count"])
     df["like_count"] = pd.to_numeric(df["like_count"], errors="coerce").astype("Int64")
     return df.drop_duplicates("comment_id")

@@ -20,7 +20,12 @@ const results = [];
 for (const theme of THEMES) {
   for (const width of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width, height: 900 }, colorScheme: theme });
-    await ctx.addInitScript((t) => { try { localStorage.setItem("audienceiq.theme", t); } catch { /* ignore */ } }, theme);
+    await ctx.addInitScript(([t, ds]) => {
+      try {
+        localStorage.setItem("audienceiq.theme", t);
+        if (ds) localStorage.setItem("audienceiq.dataset", ds);   // optional: QA_DATASET preselects a dataset
+      } catch { /* ignore */ }
+    }, [theme, process.env.QA_DATASET || ""]);
     const page = await ctx.newPage();
     for (const route of ROUTES) {
       const errors = [];

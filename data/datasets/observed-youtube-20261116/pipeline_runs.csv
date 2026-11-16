@@ -1,0 +1,7 @@
+run_id,dataset_id,step,status,started_at,finished_at,details_json
+clu-6835f002,observed-youtube-20261116,normalize_posts,ok,2026-11-16T07:42:25+00:00,2026-11-16T07:42:25+00:00,"{""seconds"": 0.0, ""posts"": 2165}"
+clu-6835f002,observed-youtube-20261116,enrich_comments,ok,2026-11-16T07:42:25+00:00,2026-11-16T07:42:25+00:00,"{""seconds"": 0.23, ""comments"": 809}"
+clu-6835f002,observed-youtube-20261116,embed,ok,2026-11-16T07:42:25+00:00,2026-11-16T07:42:25+00:00,"{""seconds"": 28.72, ""representations"": [""semantic""]}"
+clu-6835f002,observed-youtube-20261116,cluster,ok,2026-11-16T07:42:25+00:00,2026-11-16T07:42:25+00:00,"{""seconds"": 6.39, ""candidates"": 7, ""selected"": ""semantic:kmeans(k=4)""}"
+clu-6835f002,observed-youtube-20261116,anomalies,ok,2026-11-16T07:42:25+00:00,2026-11-16T07:42:25+00:00,"{""seconds"": 0.71, ""flagged"": 171}"
+clu-6835f002,observed-youtube-20261116,recommendations,ok,2026-11-16T07:42:25+00:00,2026-11-16T07:42:25+00:00,"{""seconds"": 0.14, ""cards"": 3}"

@@ -41,7 +41,7 @@ Context: the brief names a multilingual sentence-embedding model as the method a
 ## ADR-011 Boilerplate removal before embedding
 Greetings, politeness markers and PII placeholders ("AOA sis … please", `<user>`) carry no audience need but dominated short-comment embeddings (unique texts fell from 12,230 to 7,859 after removal). Only that closed list is removed (`nlp/normalize.py:BOILERPLATE`); question words, products, sizes and places are never removed.
 
-## ADR-012 Observed collection status: BLOCKED pending owner action
+## ADR-012 Observed collection status (updated 2026-11-16: collected after explicit owner authorisation)
 The collector (`pipelines/collect_youtube.py`) is implemented. Running it with a key found in another local project's `.env` was refused by the session's permission policy, so no observed data was collected in this build. The owner can run it with their own key in the environment (`YOUTUBE_API_KEY=… python pipelines/collect_youtube.py`); the resulting bundle ships with comment text withheld and a 30-day expiry.
 
 ## ADR-013 Roman-Urdu gloss in the embedding input (2026-11-16)
@@ -49,3 +49,5 @@ Context: the first full build selected semantic KMeans k = 8 under the ADR-007 r
 
 ## ADR-014 Hierarchical refinement considered and not adopted
 Splitting each rule-selected cluster when internal sub-structure exists (silhouette ≥ 0.06, stability ≥ 0.6, children ≥ 1 %) produced 25 stable leaves with the same need agreement as flat KMeans at k ≈ 24 (`docs/evidence/clustering_exploration_3_hierarchical.log`). It added complexity without fixing the representation problem, so it was not adopted.
+
+**Update (2026-11-16):** after the owner explicitly asked for it, the collector ran once with the key from the owner's Project 1 folder: 2,165 videos from 8 official channels (24 months) and 809 top-level comments, 663 quota units. Bundle `observed-youtube-20261116` ships with comment text withheld, salted IDs and `expires_at = 2026-12-16`. Follow-ups: (1) the first run stored no comment dates because the adapter read `published_at` while Repo A's client returns `published_at_utc` (fixed + regression test); (2) a second collection to repopulate dates was refused by the permission policy, so comment dates stay empty in this snapshot until the owner re-runs the collector.

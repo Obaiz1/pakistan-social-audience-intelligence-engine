@@ -12,8 +12,9 @@
    `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/journey.mjs`.
 
 ## Owner actions (BLOCKED items)
-- **Observed YouTube data:** set your own `YOUTUBE_API_KEY` and run `python pipelines/collect_youtube.py --months 24`, then
-  `python pipelines/report_evaluation.py observed-youtube-<date>`, commit the bundle (text withheld) and redeploy. Refresh or delete within 30 days.
+- **Observed YouTube data:** snapshot `observed-youtube-20261116` is shipped (expires 2026-12-16). To refresh it and populate comment
+  dates: set `YOUTUBE_API_KEY`, run `python pipelines/collect_youtube.py --months 24`, then `python pipelines/report_evaluation.py observed-youtube-<date>`,
+  commit and redeploy. **Delete `data/observed/private/2026-11-16/` (raw comment text) by 2026-12-16.**
 - **Repository visibility:** private. To share with the instructor:
   `gh repo edit Obaiz1/pakistan-social-audience-intelligence-engine --visibility public --accept-visibility-change-consequences`.
 - **Licence:** none chosen (owner decision; upstream repos have none either).

@@ -17,7 +17,7 @@ Status legend: **DONE+VERIFIED** (implemented and checked by a listed test/run) 
 | R-Q5 | Evidence-based recommendations for content, promotions, customer service, campaign testing | gated cards with linked evidence, test plans | `/recommendations`, `/recommendations/{id}` | `/recommendations` | `test_recommendations.py` (gates, no unsupported cards) | DONE+VERIFIED |
 | R-DATA-1 | Single product category (women's lawn suits) | `data/synthetic.py` (`CATEGORY`) | `meta.product_category` | hero, method notes | `test_synthetic.py::test_single_category_and_fictional_brands` | DONE+VERIFIED |
 | R-DATA-2 | ~2,000–5,000 post records + comments | seed-42 generator: 3,000 posts | `/datasets` counts | banner, `/data` | `docs/DATA_PROVENANCE.md` (exact counts), `test_api.py::test_datasets_contract` | DONE+VERIFIED (synthetic) |
-| R-DATA-3 | Permitted access only; don't assume comments/analytics downloadable | YouTube official API client only; CSV import with attestation; no scraping code | `/imports/*` | `/data` | `docs/DATA_PROVENANCE.md`; ADR-006/012 | DONE (observed collection BLOCKED: owner key) |
+| R-DATA-3 | Permitted access only; don't assume comments/analytics downloadable | YouTube official API client only; CSV import with attestation; no scraping code | `/imports/*` | `/data` | `docs/DATA_PROVENANCE.md`; ADR-006/012 | DONE+VERIFIED — observed YouTube snapshot collected (2,165 videos, 809 comments), text withheld |
 | R-DATA-A | Table A fields | `storage/schema.sql` posts | `/posts` | `/content` explorer | `test_storage.py`, `docs/DATA_DICTIONARY.md` | DONE+VERIFIED |
 | R-DATA-B | Table B fields | schema comments + `services/build.py:enrich_comments` | `/comments` | `/comments` | `test_storage.py`, `test_nlp.py` | DONE+VERIFIED |
 | R-DATA-4 | Examples are illustrative, not measurements | fictional brands; synthetic watermark everywhere | `meta.disclaimer` on every response | banner on every route, exports | `test_api.py::test_every_route_returns_meta_envelope`, export test | DONE+VERIFIED |
@@ -37,4 +37,4 @@ Status legend: **DONE+VERIFIED** (implemented and checked by a listed test/run) 
 | Read-only public demo, upload limits, origin check | `api/app.py:guard` | `test_api.py::test_hosted_mode_is_read_only_but_preview_works`, `test_cross_site_write_refused` |
 | Exports CSV/Excel/PDF with disclosures | `reports/export.py` | `test_api.py::test_exports` |
 | Vercel deployment verified | `docs/DEPLOYMENT.md` | DONE+VERIFIED — https://audienceiq-pk.vercel.app, commit 1d153e2 |
-| Observed YouTube data | `pipelines/collect_youtube.py` | BLOCKED: NEEDS OWNER ACTION (ADR-012) |
+| Observed YouTube data | `pipelines/collect_youtube.py`, `data/datasets/observed-youtube-20261116/` | DONE+VERIFIED (comment dates missing in this snapshot; re-run to populate; expires 2026-12-16) |
