@@ -11,11 +11,16 @@
 4. Redeploy: from the repo root `vercel deploy --prod -e AUDIENCEIQ_BUILD_COMMIT=$(git rev-parse --short HEAD)`, then
    `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/journey.mjs`.
 
-## Owner actions (BLOCKED items)
-- **Observed YouTube data:** snapshot `observed-youtube-20261116` (with comment dates) is shipped and expires 2026-12-16. To refresh: set `YOUTUBE_API_KEY`, run `python pipelines/collect_youtube.py --months 24`, then `python pipelines/report_evaluation.py observed-youtube-<date>`,
-  commit and redeploy. **Delete `data/observed/private/2026-11-16/` (raw comment text) by 2026-12-16.**
-- **Repository visibility:** private. To share with the instructor:
-  `gh repo edit Obaiz1/pakistan-social-audience-intelligence-engine --visibility public --accept-visibility-change-consequences`.
+## Completed on 2026-11-16 (owner-requested)
+- Observed YouTube snapshot re-collected with comment dates and deployed (commit `4c0c35f`).
+- PR #1 merged into `main` (merge commit `ea7a706`).
+- Repository made **public** after a full-history scan (no key patterns, no `.env` files, no observed comment text in any version, noreply author email only).
+- Raw observed comment text (`data/observed/private/2026-11-16/`) deleted locally; only the text-withheld bundle remains.
+
+## Remaining owner decisions
+- **Observed data expiry:** the snapshot expires 2026-12-16 (the API stops serving it then). To refresh: set `YOUTUBE_API_KEY`,
+  run `python pipelines/collect_youtube.py --months 24`, then `python pipelines/report_evaluation.py observed-youtube-<date>`, commit and redeploy;
+  delete the new `data/observed/private/<date>/` folder after building.
 - **Licence:** none chosen (owner decision; upstream repos have none either).
 - **Persistent hosted imports (optional):** attach a durable database and implement the user store on it; until then imports persist only locally.
 - **Optional AI wording:** local only — `NVIDIA_API_KEY=… AUDIENCEIQ_ENABLE_LLM=1` (model via `NVIDIA_MODEL`).

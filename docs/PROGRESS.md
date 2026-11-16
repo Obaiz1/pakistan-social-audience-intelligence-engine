@@ -18,7 +18,7 @@
 Windows 11; Git 2.45.2; Python 3.12.15 (uv-managed interpreter, project venv; matches Vercel's default) and 3.14.4 (system); Node 24.14.1; npm 11.11.0; GitHub CLI logged in as `Obaiz1`; Vercel CLI 54.17.1 logged in; Playwright Chromium 1234 installed.
 
 ## Repository
-https://github.com/Obaiz1/pakistan-social-audience-intelligence-engine (private) · branches `main`, `feat/project3-engine`.
+https://github.com/Obaiz1/pakistan-social-audience-intelligence-engine (**public**) · PR #1 merged into `main` (2026-11-16).
 
 ## Risk register (prioritised)
 | # | Risk | Impact | Mitigation / status |
