@@ -1,22 +1,21 @@
 # Session handoff
 
-**Last updated:** 2026-11-16 — backend + frontend implemented and committed; seed-42 bundle build in progress; deployment not yet done.
+**Last updated:** 2026-11-16 — all phases done; production verified at https://audienceiq-pk.vercel.app.
 
-## Resume here
-1. Read `docs/PROGRESS.md` and `docs/TRACEABILITY_MATRIX.md`.
-2. Venv (Python 3.12.15): PowerShell `.\.venv\Scripts\Activate.ps1` · Git Bash `source .venv/Scripts/activate`.
-   Recreate: `py -3.12 -m venv .venv; pip install -e ".[dev]"`; ML extra: `pip install torch --index-url https://download.pytorch.org/whl/cpu; pip install -e ".[ml]" umap-learn`.
-3. Frontend: `npm --prefix frontend ci`.
+## Resume / rerun
+1. Venv (Python 3.12.15): PowerShell `.\.venv\Scripts\Activate.ps1` · Git Bash `source .venv/Scripts/activate`.
+   Recreate: `py -3.12 -m venv .venv; pip install -e ".[dev]"`; ML extra (only to rebuild the dataset):
+   `pip install torch --index-url https://download.pytorch.org/whl/cpu; pip install -e ".[ml]" umap-learn`.
+2. Run locally: `uvicorn audienceiq.api.app:app --app-dir backend --port 8000` and `npm --prefix frontend ci && npm --prefix frontend run dev`.
+3. Rebuild dataset: `python pipelines/build_demo.py` (≈13 min) then `python pipelines/report_evaluation.py`.
+4. Redeploy: from the repo root `vercel deploy --prod -e AUDIENCEIQ_BUILD_COMMIT=$(git rev-parse --short HEAD)`, then
+   `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/journey.mjs`.
 
-## If the dataset bundle is missing (`data/datasets/synthetic-lawn-demo-v1/`)
-`python pipelines/build_demo.py` (≈15–20 min CPU; mpnet embeddings are cached in `data/cache/embeddings/` once computed).
-
-## Next unfinished tasks
-1. Fill evaluation numbers: `docs/CLUSTERING_EVALUATION.md`, `docs/DATA_PROVENANCE.md`, `docs/PROJECT3_FINAL_REPORT.md`, README `{{TBD_*}}` markers (grep before committing).
-2. Local browser QA: `uvicorn audienceiq.api.app:app --app-dir backend --port 8000` + `npm --prefix frontend run build && npx --prefix frontend next start -p 3000`, then `node frontend/e2e/journey.mjs` and `node frontend/e2e/screens.mjs`.
-3. Commit bundle + docs; push; open PR `feat/project3-engine` → `main`.
-4. Vercel: `vercel link` (root `frontend`), `vercel deploy --prod`, run e2e against the production URL, fill `docs/DEPLOYMENT.md`.
-
-## Blocked (owner action)
-- Observed YouTube data: run `pipelines/collect_youtube.py` with your own `YOUTUBE_API_KEY` in the environment.
-- Repository visibility: private; make public for grading with `gh repo edit Obaiz1/pakistan-social-audience-intelligence-engine --visibility public --accept-visibility-change-consequences`.
+## Owner actions (BLOCKED items)
+- **Observed YouTube data:** set your own `YOUTUBE_API_KEY` and run `python pipelines/collect_youtube.py --months 24`, then
+  `python pipelines/report_evaluation.py observed-youtube-<date>`, commit the bundle (text withheld) and redeploy. Refresh or delete within 30 days.
+- **Repository visibility:** private. To share with the instructor:
+  `gh repo edit Obaiz1/pakistan-social-audience-intelligence-engine --visibility public --accept-visibility-change-consequences`.
+- **Licence:** none chosen (owner decision; upstream repos have none either).
+- **Persistent hosted imports (optional):** attach a durable database and implement the user store on it; until then imports persist only locally.
+- **Optional AI wording:** local only — `NVIDIA_API_KEY=… AUDIENCEIQ_ENABLE_LLM=1` (model via `NVIDIA_MODEL`).

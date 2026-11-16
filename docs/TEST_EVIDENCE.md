@@ -41,5 +41,15 @@ Commands were executed on Windows 11 (Python 3.12.15 venv, Node 24.14.1) unless 
 
 Visual review of screenshots led to three UI fixes before the final sweep: mobile-only menu buttons visible on desktop (CSS specificity), cramped mobile top bar, stacked toggle icons.
 
-## Production
-_See `docs/DEPLOYMENT.md`._
+## GitHub Actions
+| Run | Commit | Result |
+|---|---|---|
+| 43818030768 | 92cdcb8 | failure — expected: dataset bundle not yet committed (frontend build + manifest step) |
+| 43823355039 | 1d153e2 | **success** — backend (ruff, compile, manifest verification, pytest), frontend (lint, typecheck, vitest, build), e2e (journey on Linux) |
+
+## Production (https://audienceiq-pk.vercel.app, commit 1d153e2)
+| Command | Result |
+|---|---|
+| curl smoke test of 18 API routes + 10 pages | all 200; writes 403; cross-site 403 (details in `docs/DEPLOYMENT.md`) |
+| `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/journey.mjs` | 12/12 (first run 12/12 but one check matched the hostname instead of the path — test fixed and re-run: 12/12 with real navigation to `/audience?cluster=1`) |
+| `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/screens.mjs` | 40/40 |

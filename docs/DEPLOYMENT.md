@@ -1,7 +1,26 @@
 # Deployment (Vercel)
 
-## Status
-_Updated after the production smoke test — see the bottom of this file._
+## Status: DEPLOYED AND VERIFIED (2026-11-16)
+| Item | Value |
+|---|---|
+| Production URL | **https://audienceiq-pk.vercel.app** (public, read-only demo, synthetic data only) |
+| Vercel project | `audienceiq-pk` (team "obaiz-s-projects"), root directory `frontend`, framework Next.js, Node 24.x, source files outside root enabled |
+| Deployment | `dpl_ES6uBNjWCqBQNS28FLE4VyXThB6s`, deployed with the Vercel CLI from the repo root |
+| Deployed commit | `1d153e2` (reported live by `/api/v1/health → build_commit`; later commits changed docs/tests only unless a redeploy is listed below) |
+| Production env (names only) | `AUDIENCEIQ_HOSTED=1`, `APP_ENV=production`, per-deployment `AUDIENCEIQ_BUILD_COMMIT`; **no secrets** |
+| Storage | committed CSV bundle → in-memory SQLite per function instance (read-only); no database attached |
+
+### Production verification (actual requests, 2026-11-16)
+| Check | Result |
+|---|---|
+| `GET /api/v1/health` | `status: ok`, `environment: production`, `hosted: true`, `writes_enabled: false`, `datasets: 1`, `problems: []` |
+| 18 API routes (datasets, options, analytics ×3, clusters, cluster detail, evaluation, comments, anomalies, recommendations, posts, quality, methodology, PDF/XLSX/CSV export, template) | all **200**; 0.4–1.2 s warm; XLSX export (3.0 MB) 12.7 s |
+| 10 page routes | all **200**; unknown route 404 |
+| Writes on the public demo (`/imports/confirm`, `/datasets/demo`, `DELETE /datasets/…`) | **403** with an explanatory message |
+| Cross-site POST (`Origin: https://evil.example`) | **403**; same-origin CSV preview returns validation results (422) |
+| Browser journey `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/journey.mjs` | **12/12**, 0 console errors, 0 API errors (`docs/evidence/e2e-journey-prod.json`) |
+| Visual/accessibility sweep `… node frontend/e2e/screens.mjs` | **40/40** (10 routes × 375/1440 × dark/light) (`docs/evidence/qa-screens-prod.json`, `docs/screenshots/prod/`) |
+| Secrets | none configured; `.env.local` created by `vercel link` (OIDC token) deleted locally, never committed |
 
 ## Provider constraints (checked 2026-11-15 against vercel.com/docs)
 Python 3.12 is the default runtime (3.13/3.14 available); Python function bundles may be up to 500 MB uncompressed; Hobby functions run up to 300 s with 2 GB memory; request/response bodies are limited to 4.5 MB; the function filesystem is not durable storage. Consequences: no torch on Vercel (embeddings precomputed), uploads capped at 2 MB, hosted mode is read-only.

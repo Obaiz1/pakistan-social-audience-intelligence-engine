@@ -6,7 +6,7 @@ A web application that groups multilingual social-media comments (English, Roman
 
 > **Data status:** the public demo runs on a deterministic **SYNTHETIC classroom dataset** (3,000 posts, 33,776 comments, seed 42, fictional brands). It is labelled on every page, API response and export. An observed YouTube collector is implemented but not run in this build (needs the owner's API key — see [Limitations](#known-limitations-and-blocked-items)).
 
-**Live app:** {{TBD_URL}} · **Repository:** https://github.com/Obaiz1/pakistan-social-audience-intelligence-engine (private until the owner makes it public)
+**Live app:** https://audienceiq-pk.vercel.app (public, read-only demo) · **Repository:** https://github.com/Obaiz1/pakistan-social-audience-intelligence-engine (private until the owner makes it public)
 
 ## The five questions and where they are answered
 | # | Question | Page | Method (one line) |

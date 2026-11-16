@@ -9,10 +9,10 @@
 | 4 Multilingual NLP & comment clustering (Q2/Q4) | DONE | `nlp/`, `clustering/`, exploratory logs, `test_clustering.py`, `test_nlp.py` |
 | 5 Anomalies (Q3) | DONE | `anomalies/detect.py`, `test_anomalies.py`, `docs/ANOMALY_METHOD.md` |
 | 6 Recommendations (Q5) | DONE | `recommendations/engine.py`, `test_recommendations.py` |
-| 7 Frontend | DONE (build/lint/type/unit) · browser QA pending | `frontend/`, `e2e/` |
-| 8 QA, evaluation, academic report | IN PROGRESS | waiting for the seed-42 bundle build to fill evaluation numbers |
-| 9 Deployment | TODO | `docs/DEPLOYMENT.md` |
-| 10 Final regression & handoff | TODO | |
+| 7 Frontend | DONE | lint/type/unit/build; journey 12/12; screens 40/40 (local + production) |
+| 8 QA, evaluation, academic report | DONE | `CLUSTERING_EVALUATION.md` (generated), `PROJECT3_FINAL_REPORT.md`, `TEST_EVIDENCE.md`, CI green |
+| 9 Deployment | DONE + VERIFIED | https://audienceiq-pk.vercel.app (commit 1d153e2), `docs/DEPLOYMENT.md` |
+| 10 Final regression & handoff | DONE (owner actions listed in SESSION_HANDOFF) | PR `feat/project3-engine` → `main` |
 
 ## Environment (verified 2026-11-15)
 Windows 11; Git 2.45.2; Python 3.12.15 (uv-managed interpreter, project venv; matches Vercel's default) and 3.14.4 (system); Node 24.14.1; npm 11.11.0; GitHub CLI logged in as `Obaiz1`; Vercel CLI 54.17.1 logged in; Playwright Chromium 1234 installed.

@@ -97,7 +97,8 @@ await step("Q5 recommendations with linked evidence", async () => {
   const evidence = await page.locator("article.rec a.chip").count();
   if (!evidence) throw new Error("no evidence links");
   await page.locator("article.rec a.chip").first().click();
-  await page.waitForURL(/\/(audience|anomalies|campaigns|content)/);
+  // match the pathname only (the production hostname "audienceiq-pk" would otherwise satisfy /audience/)
+  await page.waitForURL((u) => /^\/(audience|anomalies|campaigns|content)/.test(new URL(u).pathname));
   return `${cards} cards, ${evidence} evidence links; followed one to ${page.url().replace(BASE, "")}`;
 });
 await step("Data page: quality audit + import preview (validation only)", async () => {
