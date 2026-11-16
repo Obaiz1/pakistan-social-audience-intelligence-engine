@@ -24,27 +24,27 @@
         },
         "n_clusters": 4,
         "noise_rate": 0.0,
-        "silhouette_cosine": 0.3035,
-        "davies_bouldin": 2.6349,
-        "calinski_harabasz": 102.8,
-        "min_cluster_share": 0.0779,
+        "silhouette_cosine": 0.3056,
+        "davies_bouldin": 2.6766,
+        "calinski_harabasz": 102.5,
+        "min_cluster_share": 0.0927,
         "max_cluster_share": 0.3894,
-        "size_entropy": 0.9056,
-        "stability_ari": 0.9783,
+        "size_entropy": 0.9191,
+        "stability_ari": 0.9932,
         "eligible": true,
-        "selection_score": 0.2969,
+        "selection_score": 0.3035,
         "external": {
           "rule_topic": {
-            "ari": 0.3249,
-            "nmi": 0.3229,
-            "v_measure": 0.3229,
-            "purity": 0.7145
+            "ari": 0.3229,
+            "nmi": 0.3131,
+            "v_measure": 0.3131,
+            "purity": 0.7083
           },
           "language": {
-            "ari": 0.1334,
-            "nmi": 0.2062,
-            "v_measure": 0.2062,
-            "purity": 0.6551
+            "ari": 0.1233,
+            "nmi": 0.2018,
+            "v_measure": 0.2018,
+            "purity": 0.6527
           }
         }
       },
@@ -57,27 +57,27 @@
         },
         "n_clusters": 5,
         "noise_rate": 0.0,
-        "silhouette_cosine": 0.304,
-        "davies_bouldin": 2.5678,
-        "calinski_harabasz": 86.1,
-        "min_cluster_share": 0.0581,
-        "max_cluster_share": 0.3844,
-        "size_entropy": 0.8701,
-        "stability_ari": 0.7631,
+        "silhouette_cosine": 0.177,
+        "davies_bouldin": 2.698,
+        "calinski_harabasz": 86.0,
+        "min_cluster_share": 0.0927,
+        "max_cluster_share": 0.3152,
+        "size_entropy": 0.9559,
+        "stability_ari": null,
         "eligible": true,
-        "selection_score": 0.232,
+        "selection_score": null,
         "external": {
           "rule_topic": {
-            "ari": 0.3061,
-            "nmi": 0.3212,
-            "v_measure": 0.3212,
-            "purity": 0.7194
+            "ari": 0.2719,
+            "nmi": 0.3381,
+            "v_measure": 0.3381,
+            "purity": 0.7058
           },
           "language": {
-            "ari": 0.1058,
-            "nmi": 0.2024,
-            "v_measure": 0.2024,
-            "purity": 0.6564
+            "ari": 0.123,
+            "nmi": 0.1832,
+            "v_measure": 0.1832,
+            "purity": 0.6527
           }
         }
       },
@@ -90,27 +90,27 @@
         },
         "n_clusters": 6,
         "noise_rate": 0.0,
-        "silhouette_cosine": 0.2075,
-        "davies_bouldin": 2.5696,
-        "calinski_harabasz": 76.2,
-        "min_cluster_share": 0.0556,
-        "max_cluster_share": 0.2806,
-        "size_entropy": 0.9206,
+        "silhouette_cosine": 0.1953,
+        "davies_bouldin": 2.644,
+        "calinski_harabasz": 76.3,
+        "min_cluster_share": 0.0581,
+        "max_cluster_share": 0.2645,
+        "size_entropy": 0.9419,
         "stability_ari": null,
         "eligible": true,
         "selection_score": null,
         "external": {
           "rule_topic": {
-            "ari": 0.2926,
-            "nmi": 0.3269,
-            "v_measure": 0.3269,
-            "purity": 0.7145
+            "ari": 0.2475,
+            "nmi": 0.3262,
+            "v_measure": 0.3262,
+            "purity": 0.7083
           },
           "language": {
-            "ari": 0.0964,
-            "nmi": 0.1848,
-            "v_measure": 0.1848,
-            "purity": 0.6564
+            "ari": 0.0946,
+            "nmi": 0.1827,
+            "v_measure": 0.1827,
+            "purity": 0.6551
           }
         }
       },
@@ -123,26 +123,26 @@
         },
         "n_clusters": 7,
         "noise_rate": 0.0,
-        "silhouette_cosine": 0.1979,
-        "davies_bouldin": 2.7945,
-        "calinski_harabasz": 69.3,
-        "min_cluster_share": 0.0569,
-        "max_cluster_share": 0.2311,
-        "size_entropy": 0.9423,
+        "silhouette_cosine": 0.2052,
+        "davies_bouldin": 2.724,
+        "calinski_harabasz": 69.9,
+        "min_cluster_share": 0.0556,
+        "max_cluster_share": 0.241,
+        "size_entropy": 0.9449,
         "stability_ari": null,
         "eligible": true,
         "selection_score": null,
         "external": {
           "rule_topic": {
-            "ari": 0.2468,
-            "nmi": 0.3424,
-            "v_measure": 0.3424,
-            "purity": 0.7145
+            "ari": 0.2962,
+            "nmi": 0.376,
+            "v_measure": 0.376,
+            "purity": 0.759
           },
           "language": {
-            "ari": 0.0696,
-            "nmi": 0.1615,
-            "v_measure": 0.1615,
+            "ari": 0.0581,
+            "nmi": 0.1768,
+            "v_measure": 0.1768,
             "purity": 0.6489
           }
         }
@@ -156,27 +156,27 @@
         },
         "n_clusters": 8,
         "noise_rate": 0.0,
-        "silhouette_cosine": 0.214,
-        "davies_bouldin": 2.7516,
-        "calinski_harabasz": 64.2,
+        "silhouette_cosine": 0.2157,
+        "davies_bouldin": 2.671,
+        "calinski_harabasz": 63.9,
         "min_cluster_share": 0.0544,
-        "max_cluster_share": 0.2719,
-        "size_entropy": 0.9373,
-        "stability_ari": 0.7187,
+        "max_cluster_share": 0.2831,
+        "size_entropy": 0.9284,
+        "stability_ari": 0.7306,
         "eligible": true,
-        "selection_score": 0.1538,
+        "selection_score": 0.1576,
         "external": {
           "rule_topic": {
-            "ari": 0.2919,
-            "nmi": 0.3586,
-            "v_measure": 0.3586,
-            "purity": 0.7528
+            "ari": 0.3239,
+            "nmi": 0.3703,
+            "v_measure": 0.3703,
+            "purity": 0.759
           },
           "language": {
-            "ari": 0.0443,
-            "nmi": 0.1653,
-            "v_measure": 0.1653,
-            "purity": 0.6452
+            "ari": 0.0466,
+            "nmi": 0.1802,
+            "v_measure": 0.1802,
+            "purity": 0.6502
           }
         }
       },
@@ -189,27 +189,27 @@
         },
         "n_clusters": 9,
         "noise_rate": 0.0,
-        "silhouette_cosine": 0.1877,
-        "davies_bouldin": 2.6324,
-        "calinski_harabasz": 59.6,
-        "min_cluster_share": 0.0519,
-        "max_cluster_share": 0.1891,
-        "size_entropy": 0.9666,
-        "stability_ari": null,
+        "silhouette_cosine": 0.2071,
+        "davies_bouldin": 2.6335,
+        "calinski_harabasz": 59.3,
+        "min_cluster_share": 0.0136,
+        "max_cluster_share": 0.2311,
+        "size_entropy": 0.9177,
+        "stability_ari": 0.7392,
         "eligible": true,
-        "selection_score": null,
+        "selection_score": 0.1531,
         "external": {
           "rule_topic": {
-            "ari": 0.223,
-            "nmi": 0.3535,
-            "v_measure": 0.3535,
-            "purity": 0.7553
+            "ari": 0.2705,
+            "nmi": 0.3639,
+            "v_measure": 0.3639,
+            "purity": 0.7503
           },
           "language": {
-            "ari": 0.0601,
-            "nmi": 0.1947,
-            "v_measure": 0.1947,
-            "purity": 0.6613
+            "ari": 0.0439,
+            "nmi": 0.1665,
+            "v_measure": 0.1665,
+            "purity": 0.6366
           }
         }
       },
@@ -222,27 +222,27 @@
         },
         "n_clusters": 10,
         "noise_rate": 0.0,
-        "silhouette_cosine": 0.2102,
-        "davies_bouldin": 2.5893,
-        "calinski_harabasz": 56.0,
-        "min_cluster_share": 0.0136,
-        "max_cluster_share": 0.2052,
-        "size_entropy": 0.9394,
-        "stability_ari": 0.7019,
+        "silhouette_cosine": 0.2123,
+        "davies_bouldin": 2.6167,
+        "calinski_harabasz": 54.9,
+        "min_cluster_share": 0.0161,
+        "max_cluster_share": 0.2311,
+        "size_entropy": 0.9087,
+        "stability_ari": 0.7207,
         "eligible": true,
-        "selection_score": 0.1475,
+        "selection_score": 0.153,
         "external": {
           "rule_topic": {
-            "ari": 0.2403,
-            "nmi": 0.3637,
-            "v_measure": 0.3637,
-            "purity": 0.7627
+            "ari": 0.2708,
+            "nmi": 0.3722,
+            "v_measure": 0.3722,
+            "purity": 0.7565
           },
           "language": {
-            "ari": 0.0471,
-            "nmi": 0.1733,
-            "v_measure": 0.1733,
-            "purity": 0.6613
+            "ari": 0.037,
+            "nmi": 0.1666,
+            "v_measure": 0.1666,
+            "purity": 0.6255
           }
         }
       }
@@ -261,8 +261,8 @@
       "multivariate": 2
     },
     "by_direction": {
-      "negative": 170,
-      "positive": 1
+      "negative": 169,
+      "positive": 2
     },
     "cohort_levels": {
       "brand_platform_type": 2137
@@ -273,25 +273,25 @@
       "|z|>=4.0": 143,
       "|z|>=5.0": 117
     },
-    "iforest_agreement_top5pct": 0.479
+    "iforest_agreement_top5pct": 0.538
   },
   "pipeline": [
     {
       "step": "normalize_posts",
       "status": "ok",
-      "seconds": 0.0,
+      "seconds": 0.01,
       "posts": 2165
     },
     {
       "step": "enrich_comments",
       "status": "ok",
-      "seconds": 0.23,
+      "seconds": 0.41,
       "comments": 809
     },
     {
       "step": "embed",
       "status": "ok",
-      "seconds": 28.72,
+      "seconds": 26.2,
       "representations": [
         "semantic"
       ]
@@ -299,21 +299,21 @@
     {
       "step": "cluster",
       "status": "ok",
-      "seconds": 6.39,
+      "seconds": 9.41,
       "candidates": 7,
       "selected": "semantic:kmeans(k=4)"
     },
     {
       "step": "anomalies",
       "status": "ok",
-      "seconds": 0.71,
+      "seconds": 1.97,
       "flagged": 171
     },
     {
       "step": "recommendations",
       "status": "ok",
-      "seconds": 0.14,
-      "cards": 3
+      "seconds": 0.33,
+      "cards": 4
     }
   ],
   "nlp": {
@@ -325,8 +325,8 @@
       "urdu": 5
     },
     "reference_topic_mix": {
-      "compliment": 327,
       "other": 327,
+      "compliment": 327,
       "price": 57,
       "purchase_inquiry": 26,
       "availability": 20,

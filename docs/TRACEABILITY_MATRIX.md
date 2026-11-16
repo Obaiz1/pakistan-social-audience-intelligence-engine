@@ -37,4 +37,4 @@ Status legend: **DONE+VERIFIED** (implemented and checked by a listed test/run) 
 | Read-only public demo, upload limits, origin check | `api/app.py:guard` | `test_api.py::test_hosted_mode_is_read_only_but_preview_works`, `test_cross_site_write_refused` |
 | Exports CSV/Excel/PDF with disclosures | `reports/export.py` | `test_api.py::test_exports` |
 | Vercel deployment verified | `docs/DEPLOYMENT.md` | DONE+VERIFIED — https://audienceiq-pk.vercel.app, commit 1d153e2 |
-| Observed YouTube data | `pipelines/collect_youtube.py`, `data/datasets/observed-youtube-20261116/` | DONE+VERIFIED (comment dates missing in this snapshot; re-run to populate; expires 2026-12-16) |
+| Observed YouTube data | `pipelines/collect_youtube.py`, `data/datasets/observed-youtube-20261116/` | DONE+VERIFIED (re-collected with comment dates; text withheld; expires 2026-12-16) |

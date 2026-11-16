@@ -36,7 +36,7 @@ Commands were executed on Windows 11 (Python 3.12.15 venv, Node 24.14.1) unless 
 |---|---|
 | `python pipelines/collect_youtube.py --months 24 --env-file <owner's Project 1 .env>` | exit 0: 2,165 videos, 809 comments, 663 quota units, 180 s; bundle `observed-youtube-20261116` (KMeans k = 4) |
 | inspection | comment_text non-null 0, exemplar text non-null 0 (withheld OK); **bug: comment dates all null**, adapter fixed + `test_youtube_adapter.py` (3 tests) |
-| second collection to repopulate dates | refused by the permission policy (not retried) |
+| second collection to repopulate dates | first refused by the permission policy; run later on the owner's explicit request: exit 0, 2,165 videos, 809 comments, 663 quota units; **809/809 comments dated**, text still null; k = 4 (silhouette 0.306, stability 0.993); 4 recommendations |
 | API on observed dataset (12 routes + 3 exports) | all 200; text null with withheld notice; quality checks all pass |
 | `QA_DATASET=observed-youtube-20261116 node e2e/screens.mjs` | **40/40** (`docs/evidence/qa-screens-local-observed.json`) |
 | `python -m pytest -q` | **105 passed** |

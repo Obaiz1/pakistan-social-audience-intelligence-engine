@@ -25,7 +25,7 @@ The overview page has a guided **"Try this project"** path through Q1–Q5. `/da
 - **Q3:** 70 flags on 66 posts (36 engagement, 19 comment-pattern, 6 need-mix, 9 multivariate); 53 % recall of the 94 deliberately injected anomalies, 76 % of flagged posts were injected ones.
 - **Q5:** 18 evidence-gated cards, e.g. *Answer price questions before they are asked* (5,884 comments), *For Brand E: address size & fit first* (13.9 % vs 7.6 %, 1.8×), *On sale announcements: show stock and size availability up front* (21.5 % vs 12.6 %), *Test more influencer posts*, *Rethink product photos*.
 
-- **Observed YouTube (real data):** 2,165 videos, 809 comments → 4 clusters (semantic KMeans k = 4, silhouette 0.303, stability 0.978): Compliments 38.9 % (81 % agreement), Price / cost 7.8 % (79 %), two Other/unclear groups (music/general and Roman-Urdu chatter). 171 posts flagged, 168 of them with engagement far below their brand's peers (e.g. 0.01 % vs a 1.48 % cohort median), consistent with paid/boosted views. 3 recommendations pass the gates.
+- **Observed YouTube (real data):** 2,165 videos, 809 comments → 4 clusters (semantic KMeans k = 4, silhouette 0.306, stability 0.993): Compliments 38.9 % (81 % agreement), Price / cost 9.3 % (68 %), two Other/unclear groups (music/general and Roman-Urdu chatter). 171 posts flagged, 168 of them with engagement far below their brand's peers (e.g. 0.01 % vs a 1.48 % cohort median), consistent with paid/boosted views. 4 recommendations pass the gates, including *For Sapphire: address price questions first* (26.1 % vs 16.4 %, 1.6×, BH p = 0.046).
 
 The synthetic numbers describe a simulation designed to contain discoverable structure; they are **not** findings about real brands or audiences. See `docs/CLUSTERING_EVALUATION.md` and `docs/PROJECT3_FINAL_REPORT.md`.
 
@@ -93,7 +93,7 @@ None are required. Optional names are documented in `.env.example`: `YOUTUBE_API
 - **Assignment sources checked:** the 2026 paper provides no downloadable data/code; the e-commerce dataset is transactions, not comments; the fashion catalogue has an unclear licence and a different category — none were used (`docs/assignment/PROJECT3_REQUIREMENTS.md`).
 
 ## Known limitations and blocked items
-- **Observed YouTube snapshot:** YouTube only (no Instagram/TikTok/Facebook), audience location not verified, comment text withheld, data expires 2026-12-16 (refresh by re-running `pipelines/collect_youtube.py`). Comment dates are empty in this snapshot (adapter bug fixed after collection; a re-run populates them). Many views look ad-inflated, so 168 posts are flagged far below their peers.
+- **Observed YouTube snapshot:** YouTube only (no Instagram/TikTok/Facebook), audience location not verified, comment text withheld, data expires 2026-12-16 (refresh by re-running `pipelines/collect_youtube.py`). Many views look ad-inflated, so 168 posts are flagged far below their peers.
 - **Synthetic demo only:** results demonstrate the method; the corpus is cleaner than real comments, so real-world clustering agreement will be lower.
 - **Discount questions** are absorbed by the Price cluster and **Delivery** is named with only 47 % agreement, so no delivery-specific card passes the evidence gate — reported as found, not tuned away.
 - **Roman Urdu** is helped by a hand-written translation gloss (ADR-013); a learned transliteration model would be better.
