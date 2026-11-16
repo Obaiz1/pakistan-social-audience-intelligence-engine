@@ -12,7 +12,7 @@ export type NeedGroup = {
   clusters: { cluster_id: number; label: string; size: number; agreement: number }[];
 };
 
-/** Discovered needs as ranked bars. Mixed/noise stay visible (striped) — uncertainty is never relabelled away. */
+/** Discovered needs as ranked bars. Other/unclear, mixed and noise stay visible (striped) — uncertainty is never relabelled away. */
 export function NeedsDistribution({ needs, onSelect, hrefFor, total }: {
   needs: NeedGroup[];
   total: number;

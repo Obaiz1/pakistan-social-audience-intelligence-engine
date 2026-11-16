@@ -213,14 +213,18 @@ def overview(dataset_id: str | None = None, filters: Filters = Depends(filters_d
     }
 
 
+# Needs that are not a specific, actionable audience need (same rule as /audience/segments).
+UNCERTAIN_NEEDS = frozenset({"other", "mixed", "noise"})
+
 def _needs_distribution(clusters: list[dict]) -> list[dict]:
-    """Discovered clusters grouped by their post-hoc need (mixed and noise kept visible, never hidden)."""
+    """Discovered clusters grouped by their post-hoc need. Catch-all groups (other/unclear, mixed, noise) stay visible
+    but are marked uncertain, so they are never presented as a confident need."""
     groups: dict[str, dict] = {}
     for c in clusters:
         key = "noise" if c["cluster_id"] == -1 else c["need_category"]
         g = groups.setdefault(key, {"need": key, "label": NEED_LABELS.get(key, "Mixed / uncertain" if key == "mixed"
                                                                          else "Unclustered (noise)" if key == "noise" else key),
-                                    "comments": 0, "share": 0.0, "clusters": [], "uncertain": key in {"mixed", "noise"}})
+                                    "comments": 0, "share": 0.0, "clusters": [], "uncertain": key in UNCERTAIN_NEEDS})
         g["comments"] += c["filtered_size"]
         g["share"] += c["filtered_share"] if c["cluster_id"] != -1 else 0.0
         g["clusters"].append({"cluster_id": c["cluster_id"], "label": c["label"], "size": c["filtered_size"],

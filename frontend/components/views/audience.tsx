@@ -77,7 +77,7 @@ function ClusterDetail({ id }: { id: number }) {
   const d = s.data;
   const c = d.cluster;
   const monthly = Object.entries(d.monthly).map(([month, n]) => ({ month, n }));
-  const uncertain = c.need_category === "mixed" || c.label_agreement < 0.5;
+  const uncertain = c.need_category === "mixed" || c.need_category === "other" || c.label_agreement < 0.5;
   return (
     <Panel id="cluster-detail" title={<span className="serif" style={{ fontSize: 22 }}>#{c.cluster_id} · {c.label}</span>} description={c.explanation}
       actions={<Link className="btn sm" href={`/comments?cluster_id=${c.cluster_id}`}>All comments <ArrowRight size={14} /></Link>}>
@@ -87,7 +87,9 @@ function ClusterDetail({ id }: { id: number }) {
         <a className="step" href="#trail-posts">3 · Linked posts</a><span className="arrow" aria-hidden="true">→</span>
         <a className="step" href="#trail-actions">4 · Recommended action</a>
       </nav>
-      {uncertain && <Notice tone="warn" title="Uncertain cluster">Only {pct(c.label_agreement, 0)} of members carry the reference label used to name it. Treat the name as a hint; read the comments below before acting.</Notice>}
+      {uncertain && <Notice tone="warn" title="Uncertain cluster">{c.need_category === "other" || c.need_category === "mixed"
+        ? "This is a catch-all group: its comments do not share one specific, actionable need, so it is not treated as a confident need anywhere in the app. Read the comments below before acting."
+        : <>Only {pct(c.label_agreement, 0)} of members carry the reference label used to name it. Treat the name as a hint; read the comments below before acting.</>}</Notice>}
       <div className="grid cols-4" style={{ marginTop: 12 }}>
         <Kpi label="Comments (view)" value={num(c.filtered_size)} sub={`${pct(c.filtered_share)} of clustered comments`} />
         <Kpi label="Name agreement" value={pct(c.label_agreement, 0)} sub="members with this reference label" help="Share of members whose rule-based reference label matches the cluster name. Low = name is uncertain." />

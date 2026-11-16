@@ -59,7 +59,7 @@ export function BriefView() {
       <section className="panel">
         <h2 className="section">Q2 · What does the audience want?</h2>
         <div className="table-wrap" tabIndex={0} style={{ marginTop: 8 }}><table className="data"><thead><tr><th>Discovered need</th><th className="n">Comments</th><th className="n">Share</th><th>Note</th></tr></thead>
-          <tbody>{d.needs.map((n) => <tr key={n.need}><td>{n.label}</td><td className="n">{num(n.comments)}</td><td className="n">{pct(n.comments / Math.max(comments, 1), 1)}</td><td className="faint">{n.uncertain ? "uncertain (mixed or unclustered)" : `${n.clusters.length} cluster${n.clusters.length > 1 ? "s" : ""}`}</td></tr>)}</tbody></table></div>
+          <tbody>{d.needs.map((n) => <tr key={n.need}><td>{n.label}</td><td className="n">{num(n.comments)}</td><td className="n">{pct(n.comments / Math.max(comments, 1), 1)}</td><td className="faint">{n.uncertain ? "uncertain (other/unclear, mixed or unclustered)" : `${n.clusters.length} cluster${n.clusters.length > 1 ? "s" : ""}`}</td></tr>)}</tbody></table></div>
       </section>
       <section className="panel">
         <h2 className="section">Q3 · Which patterns are unusual?</h2>
