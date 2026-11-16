@@ -5,8 +5,8 @@
 |---|---|
 | Production URL | **https://audienceiq-pk.vercel.app** (public, read-only demo; synthetic dataset by default + observed YouTube snapshot with comment text withheld) |
 | Vercel project | `audienceiq-pk` (team "obaiz-s-projects"), root directory `frontend`, framework Next.js, Node 24.x, source files outside root enabled |
-| Deployment | latest: `audienceiq-gxovpqsz2-obaiz-s-projects.vercel.app` (commit `b7e902e`, adds the observed dataset); previous: `dpl_ES6uBNjWCqBQNS28FLE4VyXThB6s` (commit `1d153e2`) — both via the Vercel CLI from the repo root |
-| Deployed commit | **`b7e902e`** (reported live by `/api/v1/health → build_commit`; later commits change docs/evidence only) |
+| Deployment | latest: `audienceiq-ehfesi2h1-obaiz-s-projects.vercel.app` (commit `4c0c35f`, observed snapshot with comment dates); earlier: `audienceiq-gxovpqsz2-…` (commit `b7e902e`), previous: `dpl_ES6uBNjWCqBQNS28FLE4VyXThB6s` (commit `1d153e2`) — both via the Vercel CLI from the repo root |
+| Deployed commit | **`4c0c35f`** (reported live by `/api/v1/health → build_commit`; later commits change docs/evidence only) |
 | Production env (names only) | `AUDIENCEIQ_HOSTED=1`, `APP_ENV=production`, per-deployment `AUDIENCEIQ_BUILD_COMMIT`; **no secrets** |
 | Storage | committed CSV bundle → in-memory SQLite per function instance (read-only); no database attached |
 
@@ -21,6 +21,7 @@
 | Browser journey `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/journey.mjs` | **12/12**, 0 console errors, 0 API errors (`docs/evidence/e2e-journey-prod.json`) |
 | Visual/accessibility sweep `… node frontend/e2e/screens.mjs` | **40/40** (10 routes × 375/1440 × dark/light) (`docs/evidence/qa-screens-prod.json`, `docs/screenshots/prod/`) |
 | Secrets | none configured; `.env.local` created by `vercel link` (OIDC token) deleted locally, never committed |
+| Redeploy with dated observed snapshot (commit `4c0c35f`) | health `ok`, 2 datasets; comment dates present (date-only), text null; cluster monthly trend populated; journey **12/12**; observed sweep **40/40** |
 | Redeploy with observed dataset (commit `b7e902e`) | health `ok`, `datasets: 2`; observed dataset: 10 API routes 200, every `comment_text` null with `text_visible: false`; journey **12/12**; observed visual sweep **40/40** (`docs/evidence/qa-screens-prod-observed.json`) |
 
 ## Provider constraints (checked 2026-11-15 against vercel.com/docs)

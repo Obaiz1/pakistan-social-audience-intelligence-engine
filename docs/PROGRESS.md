@@ -11,7 +11,7 @@
 | 6 Recommendations (Q5) | DONE | `recommendations/engine.py`, `test_recommendations.py` |
 | 7 Frontend | DONE | lint/type/unit/build; journey 12/12; screens 40/40 (local + production) |
 | 8 QA, evaluation, academic report | DONE | `CLUSTERING_EVALUATION.md` (generated), `PROJECT3_FINAL_REPORT.md`, `TEST_EVIDENCE.md`, CI green |
-| 9 Deployment | DONE + VERIFIED | https://audienceiq-pk.vercel.app (commit b7e902e, synthetic + observed datasets), `docs/DEPLOYMENT.md` |
+| 9 Deployment | DONE + VERIFIED | https://audienceiq-pk.vercel.app (commit 4c0c35f, synthetic + observed datasets), `docs/DEPLOYMENT.md` |
 | 10 Final regression & handoff | DONE (owner actions listed in SESSION_HANDOFF) | PR `feat/project3-engine` → `main` |
 
 ## Environment (verified 2026-11-15)
