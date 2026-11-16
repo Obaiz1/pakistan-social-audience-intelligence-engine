@@ -23,7 +23,8 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--embedding", choices=["lexical", "semantic", "hybrid", "compare"], default="compare")
     ap.add_argument("--model", choices=["minilm", "e5-small", "mpnet"], default="mpnet")
-    ap.add_argument("--prefer", default=None, help="restrict selection to one representation (documented in evaluation)")
+    ap.add_argument("--prefer", default="semantic,hybrid",
+                    help="representations eligible for selection (ADR-007 amendment: lexical is the comparison baseline)")
     ap.add_argument("--out", default=str(ROOT / "data" / "datasets"))
     args = ap.parse_args()
 
@@ -38,7 +39,7 @@ def main() -> None:
     result = build_synthetic(
         n_posts=args.posts, seed=args.seed, embedding=args.embedding, semantic_encoder=encoder, semantic_model=model_desc,
         out_dir=out, k_values=[8, 10, 12, 14, 16, 18, 20, 24, 28], hdbscan_sizes=[60, 120, 250], hdbscan_reducer="umap",
-        preferred=args.prefer)
+        preferred=[x for x in args.prefer.split(',') if x] if args.embedding == 'compare' else None)
     ev = result["evaluation"]
     print(json.dumps({
         "dataset": result["dataset"]["dataset_id"], "posts": result["dataset"]["post_count"],

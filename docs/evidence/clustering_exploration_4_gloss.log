@@ -1,0 +1,16 @@
+# Exploration 4 (2026-11-16): Roman-Urdu gloss before embedding vs none; mpnet; KMeans sweep.
+# score = silhouette x stability (ADR-007 rule). 'need'/'audit' columns are reported agreement, not selection inputs.
+== gloss=False unique=7859
+k= 8 sil=0.1985 minsh=0.0703 stab=0.849 score=0.1685 | need nmi=0.239 pur=0.4148 | audit=0.18 | named=[np.str_('compliment'), np.str_('price'), np.str_('size_fit')]
+k=10 sil=0.1774 minsh=0.063 stab=0.802 score=0.1424 | need nmi=0.2503 pur=0.4422 | audit=0.23 | named=[np.str_('compliment'), np.str_('delivery'), np.str_('price'), np.str_('size_fit')]
+k=12 sil=0.176 minsh=0.0507 stab=0.710 score=0.1250 | need nmi=0.2844 pur=0.4838 | audit=0.28 | named=[np.str_('compliment'), np.str_('delivery'), np.str_('discount'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]
+k=14 sil=0.1748 minsh=0.0361 stab=0.674 score=0.1178 | need nmi=0.3038 pur=0.5136 | audit=0.33 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('discount'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]
+k=16 sil=0.165 minsh=0.0188 stab=0.628 score=0.1036 | need nmi=0.2855 pur=0.4906 | audit=0.31 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]
+k=18 sil=0.1959 minsh=0.0108 stab=0.641 score=0.1256 | need nmi=0.2851 pur=0.482 | audit=0.32 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('fabric_quality'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]
+== gloss=True unique=7759
+k= 8 sil=0.2222 minsh=0.0466 stab=0.749 score=0.1665 | need nmi=0.4296 pur=0.5865 | audit=0.43 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('fabric_quality'), np.str_('price'), np.str_('size_fit')]
+k=10 sil=0.2401 minsh=0.0252 stab=0.783 score=0.1881 | need nmi=0.4216 pur=0.5907 | audit=0.52 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('fabric_quality'), np.str_('other'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]
+k=12 sil=0.2529 minsh=0.0324 stab=0.759 score=0.1919 | need nmi=0.4467 pur=0.6258 | audit=0.46 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('fabric_quality'), np.str_('other'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]
+k=14 sil=0.1797 minsh=0.0272 stab=0.692 score=0.1244 | need nmi=0.4259 pur=0.6166 | audit=0.57 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('discount'), np.str_('fabric_quality'), np.str_('other'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]
+k=16 sil=0.2035 minsh=0.0237 stab=0.645 score=0.1312 | need nmi=0.4601 pur=0.6713 | audit=0.64 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('discount'), np.str_('fabric_quality'), np.str_('other'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]
+k=18 sil=0.1983 minsh=0.0152 stab=0.662 score=0.1312 | need nmi=0.4176 pur=0.6133 | audit=0.48 | named=[np.str_('availability'), np.str_('compliment'), np.str_('delivery'), np.str_('discount'), np.str_('fabric_quality'), np.str_('other'), np.str_('price'), np.str_('purchase_inquiry'), np.str_('size_fit')]

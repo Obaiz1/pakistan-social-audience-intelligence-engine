@@ -1,0 +1,1 @@
+# Exploration 3 (2026-11-16): hierarchical refinement of rule-selected semantic KMeans k=8 (no gloss). Result: 25 leaves, need NMI 0.296, purity 0.524 (vs flat k=8: 0.239 / 0.415). Not adopted (ADR-014).

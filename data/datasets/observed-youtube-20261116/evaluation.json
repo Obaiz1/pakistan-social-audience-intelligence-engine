@@ -1,0 +1,355 @@
+{
+  "clustering": {
+    "selection_rule": {
+      "max_noise": 0.35,
+      "min_cluster_share": 0.01,
+      "max_k": 40,
+      "stability_top": 4,
+      "stability_seeds": 3,
+      "score": "silhouette_cosine × stability_ari",
+      "selection_family": "all representations",
+      "baseline_only": [
+        "semantic"
+      ]
+    },
+    "selected_run_id": "clu-6835f002",
+    "selected_key": "semantic:kmeans(k=4)",
+    "candidates": [
+      {
+        "run_id": "clu-6835f002",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 4
+        },
+        "n_clusters": 4,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.3056,
+        "davies_bouldin": 2.6766,
+        "calinski_harabasz": 102.5,
+        "min_cluster_share": 0.0927,
+        "max_cluster_share": 0.3894,
+        "size_entropy": 0.9191,
+        "stability_ari": 0.9932,
+        "eligible": true,
+        "selection_score": 0.3035,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3229,
+            "nmi": 0.3131,
+            "v_measure": 0.3131,
+            "purity": 0.7083
+          },
+          "language": {
+            "ari": 0.1233,
+            "nmi": 0.2018,
+            "v_measure": 0.2018,
+            "purity": 0.6527
+          }
+        }
+      },
+      {
+        "run_id": "clu-a914deba",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 5
+        },
+        "n_clusters": 5,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.177,
+        "davies_bouldin": 2.698,
+        "calinski_harabasz": 86.0,
+        "min_cluster_share": 0.0927,
+        "max_cluster_share": 0.3152,
+        "size_entropy": 0.9559,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2719,
+            "nmi": 0.3381,
+            "v_measure": 0.3381,
+            "purity": 0.7058
+          },
+          "language": {
+            "ari": 0.123,
+            "nmi": 0.1832,
+            "v_measure": 0.1832,
+            "purity": 0.6527
+          }
+        }
+      },
+      {
+        "run_id": "clu-ad6c1d89",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 6
+        },
+        "n_clusters": 6,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1953,
+        "davies_bouldin": 2.644,
+        "calinski_harabasz": 76.3,
+        "min_cluster_share": 0.0581,
+        "max_cluster_share": 0.2645,
+        "size_entropy": 0.9419,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2475,
+            "nmi": 0.3262,
+            "v_measure": 0.3262,
+            "purity": 0.7083
+          },
+          "language": {
+            "ari": 0.0946,
+            "nmi": 0.1827,
+            "v_measure": 0.1827,
+            "purity": 0.6551
+          }
+        }
+      },
+      {
+        "run_id": "clu-eb2f87d0",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 7
+        },
+        "n_clusters": 7,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2052,
+        "davies_bouldin": 2.724,
+        "calinski_harabasz": 69.9,
+        "min_cluster_share": 0.0556,
+        "max_cluster_share": 0.241,
+        "size_entropy": 0.9449,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2962,
+            "nmi": 0.376,
+            "v_measure": 0.376,
+            "purity": 0.759
+          },
+          "language": {
+            "ari": 0.0581,
+            "nmi": 0.1768,
+            "v_measure": 0.1768,
+            "purity": 0.6489
+          }
+        }
+      },
+      {
+        "run_id": "clu-36f0a09e",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 8
+        },
+        "n_clusters": 8,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2157,
+        "davies_bouldin": 2.671,
+        "calinski_harabasz": 63.9,
+        "min_cluster_share": 0.0544,
+        "max_cluster_share": 0.2831,
+        "size_entropy": 0.9284,
+        "stability_ari": 0.7306,
+        "eligible": true,
+        "selection_score": 0.1576,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3239,
+            "nmi": 0.3703,
+            "v_measure": 0.3703,
+            "purity": 0.759
+          },
+          "language": {
+            "ari": 0.0466,
+            "nmi": 0.1802,
+            "v_measure": 0.1802,
+            "purity": 0.6502
+          }
+        }
+      },
+      {
+        "run_id": "clu-1f98d27e",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 9
+        },
+        "n_clusters": 9,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2071,
+        "davies_bouldin": 2.6335,
+        "calinski_harabasz": 59.3,
+        "min_cluster_share": 0.0136,
+        "max_cluster_share": 0.2311,
+        "size_entropy": 0.9177,
+        "stability_ari": 0.7392,
+        "eligible": true,
+        "selection_score": 0.1531,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2705,
+            "nmi": 0.3639,
+            "v_measure": 0.3639,
+            "purity": 0.7503
+          },
+          "language": {
+            "ari": 0.0439,
+            "nmi": 0.1665,
+            "v_measure": 0.1665,
+            "purity": 0.6366
+          }
+        }
+      },
+      {
+        "run_id": "clu-1d647cf9",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 10
+        },
+        "n_clusters": 10,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2123,
+        "davies_bouldin": 2.6167,
+        "calinski_harabasz": 54.9,
+        "min_cluster_share": 0.0161,
+        "max_cluster_share": 0.2311,
+        "size_entropy": 0.9087,
+        "stability_ari": 0.7207,
+        "eligible": true,
+        "selection_score": 0.153,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2708,
+            "nmi": 0.3722,
+            "v_measure": 0.3722,
+            "purity": 0.7565
+          },
+          "language": {
+            "ari": 0.037,
+            "nmi": 0.1666,
+            "v_measure": 0.1666,
+            "purity": 0.6255
+          }
+        }
+      }
+    ]
+  },
+  "anomalies": {
+    "posts_total": 2165,
+    "posts_mature": 2137,
+    "posts_scored": 2137,
+    "posts_unscored_small_cohort": 0,
+    "posts_immature": 28,
+    "flags": 171,
+    "posts_flagged": 171,
+    "by_kind": {
+      "engagement": 169,
+      "multivariate": 2
+    },
+    "by_direction": {
+      "negative": 169,
+      "positive": 2
+    },
+    "cohort_levels": {
+      "brand_platform_type": 2137
+    },
+    "sensitivity_engagement": {
+      "|z|>=3.0": 195,
+      "|z|>=3.5": 169,
+      "|z|>=4.0": 143,
+      "|z|>=5.0": 117
+    },
+    "iforest_agreement_top5pct": 0.538
+  },
+  "pipeline": [
+    {
+      "step": "normalize_posts",
+      "status": "ok",
+      "seconds": 0.01,
+      "posts": 2165
+    },
+    {
+      "step": "enrich_comments",
+      "status": "ok",
+      "seconds": 0.41,
+      "comments": 809
+    },
+    {
+      "step": "embed",
+      "status": "ok",
+      "seconds": 26.2,
+      "representations": [
+        "semantic"
+      ]
+    },
+    {
+      "step": "cluster",
+      "status": "ok",
+      "seconds": 9.41,
+      "candidates": 7,
+      "selected": "semantic:kmeans(k=4)"
+    },
+    {
+      "step": "anomalies",
+      "status": "ok",
+      "seconds": 1.97,
+      "flagged": 171
+    },
+    {
+      "step": "recommendations",
+      "status": "ok",
+      "seconds": 0.33,
+      "cards": 4
+    }
+  ],
+  "nlp": {
+    "language_mix": {
+      "english": 472,
+      "roman_urdu": 164,
+      "other": 150,
+      "mixed": 18,
+      "urdu": 5
+    },
+    "reference_topic_mix": {
+      "other": 327,
+      "compliment": 327,
+      "price": 57,
+      "purchase_inquiry": 26,
+      "availability": 20,
+      "discount": 18,
+      "fabric_quality": 15,
+      "order_issue": 11,
+      "delivery": 5,
+      "size_fit": 3
+    },
+    "reference_unlabelled_share": 0.4042,
+    "purchase_intent_mix": {
+      "unknown": 352,
+      "none": 346,
+      "possible_inquiry": 108,
+      "strong_intent": 3
+    },
+    "sentiment_mix": {
+      "neutral": 430,
+      "positive": 334,
+      "negative": 45
+    }
+  },
+  "langid": {
+    "note": "No ground truth for observed comments."
+  }
+}

@@ -1,0 +1,2806 @@
+{
+  "clustering": {
+    "selection_rule": {
+      "max_noise": 0.35,
+      "min_cluster_share": 0.01,
+      "max_k": 40,
+      "stability_top": 4,
+      "stability_seeds": 3,
+      "score": "silhouette_cosine × stability_ari",
+      "selection_family": [
+        "semantic",
+        "hybrid"
+      ],
+      "baseline_only": [
+        "lexical"
+      ]
+    },
+    "selected_run_id": "clu-9e481af5",
+    "selected_key": "semantic:kmeans(k=8)",
+    "candidates": [
+      {
+        "run_id": "clu-7a406b58",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 8
+        },
+        "n_clusters": 8,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1311,
+        "davies_bouldin": 3.2478,
+        "calinski_harabasz": 988.7,
+        "min_cluster_share": 0.0273,
+        "max_cluster_share": 0.4041,
+        "size_entropy": 0.8575,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.129,
+            "nmi": 0.2725,
+            "v_measure": 0.2725,
+            "purity": 0.437
+          },
+          "language": {
+            "ari": 0.1445,
+            "nmi": 0.2589,
+            "v_measure": 0.2589,
+            "purity": 0.5953
+          },
+          "synthetic_true_need": {
+            "ari": 0.0943,
+            "nmi": 0.231,
+            "v_measure": 0.231,
+            "purity": 0.3978
+          },
+          "synthetic_true_language": {
+            "ari": 0.1361,
+            "nmi": 0.2436,
+            "v_measure": 0.2436,
+            "purity": 0.591
+          }
+        }
+      },
+      {
+        "run_id": "clu-b68e557d",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 10
+        },
+        "n_clusters": 10,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1455,
+        "davies_bouldin": 3.5198,
+        "calinski_harabasz": 931.8,
+        "min_cluster_share": 0.0359,
+        "max_cluster_share": 0.2687,
+        "size_entropy": 0.9151,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1421,
+            "nmi": 0.2808,
+            "v_measure": 0.2808,
+            "purity": 0.436
+          },
+          "language": {
+            "ari": 0.1195,
+            "nmi": 0.2403,
+            "v_measure": 0.2403,
+            "purity": 0.604
+          },
+          "synthetic_true_need": {
+            "ari": 0.1122,
+            "nmi": 0.2533,
+            "v_measure": 0.2533,
+            "purity": 0.417
+          },
+          "synthetic_true_language": {
+            "ari": 0.115,
+            "nmi": 0.2257,
+            "v_measure": 0.2257,
+            "purity": 0.5882
+          }
+        }
+      },
+      {
+        "run_id": "clu-c3ead420",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 12
+        },
+        "n_clusters": 12,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1563,
+        "davies_bouldin": 3.337,
+        "calinski_harabasz": 875.2,
+        "min_cluster_share": 0.0296,
+        "max_cluster_share": 0.253,
+        "size_entropy": 0.9163,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1273,
+            "nmi": 0.2679,
+            "v_measure": 0.2679,
+            "purity": 0.4532
+          },
+          "language": {
+            "ari": 0.0938,
+            "nmi": 0.2119,
+            "v_measure": 0.2119,
+            "purity": 0.6062
+          },
+          "synthetic_true_need": {
+            "ari": 0.1165,
+            "nmi": 0.2611,
+            "v_measure": 0.2611,
+            "purity": 0.4444
+          },
+          "synthetic_true_language": {
+            "ari": 0.0896,
+            "nmi": 0.1955,
+            "v_measure": 0.1955,
+            "purity": 0.5923
+          }
+        }
+      },
+      {
+        "run_id": "clu-6d91f201",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 14
+        },
+        "n_clusters": 14,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.162,
+        "davies_bouldin": 3.2256,
+        "calinski_harabasz": 825.4,
+        "min_cluster_share": 0.0223,
+        "max_cluster_share": 0.1954,
+        "size_entropy": 0.9375,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1574,
+            "nmi": 0.3026,
+            "v_measure": 0.3026,
+            "purity": 0.4849
+          },
+          "language": {
+            "ari": 0.0984,
+            "nmi": 0.2364,
+            "v_measure": 0.2364,
+            "purity": 0.6389
+          },
+          "synthetic_true_need": {
+            "ari": 0.1366,
+            "nmi": 0.2834,
+            "v_measure": 0.2834,
+            "purity": 0.4645
+          },
+          "synthetic_true_language": {
+            "ari": 0.0944,
+            "nmi": 0.2242,
+            "v_measure": 0.2242,
+            "purity": 0.6246
+          }
+        }
+      },
+      {
+        "run_id": "clu-04fb6561",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 16
+        },
+        "n_clusters": 16,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1822,
+        "davies_bouldin": 2.9042,
+        "calinski_harabasz": 815.9,
+        "min_cluster_share": 0.0195,
+        "max_cluster_share": 0.2672,
+        "size_entropy": 0.9052,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.148,
+            "nmi": 0.3257,
+            "v_measure": 0.3257,
+            "purity": 0.5069
+          },
+          "language": {
+            "ari": 0.0946,
+            "nmi": 0.24,
+            "v_measure": 0.24,
+            "purity": 0.633
+          },
+          "synthetic_true_need": {
+            "ari": 0.1226,
+            "nmi": 0.3099,
+            "v_measure": 0.3099,
+            "purity": 0.4895
+          },
+          "synthetic_true_language": {
+            "ari": 0.0945,
+            "nmi": 0.2285,
+            "v_measure": 0.2285,
+            "purity": 0.6153
+          }
+        }
+      },
+      {
+        "run_id": "clu-fab82bae",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 18
+        },
+        "n_clusters": 18,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2023,
+        "davies_bouldin": 2.775,
+        "calinski_harabasz": 796.3,
+        "min_cluster_share": 0.0176,
+        "max_cluster_share": 0.2438,
+        "size_entropy": 0.9073,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1431,
+            "nmi": 0.3211,
+            "v_measure": 0.3211,
+            "purity": 0.5291
+          },
+          "language": {
+            "ari": 0.0723,
+            "nmi": 0.2142,
+            "v_measure": 0.2142,
+            "purity": 0.6238
+          },
+          "synthetic_true_need": {
+            "ari": 0.1218,
+            "nmi": 0.3121,
+            "v_measure": 0.3121,
+            "purity": 0.5083
+          },
+          "synthetic_true_language": {
+            "ari": 0.0685,
+            "nmi": 0.2042,
+            "v_measure": 0.2042,
+            "purity": 0.6181
+          }
+        }
+      },
+      {
+        "run_id": "clu-6ec7ba52",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 20
+        },
+        "n_clusters": 20,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2117,
+        "davies_bouldin": 2.7183,
+        "calinski_harabasz": 792.7,
+        "min_cluster_share": 0.0176,
+        "max_cluster_share": 0.2144,
+        "size_entropy": 0.9189,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1656,
+            "nmi": 0.3567,
+            "v_measure": 0.3567,
+            "purity": 0.5635
+          },
+          "language": {
+            "ari": 0.0733,
+            "nmi": 0.2138,
+            "v_measure": 0.2138,
+            "purity": 0.6308
+          },
+          "synthetic_true_need": {
+            "ari": 0.1409,
+            "nmi": 0.3399,
+            "v_measure": 0.3399,
+            "purity": 0.5364
+          },
+          "synthetic_true_language": {
+            "ari": 0.0731,
+            "nmi": 0.2032,
+            "v_measure": 0.2032,
+            "purity": 0.6185
+          }
+        }
+      },
+      {
+        "run_id": "clu-bfef68ae",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 24
+        },
+        "n_clusters": 24,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2232,
+        "davies_bouldin": 2.5632,
+        "calinski_harabasz": 741.7,
+        "min_cluster_share": 0.0057,
+        "max_cluster_share": 0.1959,
+        "size_entropy": 0.9276,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.153,
+            "nmi": 0.3444,
+            "v_measure": 0.3444,
+            "purity": 0.5521
+          },
+          "language": {
+            "ari": 0.0655,
+            "nmi": 0.2296,
+            "v_measure": 0.2296,
+            "purity": 0.6543
+          },
+          "synthetic_true_need": {
+            "ari": 0.1378,
+            "nmi": 0.3491,
+            "v_measure": 0.3491,
+            "purity": 0.538
+          },
+          "synthetic_true_language": {
+            "ari": 0.0638,
+            "nmi": 0.2137,
+            "v_measure": 0.2137,
+            "purity": 0.6498
+          }
+        }
+      },
+      {
+        "run_id": "clu-a1797edb",
+        "embedding": "lexical",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 28
+        },
+        "n_clusters": 28,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2537,
+        "davies_bouldin": 2.5185,
+        "calinski_harabasz": 752.5,
+        "min_cluster_share": 0.0123,
+        "max_cluster_share": 0.1304,
+        "size_entropy": 0.9541,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1662,
+            "nmi": 0.3743,
+            "v_measure": 0.3743,
+            "purity": 0.6002
+          },
+          "language": {
+            "ari": 0.0529,
+            "nmi": 0.2205,
+            "v_measure": 0.2205,
+            "purity": 0.6509
+          },
+          "synthetic_true_need": {
+            "ari": 0.1502,
+            "nmi": 0.384,
+            "v_measure": 0.384,
+            "purity": 0.5969
+          },
+          "synthetic_true_language": {
+            "ari": 0.0545,
+            "nmi": 0.2103,
+            "v_measure": 0.2103,
+            "purity": 0.6559
+          }
+        }
+      },
+      {
+        "run_id": "clu-293b6e28",
+        "embedding": "lexical",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 60,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 226,
+        "noise_rate": 0.2869,
+        "silhouette_cosine": 0.3284,
+        "davies_bouldin": 3.4053,
+        "calinski_harabasz": 363.3,
+        "min_cluster_share": 0.0025,
+        "max_cluster_share": 0.0186,
+        "size_entropy": 0.979,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.0547,
+            "nmi": 0.4538,
+            "v_measure": 0.4538,
+            "purity": 0.8292
+          },
+          "language": {
+            "ari": 0.0118,
+            "nmi": 0.2548,
+            "v_measure": 0.2548,
+            "purity": 0.8351
+          },
+          "synthetic_true_need": {
+            "ari": 0.058,
+            "nmi": 0.4903,
+            "v_measure": 0.4903,
+            "purity": 0.8539
+          },
+          "synthetic_true_language": {
+            "ari": 0.0128,
+            "nmi": 0.2657,
+            "v_measure": 0.2657,
+            "purity": 0.8506
+          }
+        }
+      },
+      {
+        "run_id": "clu-8070d221",
+        "embedding": "lexical",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 120,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 73,
+        "noise_rate": 0.5565,
+        "silhouette_cosine": 0.3988,
+        "davies_bouldin": 1.8069,
+        "calinski_harabasz": 404.6,
+        "min_cluster_share": 0.008,
+        "max_cluster_share": 0.0316,
+        "size_entropy": 0.9845,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1121,
+            "nmi": 0.4527,
+            "v_measure": 0.4527,
+            "purity": 0.7574
+          },
+          "language": {
+            "ari": 0.0274,
+            "nmi": 0.2503,
+            "v_measure": 0.2503,
+            "purity": 0.7414
+          },
+          "synthetic_true_need": {
+            "ari": 0.1096,
+            "nmi": 0.4899,
+            "v_measure": 0.4899,
+            "purity": 0.7802
+          },
+          "synthetic_true_language": {
+            "ari": 0.0272,
+            "nmi": 0.2484,
+            "v_measure": 0.2484,
+            "purity": 0.7501
+          }
+        }
+      },
+      {
+        "run_id": "clu-5461cfd0",
+        "embedding": "lexical",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 250,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 19,
+        "noise_rate": 0.7188,
+        "silhouette_cosine": 0.3184,
+        "davies_bouldin": 2.2451,
+        "calinski_harabasz": 413.7,
+        "min_cluster_share": 0.0267,
+        "max_cluster_share": 0.1395,
+        "size_entropy": 0.96,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2572,
+            "nmi": 0.4789,
+            "v_measure": 0.4789,
+            "purity": 0.6888
+          },
+          "language": {
+            "ari": 0.0406,
+            "nmi": 0.2026,
+            "v_measure": 0.2026,
+            "purity": 0.5612
+          },
+          "synthetic_true_need": {
+            "ari": 0.2639,
+            "nmi": 0.5092,
+            "v_measure": 0.5092,
+            "purity": 0.6969
+          },
+          "synthetic_true_language": {
+            "ari": 0.0427,
+            "nmi": 0.1918,
+            "v_measure": 0.1918,
+            "purity": 0.5944
+          }
+        }
+      },
+      {
+        "run_id": "clu-9e481af5",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 8
+        },
+        "n_clusters": 8,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2226,
+        "davies_bouldin": 2.7567,
+        "calinski_harabasz": 2008.1,
+        "min_cluster_share": 0.0458,
+        "max_cluster_share": 0.1742,
+        "size_entropy": 0.9667,
+        "stability_ari": 0.7644,
+        "eligible": true,
+        "selection_score": 0.1702,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3746,
+            "nmi": 0.4563,
+            "v_measure": 0.4563,
+            "purity": 0.6126
+          },
+          "language": {
+            "ari": 0.005,
+            "nmi": 0.0331,
+            "v_measure": 0.0331,
+            "purity": 0.464
+          },
+          "synthetic_true_need": {
+            "ari": 0.3559,
+            "nmi": 0.429,
+            "v_measure": 0.429,
+            "purity": 0.5866
+          },
+          "synthetic_true_language": {
+            "ari": 0.0064,
+            "nmi": 0.0195,
+            "v_measure": 0.0195,
+            "purity": 0.4554
+          }
+        }
+      },
+      {
+        "run_id": "clu-317487a5",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 10
+        },
+        "n_clusters": 10,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2297,
+        "davies_bouldin": 2.7029,
+        "calinski_harabasz": 1751.8,
+        "min_cluster_share": 0.0469,
+        "max_cluster_share": 0.1732,
+        "size_entropy": 0.9687,
+        "stability_ari": 0.7182,
+        "eligible": true,
+        "selection_score": 0.165,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3504,
+            "nmi": 0.4392,
+            "v_measure": 0.4392,
+            "purity": 0.5973
+          },
+          "language": {
+            "ari": 0.011,
+            "nmi": 0.0529,
+            "v_measure": 0.0529,
+            "purity": 0.4863
+          },
+          "synthetic_true_need": {
+            "ari": 0.3192,
+            "nmi": 0.4084,
+            "v_measure": 0.4084,
+            "purity": 0.5711
+          },
+          "synthetic_true_language": {
+            "ari": 0.0143,
+            "nmi": 0.0404,
+            "v_measure": 0.0404,
+            "purity": 0.4753
+          }
+        }
+      },
+      {
+        "run_id": "clu-79def3cb",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 12
+        },
+        "n_clusters": 12,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.185,
+        "davies_bouldin": 2.8815,
+        "calinski_harabasz": 1554.5,
+        "min_cluster_share": 0.0363,
+        "max_cluster_share": 0.1309,
+        "size_entropy": 0.9833,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3928,
+            "nmi": 0.4758,
+            "v_measure": 0.4758,
+            "purity": 0.6585
+          },
+          "language": {
+            "ari": 0.0075,
+            "nmi": 0.0493,
+            "v_measure": 0.0493,
+            "purity": 0.4676
+          },
+          "synthetic_true_need": {
+            "ari": 0.369,
+            "nmi": 0.4401,
+            "v_measure": 0.4401,
+            "purity": 0.636
+          },
+          "synthetic_true_language": {
+            "ari": 0.0081,
+            "nmi": 0.0363,
+            "v_measure": 0.0363,
+            "purity": 0.4554
+          }
+        }
+      },
+      {
+        "run_id": "clu-8d4da7f4",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 14
+        },
+        "n_clusters": 14,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1813,
+        "davies_bouldin": 2.7333,
+        "calinski_harabasz": 1426.5,
+        "min_cluster_share": 0.0249,
+        "max_cluster_share": 0.1225,
+        "size_entropy": 0.9683,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3281,
+            "nmi": 0.444,
+            "v_measure": 0.444,
+            "purity": 0.6259
+          },
+          "language": {
+            "ari": 0.0047,
+            "nmi": 0.0429,
+            "v_measure": 0.0429,
+            "purity": 0.476
+          },
+          "synthetic_true_need": {
+            "ari": 0.3046,
+            "nmi": 0.4104,
+            "v_measure": 0.4104,
+            "purity": 0.596
+          },
+          "synthetic_true_language": {
+            "ari": 0.0046,
+            "nmi": 0.0294,
+            "v_measure": 0.0294,
+            "purity": 0.4583
+          }
+        }
+      },
+      {
+        "run_id": "clu-d486087d",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 16
+        },
+        "n_clusters": 16,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1976,
+        "davies_bouldin": 2.5835,
+        "calinski_harabasz": 1374.7,
+        "min_cluster_share": 0.0284,
+        "max_cluster_share": 0.115,
+        "size_entropy": 0.9713,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3005,
+            "nmi": 0.4445,
+            "v_measure": 0.4445,
+            "purity": 0.6429
+          },
+          "language": {
+            "ari": 0.0075,
+            "nmi": 0.0455,
+            "v_measure": 0.0455,
+            "purity": 0.4864
+          },
+          "synthetic_true_need": {
+            "ari": 0.2734,
+            "nmi": 0.4259,
+            "v_measure": 0.4259,
+            "purity": 0.6193
+          },
+          "synthetic_true_language": {
+            "ari": 0.0091,
+            "nmi": 0.0336,
+            "v_measure": 0.0336,
+            "purity": 0.4681
+          }
+        }
+      },
+      {
+        "run_id": "clu-513d1d22",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 18
+        },
+        "n_clusters": 18,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2342,
+        "davies_bouldin": 2.3297,
+        "calinski_harabasz": 1265.6,
+        "min_cluster_share": 0.0158,
+        "max_cluster_share": 0.1577,
+        "size_entropy": 0.9301,
+        "stability_ari": 0.6395,
+        "eligible": true,
+        "selection_score": 0.1498,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3602,
+            "nmi": 0.4794,
+            "v_measure": 0.4794,
+            "purity": 0.6804
+          },
+          "language": {
+            "ari": 0.0017,
+            "nmi": 0.0551,
+            "v_measure": 0.0551,
+            "purity": 0.4746
+          },
+          "synthetic_true_need": {
+            "ari": 0.3155,
+            "nmi": 0.4582,
+            "v_measure": 0.4582,
+            "purity": 0.6574
+          },
+          "synthetic_true_language": {
+            "ari": 0.0051,
+            "nmi": 0.0455,
+            "v_measure": 0.0455,
+            "purity": 0.4626
+          }
+        }
+      },
+      {
+        "run_id": "clu-ff8ab4f6",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 20
+        },
+        "n_clusters": 20,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.22,
+        "davies_bouldin": 2.3617,
+        "calinski_harabasz": 1203.4,
+        "min_cluster_share": 0.0158,
+        "max_cluster_share": 0.1457,
+        "size_entropy": 0.9504,
+        "stability_ari": 0.6628,
+        "eligible": true,
+        "selection_score": 0.1458,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3704,
+            "nmi": 0.4763,
+            "v_measure": 0.4763,
+            "purity": 0.6959
+          },
+          "language": {
+            "ari": 0.0018,
+            "nmi": 0.0502,
+            "v_measure": 0.0502,
+            "purity": 0.4709
+          },
+          "synthetic_true_need": {
+            "ari": 0.3283,
+            "nmi": 0.4507,
+            "v_measure": 0.4507,
+            "purity": 0.6614
+          },
+          "synthetic_true_language": {
+            "ari": 0.0045,
+            "nmi": 0.0378,
+            "v_measure": 0.0378,
+            "purity": 0.4554
+          }
+        }
+      },
+      {
+        "run_id": "clu-7fc5d25f",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 24
+        },
+        "n_clusters": 24,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2177,
+        "davies_bouldin": 2.307,
+        "calinski_harabasz": 1107.4,
+        "min_cluster_share": 0.0128,
+        "max_cluster_share": 0.1033,
+        "size_entropy": 0.9561,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2997,
+            "nmi": 0.4855,
+            "v_measure": 0.4855,
+            "purity": 0.7169
+          },
+          "language": {
+            "ari": 0.0051,
+            "nmi": 0.0572,
+            "v_measure": 0.0572,
+            "purity": 0.5008
+          },
+          "synthetic_true_need": {
+            "ari": 0.2587,
+            "nmi": 0.4551,
+            "v_measure": 0.4551,
+            "purity": 0.6806
+          },
+          "synthetic_true_language": {
+            "ari": 0.0063,
+            "nmi": 0.0428,
+            "v_measure": 0.0428,
+            "purity": 0.4839
+          }
+        }
+      },
+      {
+        "run_id": "clu-9d02d8e8",
+        "embedding": "semantic",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 28
+        },
+        "n_clusters": 28,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.228,
+        "davies_bouldin": 2.1416,
+        "calinski_harabasz": 1025.4,
+        "min_cluster_share": 0.0072,
+        "max_cluster_share": 0.1045,
+        "size_entropy": 0.9352,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2718,
+            "nmi": 0.4615,
+            "v_measure": 0.4615,
+            "purity": 0.6933
+          },
+          "language": {
+            "ari": 0.0057,
+            "nmi": 0.0597,
+            "v_measure": 0.0597,
+            "purity": 0.4958
+          },
+          "synthetic_true_need": {
+            "ari": 0.2516,
+            "nmi": 0.4573,
+            "v_measure": 0.4573,
+            "purity": 0.6852
+          },
+          "synthetic_true_language": {
+            "ari": 0.0065,
+            "nmi": 0.0457,
+            "v_measure": 0.0457,
+            "purity": 0.4904
+          }
+        }
+      },
+      {
+        "run_id": "clu-721e3e65",
+        "embedding": "semantic",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 60,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 203,
+        "noise_rate": 0.3466,
+        "silhouette_cosine": 0.3147,
+        "davies_bouldin": 2.0108,
+        "calinski_harabasz": 269.8,
+        "min_cluster_share": 0.0027,
+        "max_cluster_share": 0.0328,
+        "size_entropy": 0.9754,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.0557,
+            "nmi": 0.4513,
+            "v_measure": 0.4513,
+            "purity": 0.7994
+          },
+          "language": {
+            "ari": 0.0101,
+            "nmi": 0.2178,
+            "v_measure": 0.2178,
+            "purity": 0.7608
+          },
+          "synthetic_true_need": {
+            "ari": 0.053,
+            "nmi": 0.4556,
+            "v_measure": 0.4556,
+            "purity": 0.7959
+          },
+          "synthetic_true_language": {
+            "ari": 0.0107,
+            "nmi": 0.2166,
+            "v_measure": 0.2166,
+            "purity": 0.7562
+          }
+        }
+      },
+      {
+        "run_id": "clu-2c93f940",
+        "embedding": "semantic",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 120,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 67,
+        "noise_rate": 0.5608,
+        "silhouette_cosine": 0.2559,
+        "davies_bouldin": 2.0419,
+        "calinski_harabasz": 290.7,
+        "min_cluster_share": 0.0083,
+        "max_cluster_share": 0.064,
+        "size_entropy": 0.9608,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1553,
+            "nmi": 0.4732,
+            "v_measure": 0.4732,
+            "purity": 0.733
+          },
+          "language": {
+            "ari": 0.0165,
+            "nmi": 0.1842,
+            "v_measure": 0.1842,
+            "purity": 0.6661
+          },
+          "synthetic_true_need": {
+            "ari": 0.1037,
+            "nmi": 0.4408,
+            "v_measure": 0.4408,
+            "purity": 0.6971
+          },
+          "synthetic_true_language": {
+            "ari": 0.0156,
+            "nmi": 0.1747,
+            "v_measure": 0.1747,
+            "purity": 0.6516
+          }
+        }
+      },
+      {
+        "run_id": "clu-91125fae",
+        "embedding": "semantic",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 250,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 20,
+        "noise_rate": 0.6301,
+        "silhouette_cosine": 0.2343,
+        "davies_bouldin": 2.3778,
+        "calinski_harabasz": 438.6,
+        "min_cluster_share": 0.02,
+        "max_cluster_share": 0.2795,
+        "size_entropy": 0.8653,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1881,
+            "nmi": 0.4323,
+            "v_measure": 0.4323,
+            "purity": 0.5752
+          },
+          "language": {
+            "ari": -0.0003,
+            "nmi": 0.091,
+            "v_measure": 0.091,
+            "purity": 0.5023
+          },
+          "synthetic_true_need": {
+            "ari": 0.1349,
+            "nmi": 0.3737,
+            "v_measure": 0.3737,
+            "purity": 0.5425
+          },
+          "synthetic_true_language": {
+            "ari": 0.0033,
+            "nmi": 0.0878,
+            "v_measure": 0.0878,
+            "purity": 0.5073
+          }
+        }
+      },
+      {
+        "run_id": "clu-10054ed7",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 8
+        },
+        "n_clusters": 8,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1427,
+        "davies_bouldin": 3.0808,
+        "calinski_harabasz": 1433.6,
+        "min_cluster_share": 0.0723,
+        "max_cluster_share": 0.2493,
+        "size_entropy": 0.9561,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.344,
+            "nmi": 0.4397,
+            "v_measure": 0.4397,
+            "purity": 0.5824
+          },
+          "language": {
+            "ari": 0.002,
+            "nmi": 0.0378,
+            "v_measure": 0.0378,
+            "purity": 0.4649
+          },
+          "synthetic_true_need": {
+            "ari": 0.3083,
+            "nmi": 0.3766,
+            "v_measure": 0.3766,
+            "purity": 0.5354
+          },
+          "synthetic_true_language": {
+            "ari": 0.0024,
+            "nmi": 0.0213,
+            "v_measure": 0.0213,
+            "purity": 0.4554
+          }
+        }
+      },
+      {
+        "run_id": "clu-ac9dc36b",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 10
+        },
+        "n_clusters": 10,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.186,
+        "davies_bouldin": 2.8548,
+        "calinski_harabasz": 1274.1,
+        "min_cluster_share": 0.0296,
+        "max_cluster_share": 0.1987,
+        "size_entropy": 0.9334,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3945,
+            "nmi": 0.4994,
+            "v_measure": 0.4994,
+            "purity": 0.6569
+          },
+          "language": {
+            "ari": 0.002,
+            "nmi": 0.0449,
+            "v_measure": 0.0449,
+            "purity": 0.4665
+          },
+          "synthetic_true_need": {
+            "ari": 0.364,
+            "nmi": 0.4576,
+            "v_measure": 0.4576,
+            "purity": 0.6249
+          },
+          "synthetic_true_language": {
+            "ari": 0.0033,
+            "nmi": 0.0293,
+            "v_measure": 0.0293,
+            "purity": 0.4554
+          }
+        }
+      },
+      {
+        "run_id": "clu-c7785a94",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 12
+        },
+        "n_clusters": 12,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1952,
+        "davies_bouldin": 2.9138,
+        "calinski_harabasz": 1154.6,
+        "min_cluster_share": 0.0273,
+        "max_cluster_share": 0.1529,
+        "size_entropy": 0.9352,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3927,
+            "nmi": 0.4803,
+            "v_measure": 0.4803,
+            "purity": 0.6548
+          },
+          "language": {
+            "ari": 0.0003,
+            "nmi": 0.0455,
+            "v_measure": 0.0455,
+            "purity": 0.4694
+          },
+          "synthetic_true_need": {
+            "ari": 0.3714,
+            "nmi": 0.4519,
+            "v_measure": 0.4519,
+            "purity": 0.6275
+          },
+          "synthetic_true_language": {
+            "ari": 0.0018,
+            "nmi": 0.0351,
+            "v_measure": 0.0351,
+            "purity": 0.4554
+          }
+        }
+      },
+      {
+        "run_id": "clu-1882f874",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 14
+        },
+        "n_clusters": 14,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1697,
+        "davies_bouldin": 2.9792,
+        "calinski_harabasz": 1078.5,
+        "min_cluster_share": 0.0277,
+        "max_cluster_share": 0.1388,
+        "size_entropy": 0.9686,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3485,
+            "nmi": 0.4543,
+            "v_measure": 0.4543,
+            "purity": 0.6373
+          },
+          "language": {
+            "ari": 0.0159,
+            "nmi": 0.0691,
+            "v_measure": 0.0691,
+            "purity": 0.505
+          },
+          "synthetic_true_need": {
+            "ari": 0.3175,
+            "nmi": 0.4317,
+            "v_measure": 0.4317,
+            "purity": 0.6239
+          },
+          "synthetic_true_language": {
+            "ari": 0.0168,
+            "nmi": 0.0528,
+            "v_measure": 0.0528,
+            "purity": 0.4885
+          }
+        }
+      },
+      {
+        "run_id": "clu-ff616c18",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 16
+        },
+        "n_clusters": 16,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1756,
+        "davies_bouldin": 2.8603,
+        "calinski_harabasz": 1014.9,
+        "min_cluster_share": 0.0273,
+        "max_cluster_share": 0.1082,
+        "size_entropy": 0.9724,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3296,
+            "nmi": 0.4713,
+            "v_measure": 0.4713,
+            "purity": 0.6767
+          },
+          "language": {
+            "ari": 0.0185,
+            "nmi": 0.0815,
+            "v_measure": 0.0815,
+            "purity": 0.5248
+          },
+          "synthetic_true_need": {
+            "ari": 0.3075,
+            "nmi": 0.4582,
+            "v_measure": 0.4582,
+            "purity": 0.6564
+          },
+          "synthetic_true_language": {
+            "ari": 0.0171,
+            "nmi": 0.0633,
+            "v_measure": 0.0633,
+            "purity": 0.4992
+          }
+        }
+      },
+      {
+        "run_id": "clu-e6390861",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 18
+        },
+        "n_clusters": 18,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1798,
+        "davies_bouldin": 2.7093,
+        "calinski_harabasz": 939.4,
+        "min_cluster_share": 0.0165,
+        "max_cluster_share": 0.1295,
+        "size_entropy": 0.9437,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3041,
+            "nmi": 0.4426,
+            "v_measure": 0.4426,
+            "purity": 0.6337
+          },
+          "language": {
+            "ari": 0.0068,
+            "nmi": 0.0632,
+            "v_measure": 0.0632,
+            "purity": 0.4937
+          },
+          "synthetic_true_need": {
+            "ari": 0.269,
+            "nmi": 0.4212,
+            "v_measure": 0.4212,
+            "purity": 0.6113
+          },
+          "synthetic_true_language": {
+            "ari": 0.0091,
+            "nmi": 0.0537,
+            "v_measure": 0.0537,
+            "purity": 0.4792
+          }
+        }
+      },
+      {
+        "run_id": "clu-26e8e769",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 20
+        },
+        "n_clusters": 20,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2003,
+        "davies_bouldin": 2.8018,
+        "calinski_harabasz": 905.1,
+        "min_cluster_share": 0.0123,
+        "max_cluster_share": 0.0965,
+        "size_entropy": 0.9695,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.3118,
+            "nmi": 0.4596,
+            "v_measure": 0.4596,
+            "purity": 0.6675
+          },
+          "language": {
+            "ari": 0.0103,
+            "nmi": 0.0674,
+            "v_measure": 0.0674,
+            "purity": 0.5013
+          },
+          "synthetic_true_need": {
+            "ari": 0.2849,
+            "nmi": 0.4445,
+            "v_measure": 0.4445,
+            "purity": 0.6537
+          },
+          "synthetic_true_language": {
+            "ari": 0.0123,
+            "nmi": 0.0568,
+            "v_measure": 0.0568,
+            "purity": 0.4821
+          }
+        }
+      },
+      {
+        "run_id": "clu-fc0b61b9",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 24
+        },
+        "n_clusters": 24,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.1993,
+        "davies_bouldin": 2.6352,
+        "calinski_harabasz": 837.2,
+        "min_cluster_share": 0.0163,
+        "max_cluster_share": 0.1043,
+        "size_entropy": 0.961,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2901,
+            "nmi": 0.4491,
+            "v_measure": 0.4491,
+            "purity": 0.672
+          },
+          "language": {
+            "ari": 0.0156,
+            "nmi": 0.0955,
+            "v_measure": 0.0955,
+            "purity": 0.544
+          },
+          "synthetic_true_need": {
+            "ari": 0.2614,
+            "nmi": 0.4385,
+            "v_measure": 0.4385,
+            "purity": 0.6547
+          },
+          "synthetic_true_language": {
+            "ari": 0.0202,
+            "nmi": 0.0885,
+            "v_measure": 0.0885,
+            "purity": 0.5322
+          }
+        }
+      },
+      {
+        "run_id": "clu-05161245",
+        "embedding": "hybrid",
+        "algorithm": "kmeans",
+        "params": {
+          "k": 28
+        },
+        "n_clusters": 28,
+        "noise_rate": 0.0,
+        "silhouette_cosine": 0.2136,
+        "davies_bouldin": 2.5048,
+        "calinski_harabasz": 783.6,
+        "min_cluster_share": 0.0127,
+        "max_cluster_share": 0.0939,
+        "size_entropy": 0.9587,
+        "stability_ari": null,
+        "eligible": true,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2742,
+            "nmi": 0.4818,
+            "v_measure": 0.4818,
+            "purity": 0.7241
+          },
+          "language": {
+            "ari": 0.0129,
+            "nmi": 0.0997,
+            "v_measure": 0.0997,
+            "purity": 0.5282
+          },
+          "synthetic_true_need": {
+            "ari": 0.2401,
+            "nmi": 0.4695,
+            "v_measure": 0.4695,
+            "purity": 0.6972
+          },
+          "synthetic_true_language": {
+            "ari": 0.0165,
+            "nmi": 0.0927,
+            "v_measure": 0.0927,
+            "purity": 0.5182
+          }
+        }
+      },
+      {
+        "run_id": "clu-c251e107",
+        "embedding": "hybrid",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 60,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 218,
+        "noise_rate": 0.3444,
+        "silhouette_cosine": 0.3466,
+        "davies_bouldin": 2.2424,
+        "calinski_harabasz": 264.1,
+        "min_cluster_share": 0.0027,
+        "max_cluster_share": 0.0221,
+        "size_entropy": 0.9819,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.0565,
+            "nmi": 0.4646,
+            "v_measure": 0.4646,
+            "purity": 0.8387
+          },
+          "language": {
+            "ari": 0.0123,
+            "nmi": 0.2476,
+            "v_measure": 0.2476,
+            "purity": 0.8029
+          },
+          "synthetic_true_need": {
+            "ari": 0.0562,
+            "nmi": 0.4936,
+            "v_measure": 0.4936,
+            "purity": 0.8566
+          },
+          "synthetic_true_language": {
+            "ari": 0.0122,
+            "nmi": 0.2437,
+            "v_measure": 0.2437,
+            "purity": 0.8097
+          }
+        }
+      },
+      {
+        "run_id": "clu-80874c32",
+        "embedding": "hybrid",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 120,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 64,
+        "noise_rate": 0.5869,
+        "silhouette_cosine": 0.2715,
+        "davies_bouldin": 1.9719,
+        "calinski_harabasz": 263.8,
+        "min_cluster_share": 0.0087,
+        "max_cluster_share": 0.074,
+        "size_entropy": 0.9604,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.1186,
+            "nmi": 0.4516,
+            "v_measure": 0.4516,
+            "purity": 0.7077
+          },
+          "language": {
+            "ari": 0.0347,
+            "nmi": 0.2472,
+            "v_measure": 0.2472,
+            "purity": 0.706
+          },
+          "synthetic_true_need": {
+            "ari": 0.1211,
+            "nmi": 0.4762,
+            "v_measure": 0.4762,
+            "purity": 0.7284
+          },
+          "synthetic_true_language": {
+            "ari": 0.0354,
+            "nmi": 0.2392,
+            "v_measure": 0.2392,
+            "purity": 0.7011
+          }
+        }
+      },
+      {
+        "run_id": "clu-28e418fc",
+        "embedding": "hybrid",
+        "algorithm": "hdbscan",
+        "params": {
+          "min_cluster_size": 250,
+          "min_samples": 10,
+          "reducer": "umap",
+          "dims": 10
+        },
+        "n_clusters": 16,
+        "noise_rate": 0.7676,
+        "silhouette_cosine": 0.1594,
+        "davies_bouldin": 2.7102,
+        "calinski_harabasz": 309.5,
+        "min_cluster_share": 0.0348,
+        "max_cluster_share": 0.1688,
+        "size_entropy": 0.9575,
+        "stability_ari": null,
+        "eligible": false,
+        "selection_score": null,
+        "external": {
+          "rule_topic": {
+            "ari": 0.2596,
+            "nmi": 0.4732,
+            "v_measure": 0.4732,
+            "purity": 0.6741
+          },
+          "language": {
+            "ari": 0.0668,
+            "nmi": 0.1975,
+            "v_measure": 0.1975,
+            "purity": 0.55
+          },
+          "synthetic_true_need": {
+            "ari": 0.2216,
+            "nmi": 0.4521,
+            "v_measure": 0.4521,
+            "purity": 0.6206
+          },
+          "synthetic_true_language": {
+            "ari": 0.0652,
+            "nmi": 0.1784,
+            "v_measure": 0.1784,
+            "purity": 0.5712
+          }
+        }
+      }
+    ]
+  },
+  "anomalies": {
+    "posts_total": 3000,
+    "posts_mature": 2907,
+    "posts_scored": 2895,
+    "posts_unscored_small_cohort": 0,
+    "posts_immature": 93,
+    "flags": 70,
+    "posts_flagged": 66,
+    "by_kind": {
+      "engagement": 36,
+      "comment_pattern": 19,
+      "multivariate": 9,
+      "need_mix": 6
+    },
+    "by_direction": {
+      "positive": 48,
+      "negative": 22
+    },
+    "cohort_levels": {
+      "brand_platform_type": 2403,
+      "platform_type": 492
+    },
+    "sensitivity_engagement": {
+      "|z|>=3.0": 52,
+      "|z|>=3.5": 36,
+      "|z|>=4.0": 27,
+      "|z|>=5.0": 16
+    },
+    "iforest_agreement_top5pct": 0.93
+  },
+  "pipeline": [
+    {
+      "step": "normalize_posts",
+      "status": "ok",
+      "seconds": 0.0,
+      "posts": 3000
+    },
+    {
+      "step": "enrich_comments",
+      "status": "ok",
+      "seconds": 8.36,
+      "comments": 33776
+    },
+    {
+      "step": "embed",
+      "status": "ok",
+      "seconds": 4.5,
+      "representations": [
+        "lexical",
+        "semantic",
+        "hybrid"
+      ]
+    },
+    {
+      "step": "cluster",
+      "status": "ok",
+      "seconds": 742.08,
+      "candidates": 36,
+      "selected": "semantic:kmeans(k=8)"
+    },
+    {
+      "step": "anomalies",
+      "status": "ok",
+      "seconds": 5.32,
+      "flagged": 66
+    },
+    {
+      "step": "recommendations",
+      "status": "ok",
+      "seconds": 0.65,
+      "cards": 18
+    }
+  ],
+  "nlp": {
+    "language_mix": {
+      "roman_urdu": 15673,
+      "english": 10989,
+      "urdu": 5022,
+      "mixed": 1778,
+      "other": 291,
+      "unknown": 23
+    },
+    "reference_topic_mix": {
+      "compliment": 6261,
+      "price": 5118,
+      "delivery": 3643,
+      "availability": 3603,
+      "other": 3558,
+      "discount": 2734,
+      "size_fit": 2730,
+      "purchase_inquiry": 2608,
+      "fabric_quality": 2326,
+      "order_issue": 1195
+    },
+    "reference_unlabelled_share": 0.1053,
+    "purchase_intent_mix": {
+      "possible_inquiry": 18602,
+      "none": 7998,
+      "unknown": 6407,
+      "strong_intent": 769
+    },
+    "sentiment_mix": {
+      "neutral": 23329,
+      "positive": 8926,
+      "negative": 1498,
+      "unknown": 23
+    }
+  },
+  "synthetic_recovery": {
+    "note": "Agreement with the generator's hidden latent need/language. Reported only — never used for model selection. High values on synthetic text do not imply real-world validity.",
+    "clusters_vs_true_need": {
+      "ari": 0.3559,
+      "nmi": 0.429,
+      "v_measure": 0.429,
+      "purity": 0.5866
+    },
+    "clusters_vs_true_language": {
+      "ari": 0.0064,
+      "nmi": 0.0195,
+      "v_measure": 0.0195,
+      "purity": 0.4554
+    },
+    "rule_labeller_accuracy_vs_true_need": 0.8562,
+    "langid_accuracy_vs_true_language": 0.8987,
+    "langid_confusion": {
+      "english": {
+        "english": 10282,
+        "mixed": 197,
+        "roman_urdu": 510,
+        "urdu": 0
+      },
+      "mixed": {
+        "english": 64,
+        "mixed": 917,
+        "roman_urdu": 736,
+        "urdu": 61
+      },
+      "other": {
+        "english": 291,
+        "mixed": 0,
+        "roman_urdu": 0,
+        "urdu": 0
+      },
+      "roman_urdu": {
+        "english": 175,
+        "mixed": 1363,
+        "roman_urdu": 14135,
+        "urdu": 0
+      },
+      "unknown": {
+        "english": 23,
+        "mixed": 0,
+        "roman_urdu": 0,
+        "urdu": 0
+      },
+      "urdu": {
+        "english": 0,
+        "mixed": 0,
+        "roman_urdu": 0,
+        "urdu": 5022
+      }
+    }
+  },
+  "anomaly_recovery": {
+    "note": "Recall against anomalies deliberately injected into the synthetic corpus. Precision is a lower bound: natural extremes in the simulated data are also legitimately unusual.",
+    "injected": 94,
+    "flagged_posts": 66,
+    "detected_injected": 50,
+    "recall": 0.5319,
+    "share_of_flags_that_were_injected": 0.7576,
+    "by_type": {
+      "comment_surge": {
+        "injected": 20,
+        "scored": 20,
+        "detected": 8,
+        "recall": 0.4
+      },
+      "engagement_collapse": {
+        "injected": 24,
+        "scored": 23,
+        "detected": 18,
+        "recall": 0.75
+      },
+      "giveaway_comments": {
+        "injected": 14,
+        "scored": 14,
+        "detected": 12,
+        "recall": 0.8571
+      },
+      "viral_spike": {
+        "injected": 36,
+        "scored": 36,
+        "detected": 12,
+        "recall": 0.3333
+      }
+    }
+  },
+  "audit": {
+    "n": 100,
+    "source": "backend/tests/fixtures/multilingual_audit.csv (100 comments written for this audit, phrased differently from the generator templates; same author, so not fully independent)",
+    "cluster_need_accuracy": 0.52,
+    "cluster_need_accuracy_by_language": {
+      "english": 0.65,
+      "mixed": 1.0,
+      "other": 1.0,
+      "roman_urdu": 0.3514,
+      "urdu": 0.5
+    },
+    "cluster_need_accuracy_by_need": {
+      "availability": 0.8,
+      "compliment": 0.9,
+      "delivery": 0.5,
+      "discount": 0.0,
+      "fabric_quality": 0.7,
+      "order_issue": 0.0,
+      "other": 0.9,
+      "price": 0.6,
+      "purchase_inquiry": 0.0,
+      "size_fit": 0.8
+    },
+    "examples": [
+      {
+        "audit_id": "A001",
+        "text": "whats the rate for the peach 3pc?",
+        "need": "price",
+        "language": "english",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": true
+      },
+      {
+        "audit_id": "A002",
+        "text": "can u pls tell the cost of unstitched version",
+        "need": "price",
+        "language": "english",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": true
+      },
+      {
+        "audit_id": "A003",
+        "text": "price range for this range?",
+        "need": "price",
+        "language": "english",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": true
+      },
+      {
+        "audit_id": "A004",
+        "text": "expensive yaar last season was cheaper",
+        "need": "price",
+        "language": "mixed",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": true
+      },
+      {
+        "audit_id": "A005",
+        "text": "iska rate kia hai behen",
+        "need": "price",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A006",
+        "text": "kitne rupay ka hai ye wala jora",
+        "need": "price",
+        "language": "roman_urdu",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": false
+      },
+      {
+        "audit_id": "A007",
+        "text": "qeemat batain shirt ki",
+        "need": "price",
+        "language": "roman_urdu",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": true
+      },
+      {
+        "audit_id": "A008",
+        "text": "اس جوڑے کی قیمت کتنی ہے",
+        "need": "price",
+        "language": "urdu",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": true
+      },
+      {
+        "audit_id": "A009",
+        "text": "پرائس بتا دیں",
+        "need": "price",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A010",
+        "text": "rate kya hai is outfit ka?",
+        "need": "price",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A011",
+        "text": "is there any off going on",
+        "need": "discount",
+        "language": "english",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A012",
+        "text": "will there be a black friday deal on lawn",
+        "need": "discount",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": false
+      },
+      {
+        "audit_id": "A013",
+        "text": "promo code for first order?",
+        "need": "discount",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": false
+      },
+      {
+        "audit_id": "A014",
+        "text": "sale kab start ho rahi hai",
+        "need": "discount",
+        "language": "roman_urdu",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": false
+      },
+      {
+        "audit_id": "A015",
+        "text": "koi offer ya discount chal rha hai?",
+        "need": "discount",
+        "language": "roman_urdu",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": false
+      },
+      {
+        "audit_id": "A016",
+        "text": "11.11 per kitna discount mile ga",
+        "need": "discount",
+        "language": "roman_urdu",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": false
+      },
+      {
+        "audit_id": "A017",
+        "text": "کیا سیل لگ رہی ہے",
+        "need": "discount",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A018",
+        "text": "رعایت ملے گی کیا",
+        "need": "discount",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A019",
+        "text": "any discount for 2 suits?",
+        "need": "discount",
+        "language": "english",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": false
+      },
+      {
+        "audit_id": "A020",
+        "text": "flat 40% wali sale kab tak hai",
+        "need": "discount",
+        "language": "roman_urdu",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": false
+      },
+      {
+        "audit_id": "A021",
+        "text": "do u ship to islamabad and how long",
+        "need": "delivery",
+        "language": "english",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": true
+      },
+      {
+        "audit_id": "A022",
+        "text": "can i get it delivered by friday",
+        "need": "delivery",
+        "language": "english",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": true
+      },
+      {
+        "audit_id": "A023",
+        "text": "shipping cost to sialkot?",
+        "need": "delivery",
+        "language": "english",
+        "cluster_id": 1,
+        "cluster_need": "price",
+        "hit": false
+      },
+      {
+        "audit_id": "A024",
+        "text": "multan me kitne dino me pohanchta hai",
+        "need": "delivery",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A025",
+        "text": "cash on delivery ka option hai?",
+        "need": "delivery",
+        "language": "roman_urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": true
+      },
+      {
+        "audit_id": "A026",
+        "text": "dubai bhejte hain aap log?",
+        "need": "delivery",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A027",
+        "text": "پشاور تک کتنے دن لگیں گے",
+        "need": "delivery",
+        "language": "urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": true
+      },
+      {
+        "audit_id": "A028",
+        "text": "ڈیلیوری کے چارجز کیا ہیں",
+        "need": "delivery",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A029",
+        "text": "how many working days for delivery to quetta",
+        "need": "delivery",
+        "language": "english",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": true
+      },
+      {
+        "audit_id": "A030",
+        "text": "eid se pehle deliver ho jaye ga na?",
+        "need": "delivery",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A031",
+        "text": "is the mint one still in stock?",
+        "need": "availability",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": true
+      },
+      {
+        "audit_id": "A032",
+        "text": "restock when? missed it",
+        "need": "availability",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": true
+      },
+      {
+        "audit_id": "A033",
+        "text": "can i find this at dolmen mall outlet",
+        "need": "availability",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": true
+      },
+      {
+        "audit_id": "A034",
+        "text": "lahore k store pe hai ye?",
+        "need": "availability",
+        "language": "roman_urdu",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": true
+      },
+      {
+        "audit_id": "A035",
+        "text": "yeh dobara kab aye ga stock mein",
+        "need": "availability",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A036",
+        "text": "online khatam ho gaya kya",
+        "need": "availability",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A037",
+        "text": "کیا یہ اسٹاک میں ہے",
+        "need": "availability",
+        "language": "urdu",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": true
+      },
+      {
+        "audit_id": "A038",
+        "text": "کراچی کے آؤٹ لیٹ پر دستیاب ہے؟",
+        "need": "availability",
+        "language": "urdu",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": true
+      },
+      {
+        "audit_id": "A039",
+        "text": "sold out already?? so fast",
+        "need": "availability",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": true
+      },
+      {
+        "audit_id": "A040",
+        "text": "ye available hai abhi bhi ya nahi",
+        "need": "availability",
+        "language": "roman_urdu",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": true
+      },
+      {
+        "audit_id": "A041",
+        "text": "do you have it in extra large?",
+        "need": "size_fit",
+        "language": "english",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": true
+      },
+      {
+        "audit_id": "A042",
+        "text": "whats the shirt length in medium",
+        "need": "size_fit",
+        "language": "english",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": true
+      },
+      {
+        "audit_id": "A043",
+        "text": "does it come in petite sizing",
+        "need": "size_fit",
+        "language": "english",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": true
+      },
+      {
+        "audit_id": "A044",
+        "text": "size chart share kardo plz",
+        "need": "size_fit",
+        "language": "roman_urdu",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": true
+      },
+      {
+        "audit_id": "A045",
+        "text": "mera size L hai kya fit aye ga",
+        "need": "size_fit",
+        "language": "roman_urdu",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": true
+      },
+      {
+        "audit_id": "A046",
+        "text": "fitting loose hai ya tight",
+        "need": "size_fit",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A047",
+        "text": "اس میں ایکسٹرا لارج سائز ہے؟",
+        "need": "size_fit",
+        "language": "urdu",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": true
+      },
+      {
+        "audit_id": "A048",
+        "text": "قمیض کی لمبائی بتائیں",
+        "need": "size_fit",
+        "language": "urdu",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": true
+      },
+      {
+        "audit_id": "A049",
+        "text": "XXL milay ga is ka?",
+        "need": "size_fit",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A050",
+        "text": "last time medium was too small",
+        "need": "size_fit",
+        "language": "english",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": true
+      },
+      {
+        "audit_id": "A051",
+        "text": "is the material breathable for summer",
+        "need": "fabric_quality",
+        "language": "english",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": true
+      },
+      {
+        "audit_id": "A052",
+        "text": "does the color bleed after washing",
+        "need": "fabric_quality",
+        "language": "english",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": true
+      },
+      {
+        "audit_id": "A053",
+        "text": "the lawn feels so soft",
+        "need": "fabric_quality",
+        "language": "english",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": true
+      },
+      {
+        "audit_id": "A054",
+        "text": "kapra mota hai ya patla",
+        "need": "fabric_quality",
+        "language": "roman_urdu",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": true
+      },
+      {
+        "audit_id": "A055",
+        "text": "quality pichli dafa achi nahi thi",
+        "need": "fabric_quality",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A056",
+        "text": "dupatta kis cheez ka hai",
+        "need": "fabric_quality",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A057",
+        "text": "کپڑے کی کوالٹی کیسی ہے",
+        "need": "fabric_quality",
+        "language": "urdu",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": true
+      },
+      {
+        "audit_id": "A058",
+        "text": "کڑھائی ہاتھ کی ہے یا مشین کی",
+        "need": "fabric_quality",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A059",
+        "text": "embroidery threads came off after one wash",
+        "need": "fabric_quality",
+        "language": "english",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": true
+      },
+      {
+        "audit_id": "A060",
+        "text": "lawn pure cotton hai?",
+        "need": "fabric_quality",
+        "language": "roman_urdu",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": true
+      },
+      {
+        "audit_id": "A061",
+        "text": "please dm me the details",
+        "need": "purchase_inquiry",
+        "language": "english",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A062",
+        "text": "how can i place an order",
+        "need": "purchase_inquiry",
+        "language": "english",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A063",
+        "text": "i need this one how do i buy",
+        "need": "purchase_inquiry",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": false
+      },
+      {
+        "audit_id": "A064",
+        "text": "mujhe order karwana hai kaise karun",
+        "need": "purchase_inquiry",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A065",
+        "text": "whatsapp pe details de dein",
+        "need": "purchase_inquiry",
+        "language": "roman_urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A066",
+        "text": "inbox kar diya hai check karein",
+        "need": "purchase_inquiry",
+        "language": "roman_urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A067",
+        "text": "مجھے یہ آرڈر کرنا ہے",
+        "need": "purchase_inquiry",
+        "language": "urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A068",
+        "text": "تفصیلات ان باکس کر دیں",
+        "need": "purchase_inquiry",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A069",
+        "text": "where can i buy this online",
+        "need": "purchase_inquiry",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": false
+      },
+      {
+        "audit_id": "A070",
+        "text": "link share kr den order ka",
+        "need": "purchase_inquiry",
+        "language": "roman_urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A071",
+        "text": "its been 10 days and no parcel",
+        "need": "order_issue",
+        "language": "english",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A072",
+        "text": "you sent the wrong colour",
+        "need": "order_issue",
+        "language": "english",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": false
+      },
+      {
+        "audit_id": "A073",
+        "text": "order still not shipped no one replies",
+        "need": "order_issue",
+        "language": "english",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A074",
+        "text": "mera order abhi tak nahi aya",
+        "need": "order_issue",
+        "language": "roman_urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A075",
+        "text": "ghalat article bhej diya aap ne",
+        "need": "order_issue",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A076",
+        "text": "paise wapis kab milenge",
+        "need": "order_issue",
+        "language": "roman_urdu",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": false
+      },
+      {
+        "audit_id": "A077",
+        "text": "میرا آرڈر ابھی تک نہیں آیا",
+        "need": "order_issue",
+        "language": "urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A078",
+        "text": "غلط سائز بھیج دیا گیا",
+        "need": "order_issue",
+        "language": "urdu",
+        "cluster_id": 4,
+        "cluster_need": "size_fit",
+        "hit": false
+      },
+      {
+        "audit_id": "A079",
+        "text": "received a torn shirt very disappointed",
+        "need": "order_issue",
+        "language": "english",
+        "cluster_id": 7,
+        "cluster_need": "fabric_quality",
+        "hit": false
+      },
+      {
+        "audit_id": "A080",
+        "text": "complaint number 4 times call ki koi jawab nahi",
+        "need": "order_issue",
+        "language": "roman_urdu",
+        "cluster_id": 2,
+        "cluster_need": "delivery",
+        "hit": false
+      },
+      {
+        "audit_id": "A081",
+        "text": "absolutely gorgeous colours",
+        "need": "compliment",
+        "language": "english",
+        "cluster_id": 6,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A082",
+        "text": "this is so elegant love it",
+        "need": "compliment",
+        "language": "english",
+        "cluster_id": 6,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A083",
+        "text": "🔥🔥🔥",
+        "need": "compliment",
+        "language": "other",
+        "cluster_id": 0,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A084",
+        "text": "kya kamal ki dress hai",
+        "need": "compliment",
+        "language": "roman_urdu",
+        "cluster_id": 6,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A085",
+        "text": "mashallah bohat hi khoobsurat",
+        "need": "compliment",
+        "language": "roman_urdu",
+        "cluster_id": 6,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A086",
+        "text": "bohat zabardast collection",
+        "need": "compliment",
+        "language": "roman_urdu",
+        "cluster_id": 6,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A087",
+        "text": "بہت ہی خوبصورت ڈیزائن",
+        "need": "compliment",
+        "language": "urdu",
+        "cluster_id": 6,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A088",
+        "text": "کیا بات ہے",
+        "need": "compliment",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": false
+      },
+      {
+        "audit_id": "A089",
+        "text": "stunning as always ❤️",
+        "need": "compliment",
+        "language": "english",
+        "cluster_id": 0,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A090",
+        "text": "😍😍",
+        "need": "compliment",
+        "language": "other",
+        "cluster_id": 0,
+        "cluster_need": "compliment",
+        "hit": true
+      },
+      {
+        "audit_id": "A091",
+        "text": "what is the name of this song",
+        "need": "other",
+        "language": "english",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      },
+      {
+        "audit_id": "A092",
+        "text": "who is the model",
+        "need": "other",
+        "language": "english",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      },
+      {
+        "audit_id": "A093",
+        "text": "first comment",
+        "need": "other",
+        "language": "english",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      },
+      {
+        "audit_id": "A094",
+        "text": "eid mubarak everyone",
+        "need": "other",
+        "language": "english",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      },
+      {
+        "audit_id": "A095",
+        "text": "gana kis ka hai",
+        "need": "other",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      },
+      {
+        "audit_id": "A096",
+        "text": "jumma mubarak sab ko",
+        "need": "other",
+        "language": "roman_urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      },
+      {
+        "audit_id": "A097",
+        "text": "عید مبارک",
+        "need": "other",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      },
+      {
+        "audit_id": "A098",
+        "text": "آمین",
+        "need": "other",
+        "language": "urdu",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      },
+      {
+        "audit_id": "A099",
+        "text": "which mall is this shoot in",
+        "need": "other",
+        "language": "english",
+        "cluster_id": 3,
+        "cluster_need": "availability",
+        "hit": false
+      },
+      {
+        "audit_id": "A100",
+        "text": "follow back plz",
+        "need": "other",
+        "language": "english",
+        "cluster_id": 5,
+        "cluster_need": "other",
+        "hit": true
+      }
+    ],
+    "rule_labeller_accuracy": 0.81,
+    "langid_accuracy": 0.97,
+    "langid_by_language": {
+      "english": 0.975,
+      "mixed": 0.0,
+      "other": 1.0,
+      "roman_urdu": 0.973,
+      "urdu": 1.0
+    }
+  },
+  "langid": {
+    "synthetic": 0.8987,
+    "audit": 0.97
+  }
+}

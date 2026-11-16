@@ -1,0 +1,109 @@
+# Pakistan Audience & Campaign Intelligence (AudienceIQ PK)
+
+**University Project 3 — _Pakistan Social Audience & Campaign Intelligence Engine (Clustering Based)_**
+
+A web application that groups multilingual social-media comments (English, Roman Urdu, Urdu) into audience-need clusters, finds posts that behave unusually compared with their peers, and turns both into evidence-linked marketing recommendations for a Pakistani women's lawn-suit brand.
+
+> **Data status:** two separate datasets, never merged. (1) Default: a deterministic **SYNTHETIC classroom dataset** (3,000 posts, 33,776 comments, seed 42, fictional brands), labelled on every page, API response and export. (2) **OBSERVED YouTube snapshot** (2,165 public videos from 8 official Pakistani clothing-brand channels, 809 comments, collected 2026-11-16 via the YouTube Data API v3; comment text withheld; expires 2026-12-16). Switch datasets in the top bar.
+
+**Live app:** https://audienceiq-pk.vercel.app (public, read-only demo) · **Repository:** https://github.com/Obaiz1/pakistan-social-audience-intelligence-engine (private until the owner makes it public)
+
+## The five questions and where they are answered
+| # | Question | Page | Method (one line) |
+|---|---|---|---|
+| Q1 | Which content attracts attention? | `/content`, `/campaigns` | Platform-specific engagement formulas; attention index vs brand × platform baseline; medians, bootstrap CIs, Mann-Whitney + Cliff's δ + BH |
+| Q2 | What does the audience want? | `/audience`, `/comments` | Multilingual sentence embeddings → KMeans/HDBSCAN candidates → rule-based model selection → post-hoc naming with agreement |
+| Q3 | Which marketing patterns are unusual? | `/anomalies` | Peer-cohort robust z (median/MAD), comments-per-like, need-mix binomial test, Isolation Forest (secondary) |
+| Q4 | Which audience needs should the brand address? | `/audience` (needs by campaign), `/campaigns` | Cluster profiles: size, share, language mix, campaign/platform lift, exemplars, caveats |
+| Q5 | What should the marketing team do next? | `/recommendations` | Deterministic cards from gated evidence, each with sample size, limitations and an A/B or service test |
+
+The overview page has a guided **"Try this project"** path through Q1–Q5. `/data` (provenance, quality audit, CSV import), `/reports` (CSV/Excel/PDF) and `/methodology` (official title, formulas, model comparison, audit, limitations) complete the app.
+
+## Headline results on the synthetic demo
+- **Q1 (2,895 mature posts; 93 younger than 7 days excluded):** median attention index (1.00 = the brand's typical post on that platform) — influencer posts **1.51** (95% CI 1.42–1.62), reels 1.27, styling videos 1.22, videos 0.90, sale announcements 0.80, product photos **0.64** (0.59–0.69); all differences vs the rest are BH-significant, effects small–medium. Eid ul Fitr (1.55) and Eid ul Adha (1.37) are the only campaigns significantly above the rest. Weighted engagement rate: TikTok 9.4 %, Instagram 6.6 %, Facebook 4.0 %, YouTube 1.9 % (platform formulas differ).
+- **Q2/Q4:** 33,776 comments → 8 clusters (semantic KMeans k = 8 chosen by silhouette × stability; silhouette 0.223, stability ARI 0.764, no noise). Named post hoc: Price / cost (17.4 %, 72 % name agreement), Availability & stock (11.3 %, 61 %), Size & fit (7.0 %, 81 %), Fabric & quality (4.6 %, 80 %), Delivery & shipping (12.9 %, 47 %), two Compliments clusters, Other/unclear. Clusters are not language-driven (NMI with language 0.02). Independent 100-comment audit: 52 % of hand-labelled comments land in a cluster named with their need (rule labeller: 81 %).
+- **Q3:** 70 flags on 66 posts (36 engagement, 19 comment-pattern, 6 need-mix, 9 multivariate); 53 % recall of the 94 deliberately injected anomalies, 76 % of flagged posts were injected ones.
+- **Q5:** 18 evidence-gated cards, e.g. *Answer price questions before they are asked* (5,884 comments), *For Brand E: address size & fit first* (13.9 % vs 7.6 %, 1.8×), *On sale announcements: show stock and size availability up front* (21.5 % vs 12.6 %), *Test more influencer posts*, *Rethink product photos*.
+
+- **Observed YouTube (real data):** 2,165 videos, 809 comments → 4 clusters (semantic KMeans k = 4, silhouette 0.306, stability 0.993): Compliments 38.9 % (81 % agreement), Price / cost 9.3 % (68 %), two Other/unclear groups (music/general and Roman-Urdu chatter). 171 posts flagged, 168 of them with engagement far below their brand's peers (e.g. 0.01 % vs a 1.48 % cohort median), consistent with paid/boosted views. 4 recommendations pass the gates, including *For Sapphire: address price questions first* (26.1 % vs 16.4 %, 1.6×, BH p = 0.046).
+
+The synthetic numbers describe a simulation designed to contain discoverable structure; they are **not** findings about real brands or audiences. See `docs/CLUSTERING_EVALUATION.md` and `docs/PROJECT3_FINAL_REPORT.md`.
+
+## Tech stack
+- **Frontend:** Next.js 16.4 (App Router), React 19.3, TypeScript 5.9, Tailwind CSS 4.3, Recharts 3.10, lucide-react; vitest; Playwright for E2E/visual QA.
+- **Backend:** Python 3.12, FastAPI 0.121, pydantic 2.12, pandas 2.3, NumPy 2.3, SciPy 1.16, scikit-learn 1.7, fpdf2, openpyxl. SQLite canonical store.
+- **Offline ML (not deployed):** sentence-transformers 5 + torch (CPU), `paraphrase-multilingual-mpnet-base-v2` (Apache-2.0), umap-learn.
+- **Hosting:** Vercel (Next.js + Python function in one project, layout reused from SignalSpend).
+
+## Local setup
+Requires Python 3.12, Node 24 (npm 11). The committed dataset bundle means **no API key and no ML install are needed** to run the app.
+
+**Windows PowerShell**
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -e ".[dev]"
+uvicorn audienceiq.api.app:app --app-dir backend --port 8000     # terminal 1
+npm --prefix frontend ci
+npm --prefix frontend run dev                                     # terminal 2 → http://127.0.0.1:3000
+```
+
+**macOS / Linux**
+```bash
+python3.12 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+uvicorn audienceiq.api.app:app --app-dir backend --port 8000 &
+npm --prefix frontend ci && npm --prefix frontend run dev
+```
+
+Rebuild the synthetic bundle (optional, needs the ML extra and ~1 GB model download):
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install -e ".[dev,ml]" umap-learn
+python pipelines/build_demo.py          # seed 42 → data/datasets/synthetic-lawn-demo-v1/
+python pipelines/build_demo.py --embedding lexical   # no torch: lexical baseline only
+```
+
+Collect observed YouTube data (optional, your own key; raw text stays in git-ignored `data/observed/private/`):
+```bash
+export YOUTUBE_API_KEY=...              # PowerShell: $env:YOUTUBE_API_KEY="..."
+python pipelines/collect_youtube.py --months 24
+```
+
+## Tests
+```bash
+python -m ruff check backend pipelines
+python -m pytest -q                      # backend: unit, contract, integration
+npm --prefix frontend run lint
+npm --prefix frontend run typecheck
+npm --prefix frontend test               # vitest
+npm --prefix frontend run build
+APP_URL=http://127.0.0.1:3000 node frontend/e2e/journey.mjs   # five-question browser journey
+APP_URL=http://127.0.0.1:3000 node frontend/e2e/screens.mjs   # 10 routes × 375/1440 × dark/light
+```
+Latest executed results: `docs/TEST_EVIDENCE.md`.
+
+## Keys and environment
+None are required. Optional names are documented in `.env.example`: `YOUTUBE_API_KEY` (collector only), `NVIDIA_API_KEY` + `AUDIENCEIQ_ENABLE_LLM` (local, number-locked wording only), `AUDIENCEIQ_HOSTED`, `AUDIENCEIQ_ALLOW_WRITES`, `AUDIENCEIQ_MAX_UPLOAD_BYTES`, `API_ORIGIN`. Secrets live in `.env` (git-ignored) or the Vercel/GitHub secret stores.
+
+## Data sourcing
+- **Synthetic (shipped):** `backend/audienceiq/data/synthetic.py`, seed 42, fictional "Brand A–F", invented comment texts, injected anomalies with separate ground truth. Provenance and exact counts: `docs/DATA_PROVENANCE.md`.
+- **Observed (optional):** YouTube Data API v3, official channels pinned by ID (from Project 1's audit). Comment text is never redistributed; observed bundles expire after 30 days.
+- **Imported:** your own CSV exports (Instagram/TikTok/Facebook insights, etc.) via `/data`, with field mapping, validation and a source attestation. There are no live Instagram/TikTok/Facebook connectors.
+- **Assignment sources checked:** the 2026 paper provides no downloadable data/code; the e-commerce dataset is transactions, not comments; the fashion catalogue has an unclear licence and a different category — none were used (`docs/assignment/PROJECT3_REQUIREMENTS.md`).
+
+## Known limitations and blocked items
+- **Observed YouTube snapshot:** YouTube only (no Instagram/TikTok/Facebook), audience location not verified, comment text withheld, data expires 2026-12-16 (refresh by re-running `pipelines/collect_youtube.py`). Many views look ad-inflated, so 168 posts are flagged far below their peers.
+- **Synthetic demo only:** results demonstrate the method; the corpus is cleaner than real comments, so real-world clustering agreement will be lower.
+- **Discount questions** are absorbed by the Price cluster and **Delivery** is named with only 47 % agreement, so no delivery-specific card passes the evidence gate — reported as found, not tuned away.
+- **Roman Urdu** is helped by a hand-written translation gloss (ADR-013); a learned transliteration model would be better.
+- **Hosted demo is read-only:** CSV preview/validation works online; persistent imports need local mode (no durable hosted database).
+- **No live Instagram/TikTok/Facebook connectors;** those platforms enter only through authorised CSV exports.
+- **Associational analysis;** anomalies are statistical outliers, not evidence of fraud.
+- **Optional AI wording** (NVIDIA API, number-locked) is off by default and never enabled on the public demo; **no API key is required** for any core feature.
+
+## Documentation
+[Upstream audit](docs/UPSTREAM_AUDIT.md) · [Traceability](docs/TRACEABILITY_MATRIX.md) · [Architecture](docs/ARCHITECTURE.md) · [Decisions](docs/DECISIONS.md) · [Data dictionary](docs/DATA_DICTIONARY.md) · [Provenance](docs/DATA_PROVENANCE.md) · [Clustering evaluation](docs/CLUSTERING_EVALUATION.md) · [Anomaly method](docs/ANOMALY_METHOD.md) · [Methodology](docs/METHODOLOGY.md) · [Final report](docs/PROJECT3_FINAL_REPORT.md) · [Test evidence](docs/TEST_EVIDENCE.md) · [QA checklist](docs/QA_CHECKLIST.md) · [Deployment](docs/DEPLOYMENT.md) · [Demo script & viva](docs/DEMO_SCRIPT_AND_VIVA.md) · [Progress](docs/PROGRESS.md) · [Handoff](docs/SESSION_HANDOFF.md)
+
+## Credits and reuse
+Built on two earlier projects by the same author: [pakistani-social-media-content-detective](https://github.com/Obaiz1/pakistani-social-media-content-detective) (@957e3b6f) and [signalspend-ai](https://github.com/Obaiz1/signalspend-ai) (@9c5f4152). Reused files carry provenance headers; the reuse table is in `docs/UPSTREAM_AUDIT.md`. Built with AI assistance (Claude Code) under the author's direction.

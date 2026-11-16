@@ -116,6 +116,22 @@ def demo(req: schemas.DemoRequest):
             "note": "Regenerated with the runtime lexical embedding (the shipped demo uses offline semantic embeddings)."}
 
 
+@app.get(f"{V1}/options")
+def options(dataset_id: str | None = None):
+    """Filter vocabularies for the selected dataset (values that actually occur)."""
+    f = load_frames(dataset_id)
+    p = f.posts
+    published = pd.to_datetime(p["published_at"], utc=True)
+    return {"meta": meta(f, len(p)), "platforms": sorted(p["platform"].unique().tolist()),
+            "brands": sorted(p["brand"].unique().tolist()), "campaigns": sorted(p["campaign"].unique().tolist()),
+            "content_types": [{"value": c, "label": CONTENT_TYPE_LABELS.get(c, c)} for c in sorted(p["content_type"].unique())],
+            "languages": [{"value": c, "label": LANGUAGE_LABELS.get(c, c)} for c in sorted(f.comments["language_type"].unique())],
+            "topics": [{"value": c, "label": NEED_LABELS.get(c, c)} for c in sorted(f.comments["topic"].unique())],
+            "clusters": [{"value": int(r["cluster_id"]), "label": f"#{int(r['cluster_id'])} {r['label']}"}
+                         for r in f.profiles.sort_values("cluster_id").to_dict(orient="records")],
+            "date_min": str(published.min())[:10], "date_max": str(published.max())[:10]}
+
+
 # ---------------------------------------------------------------- posts
 SORTABLE = {"published_at", "likes", "comments_count", "shares", "views", "er_views", "attention_index", "days_since_post"}
 
@@ -452,6 +468,21 @@ def recommendation_detail(recommendation_id: str, dataset_id: str | None = None)
     if rec.empty:
         raise HTTPException(404, f"Recommendation '{recommendation_id}' not found.")
     return {"meta": meta(f, None, run=f.selected_run), "recommendation": _rec(rec.iloc[0].to_dict())}
+
+
+@app.post(f"{V1}/recommendations/{{recommendation_id}}/rewrite")
+def recommendation_rewrite(recommendation_id: str, dataset_id: str | None = None):
+    """Optional number-locked AI wording (local only; NVIDIA_API_KEY + AUDIENCEIQ_ENABLE_LLM=1)."""
+    if not get_settings().llm_enabled:
+        raise HTTPException(501, "AI wording is disabled. Locally, set NVIDIA_API_KEY and AUDIENCEIQ_ENABLE_LLM=1. "
+                                 "The deterministic recommendation text is always available.")
+    from audienceiq.recommendations.wording import rewrite
+
+    f = load_frames(dataset_id)
+    rec = f.recommendations[f.recommendations["recommendation_id"] == recommendation_id]
+    if rec.empty:
+        raise HTTPException(404, f"Recommendation '{recommendation_id}' not found.")
+    return rewrite(_rec(rec.iloc[0].to_dict()))
 
 
 # ---------------------------------------------------------------- data, imports, reports, methodology

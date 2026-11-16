@@ -110,19 +110,22 @@ class Repository:
 
     # ---------- catalogue ----------
     def list_datasets(self) -> list[dict]:
+        # Rows are mapped from cursor.description; the shared connection's row_factory is never mutated, because
+        # FastAPI serves sync endpoints from a thread pool (a concurrency bug found by the browser QA sweep).
         out = []
-        for conn, builtin in ((self.builtin(), True), (self.user(), False)):
-            if conn is None:
-                continue
-            conn.row_factory = sqlite3.Row
-            for r in conn.execute("SELECT * FROM datasets ORDER BY mode DESC, created_at"):
-                d = dict(r)
-                d["builtin"] = builtin
-                d["expired"] = _expired(d)
-                d["sources"] = self._sources(conn, d["dataset_id"])
-                d.pop("manifest_json", None)
-                out.append(d)
-            conn.row_factory = None
+        with self._lock:
+            for conn, builtin in ((self.builtin(), True), (self.user(), False)):
+                if conn is None:
+                    continue
+                cur = conn.execute("SELECT * FROM datasets ORDER BY mode DESC, created_at")
+                cols = [c[0] for c in cur.description]
+                for row in cur.fetchall():
+                    d = dict(zip(cols, row, strict=True))
+                    d["builtin"] = builtin
+                    d["expired"] = _expired(d)
+                    d["sources"] = self._sources(conn, d["dataset_id"])
+                    d.pop("manifest_json", None)
+                    out.append(d)
         order = {"synthetic": 0, "observed": 1, "imported": 2}
         return sorted(out, key=lambda d: (order.get(d["mode"], 3), d["created_at"]))
 

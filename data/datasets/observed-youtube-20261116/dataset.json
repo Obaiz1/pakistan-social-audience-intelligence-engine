@@ -1,0 +1,78 @@
+{
+  "dataset_id": "observed-youtube-20261116",
+  "name": "Observed YouTube snapshot 2026-11-16",
+  "mode": "observed",
+  "description": "OBSERVED public YouTube statistics for official Pakistani clothing-brand channels. Platform = YouTube only; content type 'video' (no reel/short claim); campaign inferred from title keywords. Comment text is withheld from this bundle; clusters were fitted locally on the text and only derived labels ship.",
+  "product_category": "Pakistani clothing brands (YouTube channels)",
+  "created_at": "2026-11-16T08:01:40+00:00",
+  "snapshot_at": "2026-11-16T07:58:09Z",
+  "expires_at": "2026-12-16T07:58:09Z",
+  "seed": 42,
+  "generator_version": null,
+  "text_permission": "withheld",
+  "disclaimer": "OBSERVED — public YouTube Data API v3 statistics for Pakistan-related brand channels. Audience location is not verified; comment text is not redistributed.",
+  "post_count": 2165,
+  "comment_count": 809,
+  "sources": [
+    {
+      "source_id": "SRC-YT",
+      "source_type": "youtube_data_api_v3",
+      "name": "YouTube Data API v3 (public channel, video and top-level comment data)",
+      "url": "https://developers.google.com/youtube/v3",
+      "collection_method": "Official API, API key; ~663 quota units",
+      "collected_at": "2026-11-16",
+      "reuse_permission": "YouTube API Services Terms: stored API data refreshed or deleted within 30 days; comment text and author identity not redistributed",
+      "notes": "Official channels pinned by channel ID (from Repo A config): Alkaram, Bonanza Satrangi, Gul Ahmed, J. (Junaid Jamshed), Khaadi, Limelight, Nishat Linen, Sapphire."
+    }
+  ],
+  "manifest": {
+    "campaigns.csv": {
+      "sha256": "baa819afbe0eac12832236c07c1d89c8b4f6533852aa2b09758bc01ca35e8a4f",
+      "rows": 0
+    },
+    "posts.csv": {
+      "sha256": "cbbd282ef6fecee0f4e358de5968adbf396ea9f0abc54a8af245af4fc0f3e1e8",
+      "rows": 2165
+    },
+    "comments.csv": {
+      "sha256": "ed81003a05fd767babb3df6da892556af43af3710611ba586caa13b550562422",
+      "rows": 809
+    },
+    "cluster_runs.csv": {
+      "sha256": "8f906e9ab7b926ea397c854308f1c98becd69de5a2050de7e5ffdb55bec8632b",
+      "rows": 7
+    },
+    "cluster_assignments.csv": {
+      "sha256": "514bee1737d3b9f48051e75f8a1793ff3622d5d7789176aedc2b01fe887f7188",
+      "rows": 809
+    },
+    "cluster_profiles.csv": {
+      "sha256": "18ea3b4853eb1a66c49955ee476091de1d63ad010e49b696e8580e7bc12f9bed",
+      "rows": 4
+    },
+    "anomaly_runs.csv": {
+      "sha256": "26422042f423f9ab95d32ce05284c9e0146bc3b34f1f732e6edc039041c1ab9c",
+      "rows": 1
+    },
+    "anomaly_flags.csv": {
+      "sha256": "08c258a13df6e74f65734ed2161028b56e2d30f968603dd5b30f44bccafc4f7a",
+      "rows": 171
+    },
+    "anomaly_scores.csv": {
+      "sha256": "3e85c357af46aa35a04b81fe426ee3b211e022331178c120855beb575e7e0993",
+      "rows": 2137
+    },
+    "recommendations.csv": {
+      "sha256": "b636aad7ae43c413da6623de1b5dde74e5f8372fc7598cbc2b6aa58d5087faed",
+      "rows": 4
+    },
+    "pipeline_runs.csv": {
+      "sha256": "c254719f6bfc1eec409b64f05a26940b5042ad29a2483b7e17e01faa86ccc694",
+      "rows": 6
+    },
+    "evaluation.json": {
+      "sha256": "0c729170abab3a8ec860640f51e0e437fa1b2762b26176bafd54356daa2d9313"
+    }
+  },
+  "manifest_json": "{\"files\": {\"campaigns.csv\": {\"sha256\": \"baa819afbe0eac12832236c07c1d89c8b4f6533852aa2b09758bc01ca35e8a4f\", \"rows\": 0}, \"posts.csv\": {\"sha256\": \"cbbd282ef6fecee0f4e358de5968adbf396ea9f0abc54a8af245af4fc0f3e1e8\", \"rows\": 2165}, \"comments.csv\": {\"sha256\": \"ed81003a05fd767babb3df6da892556af43af3710611ba586caa13b550562422\", \"rows\": 809}, \"cluster_runs.csv\": {\"sha256\": \"8f906e9ab7b926ea397c854308f1c98becd69de5a2050de7e5ffdb55bec8632b\", \"rows\": 7}, \"cluster_assignments.csv\": {\"sha256\": \"514bee1737d3b9f48051e75f8a1793ff3622d5d7789176aedc2b01fe887f7188\", \"rows\": 809}, \"cluster_profiles.csv\": {\"sha256\": \"18ea3b4853eb1a66c49955ee476091de1d63ad010e49b696e8580e7bc12f9bed\", \"rows\": 4}, \"anomaly_runs.csv\": {\"sha256\": \"26422042f423f9ab95d32ce05284c9e0146bc3b34f1f732e6edc039041c1ab9c\", \"rows\": 1}, \"anomaly_flags.csv\": {\"sha256\": \"08c258a13df6e74f65734ed2161028b56e2d30f968603dd5b30f44bccafc4f7a\", \"rows\": 171}, \"anomaly_scores.csv\": {\"sha256\": \"3e85c357af46aa35a04b81fe426ee3b211e022331178c120855beb575e7e0993\", \"rows\": 2137}, \"recommendations.csv\": {\"sha256\": \"b636aad7ae43c413da6623de1b5dde74e5f8372fc7598cbc2b6aa58d5087faed\", \"rows\": 4}, \"pipeline_runs.csv\": {\"sha256\": \"c254719f6bfc1eec409b64f05a26940b5042ad29a2483b7e17e01faa86ccc694\", \"rows\": 6}, \"evaluation.json\": {\"sha256\": \"0c729170abab3a8ec860640f51e0e437fa1b2762b26176bafd54356daa2d9313\"}}}"
+}

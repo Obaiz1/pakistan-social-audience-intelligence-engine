@@ -24,12 +24,22 @@ kar kr de do dein ne hi ap aap please plz sis appi bhai hello hi hey dear salam 
 """.split())
 
 
-def ctfidf_terms(texts: list[str], labels: np.ndarray, top_n: int = 8) -> dict[int, list[str]]:
+def ctfidf_terms(texts: list[str], labels: np.ndarray, top_n: int = 8, min_comments: int = 1) -> dict[int, list[str]]:
+    """min_comments > 1 keeps only terms used in at least that many distinct comments (privacy for withheld text)."""
     ids = sorted(set(labels.tolist()) - {-1})
     if not ids:
         return {}
+    allowed = None
+    if min_comments > 1:
+        dfv = CountVectorizer(token_pattern=TERM_PATTERN, binary=True, min_df=min_comments)
+        try:
+            dfv.fit([t or "" for t in texts])
+            allowed = set(dfv.get_feature_names_out())
+        except ValueError:
+            allowed = set()
     docs = [" ".join(t for t, lab in zip(texts, labels, strict=True) if lab == c) for c in ids]
-    vec = CountVectorizer(token_pattern=TERM_PATTERN, stop_words=list(DISPLAY_STOPWORDS), min_df=1)
+    vec = CountVectorizer(token_pattern=TERM_PATTERN, stop_words=list(DISPLAY_STOPWORDS), min_df=1,
+                          vocabulary=sorted(allowed - DISPLAY_STOPWORDS) if allowed is not None and allowed else None)
     try:
         counts = vec.fit_transform(docs).toarray().astype(float)
     except ValueError:  # empty vocabulary
@@ -58,7 +68,7 @@ def build_profiles(comments: pd.DataFrame, x: np.ndarray, labels: np.ndarray, ce
                    show_text: bool) -> list[dict]:
     """comments must have: comment_id, norm_text, comment_text, language_type, topic, published_at (aligned with x)."""
     n_clustered = int((labels != -1).sum())
-    terms = ctfidf_terms(comments["norm_text"].tolist(), labels)
+    terms = ctfidf_terms(comments["norm_text"].tolist(), labels, min_comments=1 if show_text else 5)
     profiles = []
     ids = sorted(set(labels.tolist()))
     for c in ids:

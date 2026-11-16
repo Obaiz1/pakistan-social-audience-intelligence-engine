@@ -77,11 +77,18 @@ NEED_ACTIONS = {
                    "in the next campaign's hero content.",
                    "Feature praised designs in half of the next campaign's hero posts; compare attention index vs the other half."),
 }
+PLURAL = {"reel": "reels", "video": "videos", "product_photo": "product photos", "influencer_post": "influencer posts",
+          "styling_video": "styling videos", "sale_announcement": "sale announcements", "other": "other posts",
+          "unknown": "posts of unknown type"}
 BASE_LIMITATIONS = [
     "Associational, not causal: campaigns, budgets and seasons are confounded with content and timing.",
     "Comments are a retained sample of visible threads, not every comment a post received.",
     "Clusters were discovered without labels; their names come from a rule-based reference labeller (agreement shown).",
 ]
+
+
+def fmt_p(p: float) -> str:
+    return "< 0.001" if p < 0.001 else f"= {p:.3f}"
 
 
 def _rid(*parts) -> str:
@@ -201,23 +208,24 @@ def content_cards(content_comparison: dict) -> list[dict]:
             continue
         up = (r["cliffs_delta"] or 0) > 0
         label = r["label"]
+        plural = PLURAL.get(r["group"], f"{label.lower()} posts")
         cards.append(_card(
             recommendation_id=_rid("content", r["group"]), action_type="content",
-            title=("Test more " if up else "Rethink ") + f"{label.lower()} posts",
-            what_to_do=(f"Increase the share of {label.lower()} posts in the next content calendar and test them against "
+            title=("Test more " if up else "Rethink ") + plural,
+            what_to_do=(f"Increase the share of {plural} in the next content calendar and test them against "
                         "your usual formats." if up else
-                        f"Do not add more {label.lower()} posts without a change; test a new treatment against the current one."),
-            why_it_matters=(f"Mature {label.lower()} posts have median attention index {r['median']:.2f} (95% CI "
+                        f"Do not add more {plural} without a change; test a new treatment against the current one."),
+            why_it_matters=(f"Mature {plural} have median attention index {r['median']:.2f} (95% CI "
                             f"{r['ci_low']:.2f}–{r['ci_high']:.2f}) vs {r['rest_median']:.2f} for all other posts (1.00 = the "
                             f"brand's typical post on that platform); Cliff's δ {r['cliffs_delta']:+.2f} ({r['effect']}), "
-                            f"BH-adjusted p = {r['p_adj']:.3f}, n = {r['n']}."),
+                            f"BH-adjusted p {fmt_p(r['p_adj'])}, n = {r['n']}."),
             audience_need=None, where={"content_type": r["group"]},
             linked_evidence=[{"type": "content_comparison", "dimension": "content_type", "group": r["group"]}],
             priority=1 if r["effect"] in {"medium", "large"} else 2,
             evidence_strength={"large": "strong", "medium": "moderate"}.get(r["effect"], "limited"),
             sample_size=int(r["n"]),
             metrics={k: r[k] for k in ("median", "rest_median", "ci_low", "ci_high", "cliffs_delta", "p_adj", "n")},
-            test_plan=(f"Publish 10–20 {label.lower()} posts and 10–20 otherwise-similar posts in the same weeks, brands and "
+            test_plan=(f"Publish 10–20 {plural} and 10–20 otherwise-similar posts in the same weeks, brands and "
                        "platforms. Compare median attention index after 7 days; keep paid boosting equal or exclude boosted posts."),
             extra_limitations=([f"Effect size is {r['effect']}: expect a modest or uncertain lift."]
                                if r["effect"] == "small" else [])))
@@ -263,7 +271,8 @@ def anomaly_cards(flags: pd.DataFrame, posts: pd.DataFrame) -> list[dict]:
             audience_need=None, where={"content_type": top_ct.index[0]},
             linked_evidence=[{"type": "anomaly", "id": fid, "post_id": pid}
                              for fid, pid in zip(sub["flag_id"].head(12), sub["post_id"].head(12), strict=True)],
-            priority=1 if kind == "need_mix" else 2, evidence_strength="moderate" if len(sub) >= 10 else "limited",
+            priority=1 if kind == "need_mix" and len(sub) >= 10 else 2,
+            evidence_strength="moderate" if len(sub) >= 10 else "limited",
             sample_size=int(len(sub)),
             metrics={"flags": int(len(sub)), "median_score": round(float(np.median(sub["score"])), 3)},
             test_plan=test,

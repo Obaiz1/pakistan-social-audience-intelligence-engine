@@ -66,3 +66,37 @@ def test_rows_serialise():
                                   pd.DataFrame(), "d", "synthetic")
     df = to_rows(cards)
     assert df.loc[0, "priority"] in (1, 2, 3) and "SYNTHETIC" in df.loc[0, "limitations_json"]
+
+
+class _Resp:
+    def __init__(self, text):
+        self._t = text
+
+    def raise_for_status(self):
+        return None
+
+    def json(self):
+        return {"choices": [{"message": {"content": self._t}}]}
+
+
+CARD = {"title": "Answer price questions", "what_to_do": "Put the price in captions.",
+        "why_it_matters": "5,884 comments (17.4% of 33,776) are price questions (agreement 72%).",
+        "sample_size": 5884, "evidence_strength": "strong", "test_plan": "Alternate for 2 weeks."}
+
+
+def test_llm_wording_is_optional_and_number_locked():
+    from audienceiq.recommendations.wording import number_lock_ok, rewrite
+
+    assert rewrite(CARD, api_key="")["used_llm"] is False                     # no key → deterministic text
+    ok = rewrite(CARD, api_key="k", post=lambda *a, **k: _Resp("About 17.4% of comments ask about price; show it in captions."))
+    assert ok["used_llm"] is True
+    bad = rewrite(CARD, api_key="k", post=lambda *a, **k: _Resp("Price questions are 25% of comments."))
+    assert bad["used_llm"] is False and "rejected" in bad["reason"]           # invented number refused
+    err = rewrite(CARD, api_key="k", post=lambda *a, **k: (_ for _ in ()).throw(ConnectionError()))
+    assert err["used_llm"] is False and err["text"].startswith("Put the price")
+    assert number_lock_ok("5884 comments", CARD) and not number_lock_ok("6000 comments", CARD)
+
+
+def test_rewrite_endpoint_disabled_without_key(api_client):
+    r = api_client.post("/api/v1/recommendations/REC-X/rewrite")
+    assert r.status_code == 501 and "disabled" in r.json()["detail"]

@@ -1,0 +1,7 @@
+run_id,dataset_id,step,status,started_at,finished_at,details_json
+clu-9e481af5,synthetic-lawn-demo-v1,normalize_posts,ok,2026-11-16T07:02:14+00:00,2026-11-16T07:02:14+00:00,"{""seconds"": 0.0, ""posts"": 3000}"
+clu-9e481af5,synthetic-lawn-demo-v1,enrich_comments,ok,2026-11-16T07:02:14+00:00,2026-11-16T07:02:14+00:00,"{""seconds"": 8.36, ""comments"": 33776}"
+clu-9e481af5,synthetic-lawn-demo-v1,embed,ok,2026-11-16T07:02:14+00:00,2026-11-16T07:02:14+00:00,"{""seconds"": 4.5, ""representations"": [""lexical"", ""semantic"", ""hybrid""]}"
+clu-9e481af5,synthetic-lawn-demo-v1,cluster,ok,2026-11-16T07:02:14+00:00,2026-11-16T07:02:14+00:00,"{""seconds"": 742.08, ""candidates"": 36, ""selected"": ""semantic:kmeans(k=8)""}"
+clu-9e481af5,synthetic-lawn-demo-v1,anomalies,ok,2026-11-16T07:02:14+00:00,2026-11-16T07:02:14+00:00,"{""seconds"": 5.32, ""flagged"": 66}"
+clu-9e481af5,synthetic-lawn-demo-v1,recommendations,ok,2026-11-16T07:02:14+00:00,2026-11-16T07:02:14+00:00,"{""seconds"": 0.65, ""cards"": 18}"

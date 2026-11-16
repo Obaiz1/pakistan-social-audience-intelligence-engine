@@ -13,6 +13,7 @@ from audienceiq.constants import LANGUAGES, NEED_LABELS
 from audienceiq.data import importer
 from audienceiq.data.synthetic import CATEGORY, GENERATOR_VERSION, generate
 from audienceiq.nlp.embeddings import hybrid
+from audienceiq.nlp.gloss import embedding_text
 from audienceiq.nlp.intent import label_need
 from audienceiq.nlp.langid import detect_language
 from audienceiq.nlp.normalize import normalize_text, strip_boilerplate
@@ -37,7 +38,7 @@ def audit_set() -> pd.DataFrame:
 
 def transform_like_selected(texts: list[str], result: dict, encoder=None) -> np.ndarray | None:
     emb = result["clustering"].selected["embedding"]
-    stripped = [strip_boilerplate(normalize_text(t)) for t in texts]
+    stripped = [embedding_text(strip_boilerplate(normalize_text(t)), detect_language(t)) for t in texts]
     if emb == "lexical":
         return result["lexical"].transform(stripped)
     if encoder is None:
@@ -114,7 +115,7 @@ def anomaly_recovery(result: dict, truth_posts: pd.DataFrame) -> dict:
 def build_synthetic(n_posts: int = 3000, seed: int = 42, embedding: str = "lexical", semantic_encoder=None,
                     semantic_model: str = "", out_dir: Path | None = None, persist_user: bool = False,
                     k_values: list[int] | None = None, hdbscan_sizes: list[int] | None = None,
-                    hdbscan_reducer: str = "pca", preferred: str | None = None) -> dict:
+                    hdbscan_reducer: str = "pca", preferred: str | list[str] | None = None) -> dict:
     corpus = generate(n_posts, seed)
     default = n_posts == 3000 and seed == 42 and out_dir is not None
     dataset_id = DEMO_ID if default else f"synthetic-lawn-s{seed}-n{n_posts}"

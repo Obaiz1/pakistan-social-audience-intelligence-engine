@@ -1,22 +1,21 @@
 # Session handoff
 
-**Last updated:** 2026-11-16 — Phase 0 DONE; Phases 1–4 partially implemented (backend modules written, not yet committed or tested).
+**Last updated:** 2026-11-16 — all phases done; production verified at https://audienceiq-pk.vercel.app.
 
-## Resume here
-1. Read `docs/PROGRESS.md` (phase table) and `docs/TRACEABILITY_MATRIX.md`.
-2. Activate the venv (Python 3.12.15): PowerShell `.\.venv\Scripts\Activate.ps1` · Git Bash `source .venv/Scripts/activate`.
-   Recreate if missing: `py -3.12 -m venv .venv` then `pip install -e ".[dev,ml]"` (CPU torch: `pip install torch --index-url https://download.pytorch.org/whl/cpu`).
-3. Continue with the first phase not marked DONE.
+## Resume / rerun
+1. Venv (Python 3.12.15): PowerShell `.\.venv\Scripts\Activate.ps1` · Git Bash `source .venv/Scripts/activate`.
+   Recreate: `py -3.12 -m venv .venv; pip install -e ".[dev]"`; ML extra (only to rebuild the dataset):
+   `pip install torch --index-url https://download.pytorch.org/whl/cpu; pip install -e ".[ml]" umap-learn`.
+2. Run locally: `uvicorn audienceiq.api.app:app --app-dir backend --port 8000` and `npm --prefix frontend ci && npm --prefix frontend run dev`.
+3. Rebuild dataset: `python pipelines/build_demo.py` (≈13 min) then `python pipelines/report_evaluation.py`.
+4. Redeploy: from the repo root `vercel deploy --prod -e AUDIENCEIQ_BUILD_COMMIT=$(git rev-parse --short HEAD)`, then
+   `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/journey.mjs`.
 
-## Written so far (backend/audienceiq)
-constants, config, storage/schema.sql, nlp/{normalize,langid,intent,embeddings}, data/{synthetic,synthetic_text},
-analytics/{engagement,stats}, clustering/{candidates,evaluate,profile}; tests/fixtures/multilingual_audit.csv.
-
-## Verified facts
-- Synthetic corpus seed 42: 3,000 posts, 33,776 comments, deterministic (re-generation identical).
-- Reference labeller vs generator latent need: 85.6 % agreement (circular: same author; audit set is the fairer test).
-
-## Next unfinished tasks
-1. Clustering experiment (semantic vs lexical vs hybrid; KMeans sweep + HDBSCAN) → finalize selection per ADR-007.
-2. anomalies/detect.py, recommendations/engine.py, services/build.py (bundle → CSV tables), storage loader, API.
-3. Frontend (Next.js, Repo B layout), tests, docs, GitHub repo (private), Vercel deploy.
+## Owner actions (BLOCKED items)
+- **Observed YouTube data:** snapshot `observed-youtube-20261116` (with comment dates) is shipped and expires 2026-12-16. To refresh: set `YOUTUBE_API_KEY`, run `python pipelines/collect_youtube.py --months 24`, then `python pipelines/report_evaluation.py observed-youtube-<date>`,
+  commit and redeploy. **Delete `data/observed/private/2026-11-16/` (raw comment text) by 2026-12-16.**
+- **Repository visibility:** private. To share with the instructor:
+  `gh repo edit Obaiz1/pakistan-social-audience-intelligence-engine --visibility public --accept-visibility-change-consequences`.
+- **Licence:** none chosen (owner decision; upstream repos have none either).
+- **Persistent hosted imports (optional):** attach a durable database and implement the user store on it; until then imports persist only locally.
+- **Optional AI wording:** local only — `NVIDIA_API_KEY=… AUDIENCEIQ_ENABLE_LLM=1` (model via `NVIDIA_MODEL`).

@@ -133,3 +133,13 @@ def test_import_confirm_requires_permission(api_client):
     r = api_client.post("/api/v1/imports/confirm", json={"posts_csv": "a\n1\n", "comments_csv": "b\n1\n", "name": "abc",
                                                          "attestation": att})
     assert r.status_code == 422
+
+
+def test_concurrent_catalogue_requests_are_consistent(api_client):
+    """Regression: concurrent /datasets + /health used to corrupt rows via a shared row_factory (found by browser QA)."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    paths = ["/api/v1/datasets", "/api/v1/health"] * 30
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        codes = list(pool.map(lambda p: api_client.get(p).status_code, paths))
+    assert set(codes) == {200}
