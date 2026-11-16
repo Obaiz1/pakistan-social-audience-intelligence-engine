@@ -52,7 +52,7 @@ export function OverviewView() {
     { q: 3, href: "/anomalies", title: "Which patterns are unusual?",
       answer: `${num(Number(k.posts_flagged))} posts differ sharply from comparable posts (${num(Number(k.anomaly_flags))} flags).` },
     { q: 4, href: "/segments", title: "Which needs should we address?",
-      answer: `${confident.length} need segments are clearly named; ${d.needs.filter((n) => n.uncertain).length} groups stay marked uncertain.` },
+      answer: (() => { const u = d.needs.filter((n) => n.uncertain).length; return `${confident.length} need segment${confident.length === 1 ? " is" : "s are"} clearly named; ${u} group${u === 1 ? " stays" : "s stay"} marked uncertain.`; })() },
     { q: 5, href: "/recommendations", title: "What should we do next?",
       answer: `${num(Number(k.recommendations))} actions passed the evidence gates, each with a test plan.` },
   ];

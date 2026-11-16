@@ -178,6 +178,26 @@ def test_comment_sort_and_overview_needs(api_client):
     ov = api_client.get("/api/v1/analytics/overview").json()
     assert ov["needs"] and ov["pipeline"] and all("step" in s for s in ov["pipeline"])
     assert sum(n["comments"] for n in ov["needs"]) == ov["kpis"]["comments"]
+    # catch-all groups are never presented as a confident need (consistent with /audience/segments)
+    flags = {n["need"]: n["uncertain"] for n in ov["needs"]}
+    assert all(flags[k] for k in ("other", "mixed", "noise") if k in flags)
+
+
+def test_catch_all_needs_are_uncertain():
+    """'Other / unclear', mixed and noise groups must never be reported as a confident need (the overview's Q2/Q4
+    answers and the brief rely on this flag)."""
+    from audienceiq.api.app import _needs_distribution
+
+    def c(cid, need, n):
+        return {"cluster_id": cid, "need_category": need, "label": need, "filtered_size": n,
+                "filtered_share": n / 100, "label_agreement": 0.8}
+
+    out = {g["need"]: g for g in _needs_distribution([c(0, "other", 52), c(1, "compliment", 39), c(2, "price", 9),
+                                                       c(3, "mixed", 5), c(-1, "noise", 3)])}
+    assert out["other"]["uncertain"] and out["mixed"]["uncertain"] and out["noise"]["uncertain"]
+    assert not out["compliment"]["uncertain"] and not out["price"]["uncertain"]
+    confident = [g for g in out.values() if not g["uncertain"]]
+    assert max(confident, key=lambda g: g["comments"])["need"] == "compliment"
 
 
 def test_data_sources_reports_booleans_never_keys(api_client, monkeypatch):
