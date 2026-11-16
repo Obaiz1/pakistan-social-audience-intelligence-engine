@@ -1,0 +1,25 @@
+# Uploaded by `vercel deploy` from the repo root (project root directory = frontend). Keep the upload small and
+# never ship local state, caches, private data or secrets.
+.git
+.venv
+venv
+.env
+.env.*
+var
+data/cache
+data/observed
+data/demo
+docs/screenshots
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.ruff_cache
+frontend/node_modules
+frontend/.next
+frontend/.backend
+frontend/test-results
+backend/tests
+pipelines
+*.sqlite
+*.npy
+*.parquet

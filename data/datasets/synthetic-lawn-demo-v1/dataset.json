@@ -1,0 +1,86 @@
+{
+  "dataset_id": "synthetic-lawn-demo-v1",
+  "name": "Synthetic lawn-suit classroom demo (seed 42)",
+  "mode": "synthetic",
+  "description": "Deterministic SYNTHETIC corpus of women's lawn-suit social posts for six fictional brands on Instagram, TikTok, Facebook and YouTube with multilingual (English, Roman Urdu, Urdu, mixed) comments. Simulates brand-owned analytics exports; injected anomalies are recorded separately for evaluation.",
+  "product_category": "Women's lawn suits",
+  "created_at": "2026-11-16T07:02:14+00:00",
+  "snapshot_at": "2026-11-14T00:00:00Z",
+  "expires_at": null,
+  "seed": 42,
+  "generator_version": "synthetic-lawn-v1.0",
+  "text_permission": "illustrative",
+  "disclaimer": "SYNTHETIC DEMO — NOT REAL SOCIAL MEDIA OBSERVATIONS",
+  "post_count": 3000,
+  "comment_count": 33776,
+  "sources": [
+    {
+      "source_id": "SRC-SYNTH",
+      "source_type": "synthetic_generator",
+      "name": "AudienceIQ synthetic generator synthetic-lawn-v1.0",
+      "url": null,
+      "collection_method": "deterministic simulation (numpy default_rng)",
+      "collected_at": null,
+      "reuse_permission": "Synthetic; freely reusable for teaching. Not real social-media observations.",
+      "notes": "Fictional brands (Brand A–F); comment texts are invented, compositional and illustrative."
+    }
+  ],
+  "manifest": {
+    "campaigns.csv": {
+      "sha256": "6b79b073f9f3f15c667d7d0b5548a730b7e40fe3952bbefec32a3129fb48af05",
+      "rows": 15
+    },
+    "posts.csv": {
+      "sha256": "3d57bf7fbfe84fd6a954f74b4d175091216121404a060f2a92cd42158a8a71dd",
+      "rows": 3000
+    },
+    "comments.csv": {
+      "sha256": "efcda3b8a89aaa60e4ea8ccfb1f82a4d42234dfe163e9c91f52ef219d5a1f784",
+      "rows": 33776
+    },
+    "cluster_runs.csv": {
+      "sha256": "6049849bb280eb07fac4a31bf2df0ffff61bf7b4a4060d5b2695dd4794c66b9b",
+      "rows": 36
+    },
+    "cluster_assignments.csv": {
+      "sha256": "d4d4487cd36a281e60c00e14222815c95b9a9b257d9a5f41ce0328257d3c684b",
+      "rows": 33776
+    },
+    "cluster_profiles.csv": {
+      "sha256": "fe0088b7a4a312b6c37bab004aa41200a531339e06f678662cca41f2c7dcfbb7",
+      "rows": 8
+    },
+    "anomaly_runs.csv": {
+      "sha256": "fcb63ac8211bb90ac8ce9d0da4a4e919f0d03762c34eb3bb95ed7ae87cc42418",
+      "rows": 1
+    },
+    "anomaly_flags.csv": {
+      "sha256": "777141dac2229b7b907eee970d41f015de604994ad5cdd212e7969d67714aaca",
+      "rows": 70
+    },
+    "anomaly_scores.csv": {
+      "sha256": "f47a73f936bdde0f8e04c5cd3d3a0cc64ef8c0904c8ea9f73778d83cb2715b92",
+      "rows": 2895
+    },
+    "recommendations.csv": {
+      "sha256": "080d7998ba3b2464222b3313fcc1a1f0dfdcef50a1cc0b9cb626e1c720d39c29",
+      "rows": 18
+    },
+    "pipeline_runs.csv": {
+      "sha256": "c38a789a2b0bcb029dbad6226ed75d95d4f5ae2dc21fcbccbf61f60f84c415f4",
+      "rows": 6
+    },
+    "synthetic_truth_posts.csv": {
+      "sha256": "acc18ab483150f000cb6b2342932c5587a7dfae9dc9a744289d528ec950f4c2b",
+      "rows": 3000
+    },
+    "synthetic_truth_comments.csv": {
+      "sha256": "7c10e8faad2634dc2e23e8064bed745b5bbff8adfabfaaddbbbb2196e5f68adc",
+      "rows": 33776
+    },
+    "evaluation.json": {
+      "sha256": "a7983cb2430a7f4a9acd30bc2b7ccb5ead7dc2e7dc50387d668e4d4db1db7dab"
+    }
+  },
+  "manifest_json": "{\"files\": {\"campaigns.csv\": {\"sha256\": \"6b79b073f9f3f15c667d7d0b5548a730b7e40fe3952bbefec32a3129fb48af05\", \"rows\": 15}, \"posts.csv\": {\"sha256\": \"3d57bf7fbfe84fd6a954f74b4d175091216121404a060f2a92cd42158a8a71dd\", \"rows\": 3000}, \"comments.csv\": {\"sha256\": \"efcda3b8a89aaa60e4ea8ccfb1f82a4d42234dfe163e9c91f52ef219d5a1f784\", \"rows\": 33776}, \"cluster_runs.csv\": {\"sha256\": \"6049849bb280eb07fac4a31bf2df0ffff61bf7b4a4060d5b2695dd4794c66b9b\", \"rows\": 36}, \"cluster_assignments.csv\": {\"sha256\": \"d4d4487cd36a281e60c00e14222815c95b9a9b257d9a5f41ce0328257d3c684b\", \"rows\": 33776}, \"cluster_profiles.csv\": {\"sha256\": \"fe0088b7a4a312b6c37bab004aa41200a531339e06f678662cca41f2c7dcfbb7\", \"rows\": 8}, \"anomaly_runs.csv\": {\"sha256\": \"fcb63ac8211bb90ac8ce9d0da4a4e919f0d03762c34eb3bb95ed7ae87cc42418\", \"rows\": 1}, \"anomaly_flags.csv\": {\"sha256\": \"777141dac2229b7b907eee970d41f015de604994ad5cdd212e7969d67714aaca\", \"rows\": 70}, \"anomaly_scores.csv\": {\"sha256\": \"f47a73f936bdde0f8e04c5cd3d3a0cc64ef8c0904c8ea9f73778d83cb2715b92\", \"rows\": 2895}, \"recommendations.csv\": {\"sha256\": \"080d7998ba3b2464222b3313fcc1a1f0dfdcef50a1cc0b9cb626e1c720d39c29\", \"rows\": 18}, \"pipeline_runs.csv\": {\"sha256\": \"c38a789a2b0bcb029dbad6226ed75d95d4f5ae2dc21fcbccbf61f60f84c415f4\", \"rows\": 6}, \"synthetic_truth_posts.csv\": {\"sha256\": \"acc18ab483150f000cb6b2342932c5587a7dfae9dc9a744289d528ec950f4c2b\", \"rows\": 3000}, \"synthetic_truth_comments.csv\": {\"sha256\": \"7c10e8faad2634dc2e23e8064bed745b5bbff8adfabfaaddbbbb2196e5f68adc\", \"rows\": 33776}, \"evaluation.json\": {\"sha256\": \"a7983cb2430a7f4a9acd30bc2b7ccb5ead7dc2e7dc50387d668e4d4db1db7dab\"}}}"
+}

@@ -4,9 +4,9 @@
 
 A web application that groups multilingual social-media comments (English, Roman Urdu, Urdu) into audience-need clusters, finds posts that behave unusually compared with their peers, and turns both into evidence-linked marketing recommendations for a Pakistani women's lawn-suit brand.
 
-> **Data status:** the public demo runs on a deterministic **SYNTHETIC classroom dataset** ({{TBD_POSTS}} posts, {{TBD_COMMENTS}} comments, seed 42, fictional brands). It is labelled on every page, API response and export. An observed YouTube collector is implemented but not run in this build (needs the owner's API key — see [Limitations](#known-limitations-and-blocked-items)).
+> **Data status:** the public demo runs on a deterministic **SYNTHETIC classroom dataset** (3,000 posts, 33,776 comments, seed 42, fictional brands). It is labelled on every page, API response and export. An observed YouTube collector is implemented but not run in this build (needs the owner's API key — see [Limitations](#known-limitations-and-blocked-items)).
 
-**Live app:** {{TBD_URL}} · **Repository:** {{TBD_REPO}}
+**Live app:** {{TBD_URL}} · **Repository:** https://github.com/Obaiz1/pakistan-social-audience-intelligence-engine (private until the owner makes it public)
 
 ## The five questions and where they are answered
 | # | Question | Page | Method (one line) |
@@ -20,7 +20,10 @@ A web application that groups multilingual social-media comments (English, Roman
 The overview page has a guided **"Try this project"** path through Q1–Q5. `/data` (provenance, quality audit, CSV import), `/reports` (CSV/Excel/PDF) and `/methodology` (official title, formulas, model comparison, audit, limitations) complete the app.
 
 ## Headline results on the synthetic demo
-{{TBD_RESULTS}}
+- **Q1 (2,895 mature posts; 93 younger than 7 days excluded):** median attention index (1.00 = the brand's typical post on that platform) — influencer posts **1.51** (95% CI 1.42–1.62), reels 1.27, styling videos 1.22, videos 0.90, sale announcements 0.80, product photos **0.64** (0.59–0.69); all differences vs the rest are BH-significant, effects small–medium. Eid ul Fitr (1.55) and Eid ul Adha (1.37) are the only campaigns significantly above the rest. Weighted engagement rate: TikTok 9.4 %, Instagram 6.6 %, Facebook 4.0 %, YouTube 1.9 % (platform formulas differ).
+- **Q2/Q4:** 33,776 comments → 8 clusters (semantic KMeans k = 8 chosen by silhouette × stability; silhouette 0.223, stability ARI 0.764, no noise). Named post hoc: Price / cost (17.4 %, 72 % name agreement), Availability & stock (11.3 %, 61 %), Size & fit (7.0 %, 81 %), Fabric & quality (4.6 %, 80 %), Delivery & shipping (12.9 %, 47 %), two Compliments clusters, Other/unclear. Clusters are not language-driven (NMI with language 0.02). Independent 100-comment audit: 52 % of hand-labelled comments land in a cluster named with their need (rule labeller: 81 %).
+- **Q3:** 70 flags on 66 posts (36 engagement, 19 comment-pattern, 6 need-mix, 9 multivariate); 53 % recall of the 94 deliberately injected anomalies, 76 % of flagged posts were injected ones.
+- **Q5:** 18 evidence-gated cards, e.g. *Answer price questions before they are asked* (5,884 comments), *For Brand E: address size & fit first* (13.9 % vs 7.6 %, 1.8×), *On sale announcements: show stock and size availability up front* (21.5 % vs 12.6 %), *Test more influencer posts*, *Rethink product photos*.
 
 These numbers describe a simulation designed to contain discoverable structure; they are **not** findings about real brands or audiences. See `docs/CLUSTERING_EVALUATION.md` and `docs/PROJECT3_FINAL_REPORT.md`.
 
@@ -88,7 +91,14 @@ None are required. Optional names are documented in `.env.example`: `YOUTUBE_API
 - **Assignment sources checked:** the 2026 paper provides no downloadable data/code; the e-commerce dataset is transactions, not comments; the fashion catalogue has an unclear licence and a different category — none were used (`docs/assignment/PROJECT3_REQUIREMENTS.md`).
 
 ## Known limitations and blocked items
-{{TBD_LIMITATIONS}}
+- **BLOCKED — observed data (owner action):** no observed YouTube data is in this build; the permission policy refused using a key found in another local project. Run `pipelines/collect_youtube.py` with your own `YOUTUBE_API_KEY`.
+- **Synthetic demo only:** results demonstrate the method; the corpus is cleaner than real comments, so real-world clustering agreement will be lower.
+- **Discount questions** are absorbed by the Price cluster and **Delivery** is named with only 47 % agreement, so no delivery-specific card passes the evidence gate — reported as found, not tuned away.
+- **Roman Urdu** is helped by a hand-written translation gloss (ADR-013); a learned transliteration model would be better.
+- **Hosted demo is read-only:** CSV preview/validation works online; persistent imports need local mode (no durable hosted database).
+- **No live Instagram/TikTok/Facebook connectors;** those platforms enter only through authorised CSV exports.
+- **Associational analysis;** anomalies are statistical outliers, not evidence of fraud.
+- **Optional AI wording** (NVIDIA API, number-locked) is off by default and never enabled on the public demo; **no API key is required** for any core feature.
 
 ## Documentation
 [Upstream audit](docs/UPSTREAM_AUDIT.md) · [Traceability](docs/TRACEABILITY_MATRIX.md) · [Architecture](docs/ARCHITECTURE.md) · [Decisions](docs/DECISIONS.md) · [Data dictionary](docs/DATA_DICTIONARY.md) · [Provenance](docs/DATA_PROVENANCE.md) · [Clustering evaluation](docs/CLUSTERING_EVALUATION.md) · [Anomaly method](docs/ANOMALY_METHOD.md) · [Methodology](docs/METHODOLOGY.md) · [Final report](docs/PROJECT3_FINAL_REPORT.md) · [Test evidence](docs/TEST_EVIDENCE.md) · [QA checklist](docs/QA_CHECKLIST.md) · [Deployment](docs/DEPLOYMENT.md) · [Demo script & viva](docs/DEMO_SCRIPT_AND_VIVA.md) · [Progress](docs/PROGRESS.md) · [Handoff](docs/SESSION_HANDOFF.md)

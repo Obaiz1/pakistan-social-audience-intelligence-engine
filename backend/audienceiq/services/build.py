@@ -187,3 +187,33 @@ def nlp_summary(c: pd.DataFrame) -> dict:
 
 def bundle_path(data_dir: Path, dataset_id: str) -> Path:
     return data_dir / "datasets" / dataset_id
+
+
+def refresh_recommendations(bundle_dir: Path) -> int:
+    """Recompute only the recommendation layer of a built bundle from its stored tables (no re-embedding)."""
+    import hashlib
+
+    from audienceiq.storage.db import read_bundle_dir
+
+    meta, t = read_bundle_dir(bundle_dir)
+    sel = t["cluster_runs"][t["cluster_runs"]["selected"] == 1].iloc[0]
+    prof = t["cluster_profiles"][t["cluster_profiles"]["run_id"] == sel["run_id"]]
+    profiles = prof[["cluster_id", "label", "need_category", "label_agreement", "size"]].to_dict(orient="records")
+    enriched = add_engagement(t["posts"])
+    need_by = dict(zip(prof["cluster_id"], prof["need_category"], strict=True))
+    a = t["cluster_assignments"]
+    cn = t["comments"][["comment_id", "post_id"]].merge(a[["comment_id", "cluster_id"]], on="comment_id")
+    cn["need"] = cn["cluster_id"].map(need_by)
+    clustered = cn.merge(enriched[["post_id", "campaign", "brand", "platform", "content_type"]], on="post_id")
+    clustered = clustered[clustered["need"].notna() & (clustered["need"] != "noise")]
+    n_clustered = int((a["cluster_id"] != -1).sum())
+    recs = build_recommendations(profiles, n_clustered, clustered, compare(enriched, "content_type", "attention_index"),
+                                 t.get("anomaly_flags", pd.DataFrame()), enriched, meta["dataset_id"], meta["mode"])
+    path = bundle_dir / "recommendations.csv"
+    rec_rows(recs).to_csv(path, index=False, lineterminator=chr(10))
+    manifest = meta.get("manifest", {})
+    manifest["recommendations.csv"] = {"sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "rows": len(recs)}
+    meta["manifest"], meta["manifest_json"] = manifest, json.dumps({"files": manifest})
+    (bundle_dir / "dataset.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False, default=str), encoding="utf-8",
+                                             newline="")
+    return len(recs)

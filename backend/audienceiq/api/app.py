@@ -470,6 +470,21 @@ def recommendation_detail(recommendation_id: str, dataset_id: str | None = None)
     return {"meta": meta(f, None, run=f.selected_run), "recommendation": _rec(rec.iloc[0].to_dict())}
 
 
+@app.post(f"{V1}/recommendations/{{recommendation_id}}/rewrite")
+def recommendation_rewrite(recommendation_id: str, dataset_id: str | None = None):
+    """Optional number-locked AI wording (local only; NVIDIA_API_KEY + AUDIENCEIQ_ENABLE_LLM=1)."""
+    if not get_settings().llm_enabled:
+        raise HTTPException(501, "AI wording is disabled. Locally, set NVIDIA_API_KEY and AUDIENCEIQ_ENABLE_LLM=1. "
+                                 "The deterministic recommendation text is always available.")
+    from audienceiq.recommendations.wording import rewrite
+
+    f = load_frames(dataset_id)
+    rec = f.recommendations[f.recommendations["recommendation_id"] == recommendation_id]
+    if rec.empty:
+        raise HTTPException(404, f"Recommendation '{recommendation_id}' not found.")
+    return rewrite(_rec(rec.iloc[0].to_dict()))
+
+
 # ---------------------------------------------------------------- data, imports, reports, methodology
 @app.get(f"{V1}/data/quality")
 def data_quality(dataset_id: str | None = None):

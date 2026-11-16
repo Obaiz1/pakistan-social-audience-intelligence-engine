@@ -1,0 +1,83 @@
+{
+  "base": "http://127.0.0.1:3000",
+  "tag": "local",
+  "at": "2026-11-16T07:19:10.887Z",
+  "passed": 12,
+  "total": 12,
+  "steps": [
+    {
+      "name": "Overview loads with dataset banner and journey",
+      "ok": true,
+      "ms": 3137,
+      "detail": "SYNTHETIC DEMO — NOT REAL SOCIAL MEDIA OBSERVATIONS\n· 3,000 posts · 33,776 comments · snap"
+    },
+    {
+      "name": "Q1 content comparison renders with CI table parity",
+      "ok": true,
+      "ms": 1711,
+      "detail": "6 content types; post drawer opened and closed with Escape"
+    },
+    {
+      "name": "Q1 filter by platform updates the URL",
+      "ok": true,
+      "ms": 29,
+      "detail": "/content?platform=Instagram"
+    },
+    {
+      "name": "Q2/Q4 audience clusters + cluster drill-down",
+      "ok": true,
+      "ms": 1366,
+      "detail": "8 clusters; opened \"#1 · Price / cost\""
+    },
+    {
+      "name": "Q2 comment explorer filters by language",
+      "ok": true,
+      "ms": 645,
+      "detail": "25 Urdu rows on page 1"
+    },
+    {
+      "name": "Q3 anomalies list + detail with baseline",
+      "ok": true,
+      "ms": 470,
+      "detail": "Engagement rate 1.21% vs cohort median 7.38% (typical range P5–P95 4.85%–10.31%) among 30 mature Brand D Instagram styling video posts; robu"
+    },
+    {
+      "name": "Q1/Q4 campaigns with needs-by-campaign table",
+      "ok": true,
+      "ms": 953,
+      "detail": "3 tables"
+    },
+    {
+      "name": "Q5 recommendations with linked evidence",
+      "ok": true,
+      "ms": 193,
+      "detail": "18 cards, 45 evidence links; followed one to /audience?cluster=1"
+    },
+    {
+      "name": "Data page: quality audit + import preview (validation only)",
+      "ok": true,
+      "ms": 1062,
+      "detail": "preview + validation rendered"
+    },
+    {
+      "name": "Reports offer CSV/Excel/PDF downloads",
+      "ok": true,
+      "ms": 984,
+      "detail": "8 export links; PDF application/pdf"
+    },
+    {
+      "name": "Methodology shows the official Project 3 title",
+      "ok": true,
+      "ms": 282,
+      "detail": "title visible"
+    },
+    {
+      "name": "Health endpoint",
+      "ok": true,
+      "ms": 104,
+      "detail": "Pakistan Audience & Campaign Intelligence v1.0.0 · local · writes_enabled=true · commit n/a"
+    }
+  ],
+  "consoleErrors": [],
+  "apiErrors": []
+}
