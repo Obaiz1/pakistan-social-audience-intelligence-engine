@@ -206,7 +206,26 @@ def overview(dataset_id: str | None = None, filters: Filters = Depends(filters_d
         "top_clusters": top_clusters, "anomalies": frame_records(top_flags.drop(columns=["abs"])),
         "anomaly_counts": fl.groupby(["kind", "direction"]).size().reset_index(name="n").to_dict(orient="records"),
         "recommendations": recs, "language_mix": cc["language_type"].value_counts().to_dict(),
+        "needs": _needs_distribution(clusters),
+        "pipeline": [{"step": r["step"], "status": r["status"], "seconds": loads(r["details_json"], {}).get("seconds")}
+                     for r in f.pipeline_runs.to_dict(orient="records")],
+        "dataset_created_at": f.meta.get("created_at"),
     }
+
+
+def _needs_distribution(clusters: list[dict]) -> list[dict]:
+    """Discovered clusters grouped by their post-hoc need (mixed and noise kept visible, never hidden)."""
+    groups: dict[str, dict] = {}
+    for c in clusters:
+        key = "noise" if c["cluster_id"] == -1 else c["need_category"]
+        g = groups.setdefault(key, {"need": key, "label": NEED_LABELS.get(key, "Mixed / uncertain" if key == "mixed"
+                                                                         else "Unclustered (noise)" if key == "noise" else key),
+                                    "comments": 0, "share": 0.0, "clusters": [], "uncertain": key in {"mixed", "noise"}})
+        g["comments"] += c["filtered_size"]
+        g["share"] += c["filtered_share"] if c["cluster_id"] != -1 else 0.0
+        g["clusters"].append({"cluster_id": c["cluster_id"], "label": c["label"], "size": c["filtered_size"],
+                              "agreement": c["label_agreement"]})
+    return clean(sorted(groups.values(), key=lambda g: (g["need"] == "noise", -g["comments"])))
 
 
 @app.get(f"{V1}/analytics/content")
@@ -314,9 +333,16 @@ def cluster_detail(cluster_id: int, dataset_id: str | None = None, filters: Filt
     show = f.meta["text_permission"] != "withheld"
     rows = frame_records(chunk, ["comment_id", "post_id", "comment_text", "language_type", "topic", "sentiment",
                                  "purchase_intent", "distance", "platform", "campaign", "brand"])
-    if not show:
-        for r in rows:
+    for r in rows:
+        if not show:
             r["comment_text"] = None
+            r["gloss"] = None
+        else:
+            r["gloss"] = _gloss_for(r["comment_text"], r["language_type"])
+    lp = (members.groupby("post_id").size().rename("cluster_comments").reset_index()
+          .sort_values("cluster_comments", ascending=False).head(8)
+          .merge(p[["post_id", "brand", "platform", "campaign", "content_type", "likes", "comments_count", "views",
+                    "attention_index", "source_url"]], on="post_id", how="left"))
     need = prof["need_category"]
     recs = [_rec(r) for r in f.recommendations.to_dict(orient="records")
             if r["audience_need"] == need or f'"id": {cluster_id},' in (r["linked_evidence_json"] or "")
@@ -324,7 +350,19 @@ def cluster_detail(cluster_id: int, dataset_id: str | None = None, filters: Filt
     return {"meta": meta(f, len(members), filters, f.selected_run), "cluster": prof, "breakdowns": clean(breakdowns),
             "monthly": trend, "engagement_context": ctx, "comments": rows, "page": pg,
             "comments_note": None if show else "Comment text is withheld for this dataset (derived labels only).",
-            "recommendations": recs}
+            "gloss_note": ("Roman-Urdu/mixed comments show the English gloss that was fed to the embedding model "
+                           "(ADR-013). It is supporting information, not a translation of record.") if show else None,
+            "linked_posts": frame_records(lp), "recommendations": recs}
+
+
+def _gloss_for(text: str | None, language: str | None) -> str | None:
+    if not text or language not in {"roman_urdu", "mixed"}:
+        return None
+    from audienceiq.nlp.gloss import embedding_text
+    from audienceiq.nlp.normalize import normalize_text, strip_boilerplate
+
+    g = embedding_text(strip_boilerplate(normalize_text(text)), language)
+    return g if g and g != strip_boilerplate(normalize_text(text)) else None
 
 
 @app.get(f"{V1}/audience/evaluation")
@@ -340,6 +378,7 @@ def evaluation(dataset_id: str | None = None):
 def comments(dataset_id: str | None = None, filters: Filters = Depends(filters_dep), cluster_id: int | None = None,
              language: str | None = None, topic: str | None = None, intent: str | None = None,
              sentiment: str | None = None, q: str | None = Query(None, max_length=80),
+             sort: str = Query("comment_id", pattern=r"^-?(comment_id|published_at|char_len|cluster_id)$"),
              page: int = Query(1, ge=1), page_size: int = Query(25, ge=1, le=200)):
     f = load_frames(dataset_id)
     p = filtered_posts(f, filters)
@@ -354,7 +393,9 @@ def comments(dataset_id: str | None = None, filters: Filters = Depends(filters_d
     summary = {"languages": cc["language_type"].value_counts().to_dict(), "topics": cc["topic"].value_counts().to_dict(),
                "intent": cc["purchase_intent"].value_counts().to_dict(),
                "sentiment": cc["sentiment"].value_counts().to_dict()}
-    chunk, pg = paginate(cc.sort_values("comment_id"), page, page_size)
+    sort_col = sort.lstrip("-")
+    chunk, pg = paginate(cc.sort_values([sort_col, "comment_id"], ascending=[not sort.startswith("-"), True],
+                                        na_position="last"), page, page_size)
     rows = frame_records(chunk, ["comment_id", "post_id", "comment_text", "language_type", "topic", "topic_confidence",
                                  "sentiment", "purchase_intent", "cluster_id", "cluster_label", "need", "published_at",
                                  "platform", "brand", "campaign", "content_type"])
@@ -537,10 +578,10 @@ def report_export(dataset_id: str | None = None, filters: Filters = Depends(filt
     stamp = datetime.now(UTC).strftime("%Y%m%d")
     base = f"audienceiq_{f.meta['dataset_id']}_{stamp}"
     if format == "csv":
-        return Response(export.to_csv(f, section, p), media_type="text/csv; charset=utf-8",
+        return Response(export.to_csv(f, section, p, filters.as_dict()), media_type="text/csv; charset=utf-8",
                         headers={"Content-Disposition": f'attachment; filename="{base}_{section}.csv"'})
     if format == "xlsx":
-        return Response(export.to_xlsx(f, p), media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        return Response(export.to_xlsx(f, p, filters.as_dict()), media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                         headers={"Content-Disposition": f'attachment; filename="{base}.xlsx"'})
     return Response(export.to_pdf(f, p, compare(p, "content_type", "attention_index")), media_type="application/pdf",
                     headers={"Content-Disposition": f'attachment; filename="{base}_summary.pdf"'})
@@ -550,6 +591,114 @@ def report_export(dataset_id: str | None = None, filters: Filters = Depends(filt
 def methodology(dataset_id: str | None = None):
     f = load_frames(dataset_id)
     return {"meta": meta(f, f.meta["comment_count"], run=f.selected_run), **clean(methodology_payload(f))}
+
+
+# ---------------------------------------------------------------- segments (Q4) and data sources
+SEGMENT_NAMES = {
+    "price": "Price askers", "discount": "Discount seekers", "delivery": "Delivery-concerned shoppers",
+    "availability": "Availability inquirers", "size_fit": "Size & fit questioners", "fabric_quality": "Quality checkers",
+    "purchase_inquiry": "Ready-to-buy inquirers", "order_issue": "Order-problem reporters", "compliment": "Admirers",
+    "other": "Off-topic & general", "mixed": "Mixed / uncertain",
+}
+COMPARE_DIMS = ("campaign", "brand", "content_type", "platform")
+
+
+@app.get(f"{V1}/audience/segments")
+def segments(dataset_id: str | None = None, filters: Filters = Depends(filters_dep),
+             compare_by: str = Query("campaign", pattern="^(campaign|brand|content_type|platform)$")):
+    """Comment-level need segments = discovered clusters grouped by their post-hoc need. Unit of analysis: comments."""
+    f = load_frames(dataset_id)
+    p = filtered_posts(f, filters)
+    cc = _cc_filtered(f, p)
+    rows = [r for r in _cluster_rows(f, cc) if r["cluster_id"] != -1]
+    valid = cc[cc["cluster_id"] != -1]
+    n_valid = int(len(valid))
+    withheld = f.meta["text_permission"] == "withheld"
+    recs = [_rec(r) for r in f.recommendations.to_dict(orient="records")]
+    by_need: dict[str, list[dict]] = {}
+    for r in rows:
+        by_need.setdefault(r["need_category"], []).append(r)
+    out = []
+    for need, group in by_need.items():
+        ids = [g["cluster_id"] for g in group]
+        members = valid[valid["cluster_id"].isin(ids)]
+        size = int(len(members))
+        tops = {}
+        for dim in ("campaign", "brand", "content_type"):
+            overall = valid[dim].value_counts(normalize=True)
+            inside = members[dim].value_counts()
+            cand = [{"value": k, "label": CONTENT_TYPE_LABELS.get(k, k), "n": int(v), "share": round(v / size, 4),
+                     "lift": round((v / size) / overall[k], 3)} for k, v in inside.items() if size and v >= 15]
+            tops[dim] = sorted(cand, key=lambda x: -x["lift"])[:3]
+        month = pd.to_datetime(members["published_at"], utc=True, errors="coerce").dt.strftime("%Y-%m").dropna()
+        examples = sorted([e for g in group for e in g["exemplars"]], key=lambda e: -(e.get("similarity") or 0))[:4]
+        if withheld:
+            examples = [dict(e, text=None) for e in examples]
+        agreement = (sum(g["label_agreement"] * g["filtered_size"] for g in group) / size) if size else None
+        out.append(clean({
+            "segment": need, "name": SEGMENT_NAMES.get(need, need), "need_label": NEED_LABELS.get(need, need),
+            "uncertain": need in {"mixed", "other"} or (agreement is not None and agreement < 0.5),
+            "clusters": [{"cluster_id": g["cluster_id"], "label": g["label"], "size": g["filtered_size"],
+                          "agreement": g["label_agreement"]} for g in group],
+            "comments": size, "share_of_valid": size / n_valid if n_valid else 0.0, "name_agreement": agreement,
+            "posts_reached": int(members["post_id"].nunique()),
+            "language_mix": members["language_type"].value_counts().to_dict(),
+            "intent_mix": members["purchase_intent"].value_counts().to_dict(),
+            "top": tops, "monthly": month.value_counts().sort_index().to_dict(), "examples": examples,
+            "recommendations": [{"recommendation_id": r["recommendation_id"], "title": r["title"], "priority": r["priority"]}
+                                for r in recs if r["audience_need"] == need],
+        }))
+    out.sort(key=lambda s: -s["comments"])
+    compare_rows = []
+    for val, g in valid.groupby(compare_by):
+        if len(g) < 30:
+            continue
+        compare_rows.append({"value": val, "label": CONTENT_TYPE_LABELS.get(val, val), "comments": int(len(g)),
+                             "shares": {s["segment"]: round(float(g["cluster_id"].isin([c["cluster_id"] for c in s["clusters"]]).mean()), 4)
+                                        for s in out}})
+    return {"meta": meta(f, n_valid, filters, f.selected_run, assumptions=[
+                "Unit of analysis: comments, not people. A segment is a group of discovered clusters sharing a post-hoc need; "
+                "no individual is profiled or tracked.",
+                "Shares use clustered (non-noise) comments as the denominator.",
+                "Segments with name agreement < 50 % or a mixed/other need are marked uncertain."]),
+            "valid_comments": n_valid, "noise_comments": int((cc["cluster_id"] == -1).sum()), "segments": out,
+            "compare": {"dimension": compare_by, "rows": clean(sorted(compare_rows, key=lambda r: -r["comments"]))},
+            "text_visible": not withheld}
+
+
+@app.get(f"{V1}/data/sources")
+def data_sources():
+    """Public-safe source status: which platforms are genuinely supported and whether a collector is configured here.
+    Only booleans are reported — never key values."""
+    s = get_settings()
+    ds = get_repository().list_datasets()
+    observed = [d for d in ds if d["mode"] == "observed"]
+    latest = max(observed, key=lambda d: d["snapshot_at"]) if observed else None
+    key_here = bool(os.environ.get("YOUTUBE_API_KEY")) and not s.hosted
+    return {
+        "collector": {
+            "name": "YouTube Data API v3 collector", "script": "pipelines/collect_youtube.py",
+            "runs_where": "offline pipeline on the owner's machine; never inside the web app",
+            "configured_on_this_server": key_here,
+            "status": ("configured locally" if key_here else
+                       "not configured on this server (expected for the public demo)"),
+            "latest_snapshot": latest["snapshot_at"] if latest else None,
+            "latest_expires_at": latest["expires_at"] if latest else None,
+            "latest_expired": bool(latest["expired"]) if latest else None,
+            "quota_note": "≈ 650–700 of the default 10,000 daily quota units per 24-month collection",
+        },
+        "platforms": [
+            {"platform": "YouTube", "support": "observed", "method": "Official YouTube Data API v3 (public statistics + top-level comments)",
+             "in_this_build": bool(observed), "notes": "Comment text withheld; data expires 30 days after collection."},
+            {"platform": "Instagram", "support": "csv_import", "method": "Authorised CSV export (e.g. Insights) via Data hub",
+             "in_this_build": False, "notes": "No live connector; the synthetic demo simulates Instagram posts."},
+            {"platform": "TikTok", "support": "csv_import", "method": "Authorised CSV export via Data hub",
+             "in_this_build": False, "notes": "No live connector; the synthetic demo simulates TikTok posts."},
+            {"platform": "Facebook", "support": "csv_import", "method": "Authorised CSV export via Data hub",
+             "in_this_build": False, "notes": "No live connector; the synthetic demo simulates Facebook posts."},
+        ],
+        "writes_enabled": s.writes_enabled,
+    }
 
 
 def expiry_for(snapshot: datetime) -> str:

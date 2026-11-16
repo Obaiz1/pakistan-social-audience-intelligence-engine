@@ -71,14 +71,31 @@ def summary_frame(f, posts: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows, columns=["field", "value"])
 
 
-def to_csv(f, section: str, posts: pd.DataFrame) -> bytes:
+def report_metadata(f, filters: dict | None, rows: int | None = None) -> list[tuple[str, str]]:
+    """Metadata repeated on every export: source mode, dataset/model versions, filters, time, counts, limitations."""
+    sel = f.selected_run or {}
+    return [("product", SHORT_NAME), ("disclaimer", f.meta["disclaimer"]), ("mode", f.meta["mode"]),
+            ("dataset", f.meta["dataset_id"]), ("snapshot", str(f.meta["snapshot_at"])),
+            ("dataset posts / comments", f"{f.meta['post_count']} / {f.meta['comment_count']}"),
+            ("clustering run", f"{sel.get('run_id')} ({sel.get('model_version')})"),
+            ("filters", "; ".join(f"{k}={v}" for k, v in (filters or {}).items()) or "none"),
+            ("rows in this export", "" if rows is None else str(rows)),
+            ("generated", datetime.now(UTC).isoformat(timespec="seconds")),
+            ("limitations", "Associational analysis; anomalies are statistical outliers, not fraud claims; "
+                            "synthetic data demonstrates the method only")]
+
+
+def to_csv(f, section: str, posts: pd.DataFrame, filters: dict | None = None) -> bytes:
+    frame = _safe(section_frame(f, section, posts))
     buf = io.StringIO()
-    buf.write(f"# {SHORT_NAME} export — {section}\n# {f.meta['disclaimer']}\n# dataset: {f.meta['dataset_id']}\n")
-    _safe(section_frame(f, section, posts)).to_csv(buf, index=False, lineterminator="\n")
+    buf.write(f"# {SHORT_NAME} export — {section}\n")
+    for k, v in report_metadata(f, filters, len(frame)):
+        buf.write(f"# {k}: {v}\n")
+    frame.to_csv(buf, index=False, lineterminator="\n")
     return buf.getvalue().encode("utf-8-sig")
 
 
-def to_xlsx(f, posts: pd.DataFrame) -> bytes:
+def to_xlsx(f, posts: pd.DataFrame, filters: dict | None = None) -> bytes:
     buf = io.BytesIO()
     with pd.ExcelWriter(buf, engine="openpyxl") as xw:
         for section in SECTIONS:
@@ -86,7 +103,7 @@ def to_xlsx(f, posts: pd.DataFrame) -> bytes:
             if section == "comments" and len(df) > 50_000:
                 df = df.head(50_000)
             df.to_excel(xw, sheet_name=section[:31], index=False)
-        pd.DataFrame({"disclaimer": [f.meta["disclaimer"]]}).to_excel(xw, sheet_name="README", index=False)
+        pd.DataFrame(report_metadata(f, filters), columns=["field", "value"]).to_excel(xw, sheet_name="README", index=False)
     return buf.getvalue()
 
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
 import { Fragment } from "react";
 import { useApi } from "@/lib/api";
@@ -25,6 +26,16 @@ type Method = {
 };
 type Eval = { evaluation: { clustering?: { candidates: Candidate[]; selected_key: string } } };
 
+const DEMO: { min: string; route: string; title: string; say: string }[] = [
+  { min: "0:00", route: "/", title: "Overview", say: "State the data mode and disclaimer first, then read the five answers in order." },
+  { min: "1:00", route: "/content", title: "Q1 · Attention", say: "Open the content-type chart; point at the confidence intervals and the 'no clear difference' verdicts — not just the winner." },
+  { min: "2:00", route: "/audience", title: "Q2 · Audience needs", say: "Pick the price-inquiry cluster, show a Roman-Urdu comment with its gloss, then the linked post and the evidence trail." },
+  { min: "3:15", route: "/anomalies", title: "Q3 · Anomaly lab", say: "Open the strongest flag; read the cohort, the baseline and the caveat that outliers are not fraud." },
+  { min: "4:15", route: "/segments", title: "Q4 · Segments", say: "Compare segments by campaign; stress that segments count comments, not people." },
+  { min: "5:00", route: "/recommendations", title: "Q5 · Action center", say: "Walk one card: opportunity → why → evidence chips → suggested test → caveat. Set it to 'Planned'." },
+  { min: "6:00", route: "/model", title: "Model lab", say: "Show the selection rule, the 18 % → 52 % audit and an error case. Finish on the printable brief (/reports/brief)." },
+];
+
 export function MethodologyView() {
   const { datasetId } = useDataset();
   const s = useApi<Method>(datasetId ? "/methodology" : null, { dataset_id: datasetId });
@@ -40,15 +51,26 @@ export function MethodologyView() {
   return (
     <div className="grid">
       <section className="hero" aria-labelledby="mtitle">
-        <div className="eyebrow">University assignment</div>
+        <div className="eyebrow">Evidence &amp; data · Methodology</div>
         <h1 id="mtitle">{m.project_title}</h1>
         <p>{m.product_name} ({m.short_name}) — a small web application that groups similar audience behaviour, identifies unusual patterns and turns those discoveries into evidence-based marketing decisions. The central technique is unsupervised clustering of multilingual comments, not sentiment classification.</p>
       </section>
       <MethodNote meta={m.meta} posts={m.dataset.posts} comments={m.dataset.comments} />
 
       <Panel title="The five questions and where they are answered">
-        <div className="table-wrap"><table className="data"><thead><tr><th>ID</th><th>Question</th><th>Method</th><th>View</th></tr></thead>
+        <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>ID</th><th>Question</th><th>Method</th><th>View</th></tr></thead>
           <tbody>{m.questions.map((q) => <tr key={q.id}><td><strong>{q.id}</strong></td><td>{q.question}</td><td className="faint">{q.method}</td><td><Link className="btn sm" href={q.route}>Open</Link></td></tr>)}</tbody></table></div>
+      </Panel>
+
+      <Panel title="Seven-minute demo walkthrough" description="A suggested path for presenting the project. Each step opens the screen it describes.">
+        <ol className="stack" style={{ margin: 0, paddingLeft: 0, listStyle: "none", gap: 8 }}>
+          {DEMO.map((d) => (
+            <li key={d.route} className="row" style={{ alignItems: "flex-start", gap: 12, flexWrap: "nowrap" }}>
+              <span className="chip num" style={{ minWidth: 58, justifyContent: "center" }}><Clock size={11} aria-hidden="true" /> {d.min}</span>
+              <span><Link href={d.route}><strong>{d.title}</strong></Link> <span className="muted">— {d.say}</span></span>
+            </li>
+          ))}
+        </ol>
       </Panel>
 
       <div className="grid cols-2">
@@ -102,19 +124,7 @@ export function MethodologyView() {
             )}
           </div>
         </div>
-        <h3 className="section" style={{ margin: "16px 0 8px" }}>All {cands.length} candidates compared</h3>
-        <div className="table-wrap"><table className="data">
-          <thead><tr><th>Representation</th><th>Algorithm</th><th className="n">k</th><th className="n">Noise</th><th className="n">Silhouette</th><th className="n">DB</th><th className="n">Min share</th><th className="n">Stability</th><th>Eligible</th><th className="n">Score</th><th className="n">NMI vs language</th></tr></thead>
-          <tbody>{cands.map((c) => (
-            <tr key={c.run_id} style={c.run_id === sel.run_id ? { background: "var(--accent-soft)" } : undefined}>
-              <td>{c.embedding}{c.run_id === sel.run_id && <span className="badge accent" style={{ marginLeft: 6 }}>selected</span>}</td>
-              <td>{c.algorithm} <span className="faint mono">{Object.entries(c.params).filter(([k]) => k !== "dims").map(([k, v]) => `${k}=${v}`).join(",")}</span></td>
-              <td className="n">{c.n_clusters}</td><td className="n">{pct(c.noise_rate, 0)}</td><td className="n">{ratio(c.silhouette_cosine, 3)}</td><td className="n">{ratio(c.davies_bouldin, 2)}</td>
-              <td className="n">{pct(c.min_cluster_share, 1)}</td><td className="n">{ratio(c.stability_ari, 3)}</td><td>{c.eligible ? "yes" : "no"}</td><td className="n">{ratio(c.selection_score, 3)}</td>
-              <td className="n">{ratio(c.external?.language?.nmi ?? null, 3)}</td>
-            </tr>
-          ))}</tbody>
-        </table></div>
+        <p className="faint" style={{ marginTop: 12 }}>All {cands.length || "the"} candidate runs, the error cases and the method comparison are in the <Link href="/model">Model lab <ArrowRight size={11} aria-hidden="true" /></Link>.</p>
       </Panel>
 
       <div className="grid cols-2">
@@ -149,7 +159,7 @@ export function MethodologyView() {
 
       <Panel title="What came from earlier projects, and what is new">
         <div className="grid cols-2">
-          <div className="table-wrap"><table className="data"><thead><tr><th>Upstream repository</th><th>Reused</th></tr></thead>
+          <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Upstream repository</th><th>Reused</th></tr></thead>
             <tbody>{m.upstream.map((u) => <tr key={u.repo}><td className="mono">{u.repo}@{u.commit}</td><td className="faint">{u.reused}</td></tr>)}</tbody></table></div>
           <div><strong>New for Project 3</strong><ul style={{ paddingLeft: 18 }}>{m.new_in_project3.map((n) => <li key={n} className="muted">{n}</li>)}</ul></div>
         </div>

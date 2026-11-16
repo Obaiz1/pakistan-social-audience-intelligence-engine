@@ -2,7 +2,9 @@
 
 import { AlertTriangle, CheckCircle2, Info, Loader2, RefreshCw, Table2, BarChart3, X, XCircle } from "lucide-react";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { MODE_LABEL, date, num } from "@/lib/format";
+import { isUrduScript } from "@/lib/text";
 import type { Meta, Mode } from "@/lib/types";
 
 // Patterns adapted from Repo B (signalspend-ai components/ui.tsx): PageHead, Panel, Notice, Kpi, Empty, Skeleton.
@@ -104,17 +106,24 @@ export function ErrorState({ error, status, onRetry }: { error: string; status?:
   );
 }
 
-export function Kpi({ label, value, sub, na, help }: { label: string; value: string; sub?: ReactNode; na?: boolean; help?: string }) {
-  return (
-    <div className="kpi">
+export function Kpi({ label, value, sub, na, help, href }: { label: string; value: string; sub?: ReactNode; na?: boolean; help?: string; href?: string }) {
+  const body = (
+    <>
       <div className="kpi-label">
         {label}
-        {help && <span title={help} aria-label={`${label}: ${help}`} tabIndex={0} style={{ cursor: "help" }}>ⓘ</span>}
+        {help && <span title={help} aria-label={`Definition: ${help}`} tabIndex={href ? -1 : 0} style={{ cursor: "help" }}>ⓘ</span>}
       </div>
       <div className={`kpi-value${na ? " na" : ""}`}>{value}</div>
       {sub && <div className="kpi-sub">{sub}</div>}
-    </div>
+    </>
   );
+  return href ? <Link href={href} className="kpi">{body}<span className="sr-only"> — open evidence</span></Link> : <div className="kpi">{body}</div>;
+}
+
+/** Comment/excerpt text with per-excerpt direction: Urdu script → rtl + Naskh font; English/Roman Urdu → ltr. */
+export function Bidi({ text, className }: { text: string; className?: string }) {
+  const urdu = isUrduScript(text);
+  return <span dir={urdu ? "rtl" : "ltr"} lang={urdu ? "ur" : undefined} className={`${urdu ? "urdu" : "bidi"}${className ? ` ${className}` : ""}`}>{text}</span>;
 }
 
 export function ModeBadge({ mode }: { mode: Mode }) {
@@ -173,7 +182,18 @@ export function Drawer({ open, title, subtitle, onClose, children }: { open: boo
     if (!open) return;
     const prev = document.activeElement as HTMLElement | null;
     ref.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { onClose(); return; }
+      if (e.key !== "Tab" || !ref.current) return;
+      // aria-modal: keep Tab / Shift+Tab inside the drawer
+      const items = [...ref.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), select, input, textarea, [tabindex]:not([tabindex="-1"])')].filter((el) => el.offsetParent !== null);
+      if (!items.length) { e.preventDefault(); ref.current.focus(); return; }
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || active === ref.current)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (active === last || !ref.current.contains(active))) { e.preventDefault(); first.focus(); }
+    };
     window.addEventListener("keydown", onKey);
     return () => {
       window.removeEventListener("keydown", onKey);
@@ -216,6 +236,6 @@ export function Pager({ page, pages, total, onPage }: { page: number; pages: num
 }
 
 export function TextCell({ text, withheld }: { text: string | null; withheld?: boolean }) {
-  if (withheld || text === null) return <span className="faint">[text withheld]</span>;
-  return <span className="bidi">{text}</span>;
+  if (withheld || text === null) return <span className="faint">[text withheld — no permission to show]</span>;
+  return <Bidi text={text} />;
 }
