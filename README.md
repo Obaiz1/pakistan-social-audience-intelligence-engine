@@ -6,7 +6,7 @@ A web application that groups multilingual social-media comments (English, Roman
 
 > **Data status:** two separate datasets, never merged. (1) Default: a deterministic **SYNTHETIC classroom dataset** (3,000 posts, 33,776 comments, seed 42, fictional brands), labelled on every page, API response and export. (2) **OBSERVED YouTube snapshot** (2,165 public videos from 8 official Pakistani clothing-brand channels, 809 comments, collected 2026-11-16 via the YouTube Data API v3; comment text withheld; expires 2026-12-16). Switch datasets in the top bar.
 
-**Live app:** https://audienceiq-pk.vercel.app (public, read-only demo) · **Repository:** https://github.com/Obaiz1/pakistan-social-audience-intelligence-engine (private until the owner makes it public)
+**Live app:** https://audienceiq-pk.vercel.app (public, read-only demo) · **Repository:** https://github.com/Obaiz1/pakistan-social-audience-intelligence-engine
 
 ## The five questions and where they are answered
 | # | Question | Page | Method (one line) |
