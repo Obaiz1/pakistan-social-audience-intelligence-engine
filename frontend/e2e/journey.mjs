@@ -140,6 +140,7 @@ await step("J6 Q5 Action center: evidence link + workflow status persists", asyn
 await step("J7 Model lab: audit metric definition, candidates, error cases", async () => {
   await page.goto(`${BASE}/model`);
   await page.getByRole("heading", { name: /How the audience clusters were made/ }).waitFor();
+  await page.locator("table.data tbody tr").nth(20).waitFor({ timeout: 30000 });   // candidates table loaded
   const body = await page.locator("main").innerText();
   if (!/18\s?%/.test(body)) throw new Error("audit baseline (18 %) not stated");
   if (!/46\s?%/.test(body) || !/not the shipped figure/i.test(body)) throw new Error("exploratory 46 % not disambiguated");
@@ -150,6 +151,8 @@ await step("J7 Model lab: audit metric definition, candidates, error cases", asy
 await step("J8 Data hub: source status without a key, import preview validates only", async () => {
   await page.goto(`${BASE}/data`);
   await page.getByText("Source status").first().waitFor();
+  // the panel title renders while loading; wait for the matrix itself (slower on the hosted API)
+  await page.locator(".panel", { hasText: "Source status" }).locator("table tbody tr").first().waitFor({ timeout: 30000 });
   // textContent, not innerText: badges are text-transformed to uppercase
   const panel = await page.locator(".panel", { hasText: "Source status" }).first().evaluate((el) => el.textContent ?? "");
   if (/AIza[0-9A-Za-z_-]{10,}/.test(panel)) throw new Error("something that looks like an API key is on the page");

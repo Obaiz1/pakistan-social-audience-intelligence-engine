@@ -46,6 +46,8 @@ export const NAV: { label: string; items: NavItem[] }[] = [
 ];
 const ALL = NAV.flatMap((g) => g.items);
 
+const SUBPAGE_LABEL: Record<string, string> = { brief: "Executive brief" };
+
 function ThemeToggle() {
   const [theme, setTheme] = useState<"dark" | "light" | null>(null);
   useEffect(() => {
@@ -101,7 +103,8 @@ function Frame({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const { error, loading, refresh, health } = useDataset();
   const current = ALL.find((i) => (i.href === "/" ? pathname === "/" : pathname === i.href || pathname.startsWith(`${i.href}/`)));
-  const subpage = current && pathname !== current.href ? pathname.slice(current.href.length + 1) : null;
+  const subSlug = current && pathname !== current.href ? pathname.slice(current.href.length + 1) : null;
+  const subpage = subSlug ? (SUBPAGE_LABEL[subSlug] ?? subSlug.replace(/[-_]/g, " ").replace(/^./, (c) => c.toUpperCase())) : null;
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- close the mobile drawer after navigation
     setOpen(false);
