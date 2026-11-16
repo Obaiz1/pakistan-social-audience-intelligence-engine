@@ -2,6 +2,7 @@
 // Usage: APP_URL=http://127.0.0.1:3000 [QA_TAG=local] node e2e/screens.mjs
 // Saves screenshots to docs/screenshots/<tag>/ and a JSON report to docs/evidence/qa-screens-<tag>.json.
 import { mkdirSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
 const BASE = (process.env.APP_URL || "http://127.0.0.1:3000").replace(/\/$/, "");
@@ -46,7 +47,7 @@ for (const theme of THEMES) {
         };
       });
       const file = `${route === "/" ? "overview" : route.slice(1)}-${width}-${theme}.png`;
-      await page.screenshot({ path: new URL(file, shots), fullPage: width === 1440 && route === "/" });
+      await page.screenshot({ path: fileURLToPath(new URL(file, shots)), fullPage: width === 1440 && route === "/" });
       const status = typeof res?.status === "function" ? res.status() : null;
       const ok = status === 200 && !audit.overflow && audit.h1 >= 1 && !errors.length && !apiErrors.length && !audit.unnamed.length;
       results.push({ route, width, theme, status, ok, ...audit, consoleErrors: errors, apiErrors, screenshot: `docs/screenshots/${TAG}/${file}` });

@@ -79,7 +79,7 @@ await step("Q3 anomalies list + detail with baseline", async () => {
   await page.goto(`${BASE}/anomalies`);
   await visible("table.data");
   await page.locator("table.data button.link").first().click();
-  await visible(".drawer");
+  await visible(".drawer .kv");
   const text = await page.locator(".drawer").innerText();
   if (!/cohort median/i.test(text)) throw new Error("no baseline shown");
   if (!/not evidence of fraud/i.test(text)) throw new Error("caveat missing");
