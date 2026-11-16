@@ -34,3 +34,12 @@ Decision: hosted deployment exposes all read endpoints and CSV *preview/validati
 
 ## Open items
 - Licence for this repository: none chosen yet (owner decision). Upstream repos have no licence file.
+
+## ADR-007a Amendment (2026-11-16): selection runs within the semantic family; lexical is the baseline
+Context: the brief names a multilingual sentence-embedding model as the method and TF-IDF/char-n-gram + SVD as "an explainable baseline, not a fake semantic model". Exploratory runs (docs/evidence/clustering_exploration_*.log) showed that character n-gram silhouettes are inflated by near-duplicate templated text, and that e5-small clusters strongly by language (NMI with language ≈ 0.31) whereas multilingual MiniLM and mpnet stay near 0.13–0.15. Decision: the ADR-007 rule is applied unchanged, but only `semantic` and `hybrid` candidates may be selected; `lexical` candidates are computed and reported as the baseline. The semantic model is `paraphrase-multilingual-mpnet-base-v2` (Apache-2.0), chosen on language invariance and internal silhouette at eligible k. Disclosure: the exploratory logs also printed agreement with the synthetic generator's hidden needs; those numbers were visible when choosing the model family and are reported, never used inside the selection rule.
+
+## ADR-011 Boilerplate removal before embedding
+Greetings, politeness markers and PII placeholders ("AOA sis … please", `<user>`) carry no audience need but dominated short-comment embeddings (unique texts fell from 12,230 to 7,859 after removal). Only that closed list is removed (`nlp/normalize.py:BOILERPLATE`); question words, products, sizes and places are never removed.
+
+## ADR-012 Observed collection status: BLOCKED pending owner action
+The collector (`pipelines/collect_youtube.py`) is implemented. Running it with a key found in another local project's `.env` was refused by the session's permission policy, so no observed data was collected in this build. The owner can run it with their own key in the environment (`YOUTUBE_API_KEY=… python pipelines/collect_youtube.py`); the resulting bundle ships with comment text withheld and a 30-day expiry.

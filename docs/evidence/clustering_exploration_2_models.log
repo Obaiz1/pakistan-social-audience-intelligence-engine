@@ -1,0 +1,54 @@
+# Exploratory clustering comparison 2 (boilerplate removed; 3 multilingual models; UMAP+HDBSCAN), 2026-11-16
+# Stopped after hybrid-mpnet k=10: the remaining hybrid-mpnet candidates are recomputed by pipelines/build_demo.py.
+unique stripped 7859
+sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 encode secs 39.0
+intfloat/multilingual-e5-small encode secs 102.2
+sentence-transformers/paraphrase-multilingual-mpnet-base-v2 encode secs 122.1
+lexical                      kmeans k=10            k= 10 noise=0.00 sil=0.1404 minsh=0.0306 | need ari=0.0577 nmi=0.2127 pur=0.377 | lang nmi=0.2145
+lexical                      kmeans k=14            k= 14 noise=0.00 sil=0.1779 minsh=0.0233 | need ari=0.1015 nmi=0.2926 pur=0.4574 | lang nmi=0.2179
+lexical                      kmeans k=18            k= 18 noise=0.00 sil=0.2041 minsh=0.0139 | need ari=0.1279 nmi=0.2998 pur=0.4938 | lang nmi=0.2139
+lexical                      kmeans k=24            k= 24 noise=0.00 sil=0.2316 minsh=0.0131 | need ari=0.1343 nmi=0.3259 pur=0.5077 | lang nmi=0.249
+lexical                      kmeans k=30            k= 30 noise=0.00 sil=0.2564 minsh=0.0103 | need ari=0.1614 nmi=0.3739 pur=0.5842 | lang nmi=0.2363
+lexical                      umap+hdbscan mcs=60    k=229 noise=0.27 sil=0.3664 minsh=0.0024 | need ari=0.0562 nmi=0.4895 pur=0.8607 | lang nmi=0.2813
+lexical                      umap+hdbscan mcs=150   k= 64 noise=0.51 sil=0.4278 minsh=0.0092 | need ari=0.1006 nmi=0.4604 pur=0.7235 | lang nmi=0.2853
+lexical                      umap+hdbscan mcs=300   k= 22 noise=0.73 sil=0.2846 minsh=0.0334 | need ari=0.21 nmi=0.419 pur=0.5609 | lang nmi=0.2993
+  umap+hdb secs 362.6
+paraphrase-multilingual-MiniLM-L12-v2 kmeans k=10            k= 10 noise=0.00 sil=0.2035 minsh=0.0505 | need ari=0.136 nmi=0.2469 pur=0.4389 | lang nmi=0.135
+paraphrase-multilingual-MiniLM-L12-v2 kmeans k=14            k= 14 noise=0.00 sil=0.1735 minsh=0.0281 | need ari=0.1557 nmi=0.2834 pur=0.4947 | lang nmi=0.1296
+paraphrase-multilingual-MiniLM-L12-v2 kmeans k=18            k= 18 noise=0.00 sil=0.1985 minsh=0.0077 | need ari=0.1414 nmi=0.2812 pur=0.4669 | lang nmi=0.1482
+paraphrase-multilingual-MiniLM-L12-v2 kmeans k=24            k= 24 noise=0.00 sil=0.2113 minsh=0.0077 | need ari=0.1373 nmi=0.2985 pur=0.509 | lang nmi=0.1375
+paraphrase-multilingual-MiniLM-L12-v2 kmeans k=30            k= 30 noise=0.00 sil=0.2279 minsh=0.0036 | need ari=0.1485 nmi=0.3229 pur=0.5388 | lang nmi=0.1329
+paraphrase-multilingual-MiniLM-L12-v2 umap+hdbscan mcs=60    k=204 noise=0.33 sil=0.2284 minsh=0.0027 | need ari=0.0497 nmi=0.4226 pur=0.7504 | lang nmi=0.2349
+paraphrase-multilingual-MiniLM-L12-v2 umap+hdbscan mcs=150   k= 43 noise=0.58 sil=0.1225 minsh=0.0107 | need ari=0.0914 nmi=0.3818 pur=0.5817 | lang nmi=0.1746
+paraphrase-multilingual-MiniLM-L12-v2 umap+hdbscan mcs=300   k=  8 noise=0.73 sil=0.2363 minsh=0.0346 | need ari=0.1015 nmi=0.2593 pur=0.4106 | lang nmi=0.1063
+  umap+hdb secs 149.7
+multilingual-e5-small        kmeans k=10            k= 10 noise=0.00 sil=0.1126 minsh=0.0422 | need ari=0.1371 nmi=0.2443 pur=0.4289 | lang nmi=0.2614
+multilingual-e5-small        kmeans k=14            k= 14 noise=0.00 sil=0.1107 minsh=0.0181 | need ari=0.1357 nmi=0.2519 pur=0.4545 | lang nmi=0.3215
+multilingual-e5-small        kmeans k=18            k= 18 noise=0.00 sil=0.1218 minsh=0.013 | need ari=0.1309 nmi=0.273 pur=0.4654 | lang nmi=0.3118
+multilingual-e5-small        kmeans k=24            k= 24 noise=0.00 sil=0.1484 minsh=0.0049 | need ari=0.157 nmi=0.3191 pur=0.5189 | lang nmi=0.3194
+multilingual-e5-small        kmeans k=30            k= 30 noise=0.00 sil=0.1488 minsh=0.0067 | need ari=0.1529 nmi=0.3464 pur=0.5681 | lang nmi=0.3118
+multilingual-e5-small        umap+hdbscan mcs=60    k=213 noise=0.35 sil=0.3049 minsh=0.0027 | need ari=0.0583 nmi=0.4672 pur=0.7935 | lang nmi=0.2805
+multilingual-e5-small        umap+hdbscan mcs=150   k= 43 noise=0.64 sil=0.2173 minsh=0.0124 | need ari=0.1386 nmi=0.4391 pur=0.6391 | lang nmi=0.3436
+multilingual-e5-small        umap+hdbscan mcs=300   k= 12 noise=0.75 sil=0.1314 minsh=0.0361 | need ari=0.1804 nmi=0.3859 pur=0.5428 | lang nmi=0.363
+  umap+hdb secs 143.7
+paraphrase-multilingual-mpnet-base-v2 kmeans k=10            k= 10 noise=0.00 sil=0.1788 minsh=0.065 | need ari=0.1628 nmi=0.2522 pur=0.4512 | lang nmi=0.1235
+paraphrase-multilingual-mpnet-base-v2 kmeans k=14            k= 14 noise=0.00 sil=0.1752 minsh=0.0304 | need ari=0.1862 nmi=0.3047 pur=0.5107 | lang nmi=0.1417
+paraphrase-multilingual-mpnet-base-v2 kmeans k=18            k= 18 noise=0.00 sil=0.1946 minsh=0.0188 | need ari=0.1833 nmi=0.3243 pur=0.5384 | lang nmi=0.1458
+paraphrase-multilingual-mpnet-base-v2 kmeans k=24            k= 24 noise=0.00 sil=0.1858 minsh=0.006 | need ari=0.16 nmi=0.3108 pur=0.5289 | lang nmi=0.1491
+paraphrase-multilingual-mpnet-base-v2 kmeans k=30            k= 30 noise=0.00 sil=0.2117 minsh=0.0068 | need ari=0.1563 nmi=0.3371 pur=0.5569 | lang nmi=0.1576
+paraphrase-multilingual-mpnet-base-v2 umap+hdbscan mcs=60    k=198 noise=0.36 sil=0.2489 minsh=0.0028 | need ari=0.0492 nmi=0.4257 pur=0.7616 | lang nmi=0.2383
+paraphrase-multilingual-mpnet-base-v2 umap+hdbscan mcs=150   k= 37 noise=0.61 sil=0.1614 minsh=0.0113 | need ari=0.0666 nmi=0.3253 pur=0.5543 | lang nmi=0.175
+paraphrase-multilingual-mpnet-base-v2 umap+hdbscan mcs=300   k= 12 noise=0.68 sil=0.1954 minsh=0.0303 | need ari=0.1291 nmi=0.2867 pur=0.4563 | lang nmi=0.1284
+  umap+hdb secs 137.5
+hybrid-minilm                kmeans k=10            k= 10 noise=0.00 sil=0.1414 minsh=0.0483 | need ari=0.1552 nmi=0.2438 pur=0.4322 | lang nmi=0.1206
+hybrid-minilm                kmeans k=14            k= 14 noise=0.00 sil=0.1527 minsh=0.0239 | need ari=0.1936 nmi=0.3178 pur=0.4932 | lang nmi=0.1149
+hybrid-minilm                kmeans k=18            k= 18 noise=0.00 sil=0.1794 minsh=0.0114 | need ari=0.2015 nmi=0.328 pur=0.5191 | lang nmi=0.1115
+hybrid-minilm                kmeans k=24            k= 24 noise=0.00 sil=0.1877 minsh=0.0114 | need ari=0.1609 nmi=0.3471 pur=0.5665 | lang nmi=0.1641
+hybrid-minilm                kmeans k=30            k= 30 noise=0.00 sil=0.2147 minsh=0.0075 | need ari=0.1458 nmi=0.3412 pur=0.5557 | lang nmi=0.1649
+hybrid-minilm                umap+hdbscan mcs=60    k=206 noise=0.35 sil=0.3048 minsh=0.0027 | need ari=0.051 nmi=0.4524 pur=0.7731 | lang nmi=0.2723
+hybrid-minilm                umap+hdbscan mcs=150   k= 43 noise=0.66 sil=0.2459 minsh=0.0129 | need ari=0.1382 nmi=0.4268 pur=0.6372 | lang nmi=0.2688
+hybrid-minilm                umap+hdbscan mcs=300   k= 14 noise=0.78 sil=0.1949 minsh=0.0427 | need ari=0.1543 nmi=0.3571 pur=0.473 | lang nmi=0.2402
+  umap+hdb secs 187.7
+hybrid-mpnet                 kmeans k=10            k= 10 noise=0.00 sil=0.1731 minsh=0.0349 | need ari=0.1937 nmi=0.2993 pur=0.4993 | lang nmi=0.1211
+hybrid-mpnet                 kmeans k=14            k= 14 noise=0.00 sil=0.1686 minsh=0.0166 | need ari=0.1727 nmi=0.2858 pur=0.494 | lang nmi=0.1396
+hybrid-mpnet                 kmeans k=18            k= 18 noise=0.00 sil=0.1662 minsh=0.0071 | need ari=0.1998 nmi=0.3549 pur=0.5645 | lang nmi=0.1488

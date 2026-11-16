@@ -69,7 +69,7 @@ def _run_id(dataset_id: str, embedding: str, cand: Candidate) -> str:
 
 def run_clustering(comments: pd.DataFrame, dataset_id: str, embeddings: dict[str, tuple[np.ndarray, str]],
                    k_values: list[int], hdbscan_sizes: list[int], seed: int = 42, show_text: bool = True,
-                   truth: dict[str, np.ndarray] | None = None, preferred: str | None = None,
+                   truth: dict[str, np.ndarray] | None = None, preferred: str | list[str] | None = None,
                    hdbscan_reducer: str = "pca") -> ClusteringResult:
     """comments: comment_id, comment_text, norm_text, language_type, topic, published_at (row-aligned with embeddings).
 
@@ -106,7 +106,8 @@ def run_clustering(comments: pd.DataFrame, dataset_id: str, embeddings: dict[str
                                 and (m["min_cluster_share"] or 0) >= MIN_CLUSTER_SHARE and 2 <= c.n_clusters <= MAX_K)
         item["stability"] = None
 
-    pool = [i for i in cands if i["eligible"] and (preferred is None or i["embedding"] == preferred)] or \
+    family = [preferred] if isinstance(preferred, str) else preferred
+    pool = [i for i in cands if i["eligible"] and (not family or i["embedding"] in family)] or \
            [i for i in cands if i["eligible"]] or cands
     pool.sort(key=lambda i: -(i["metrics"]["silhouette_cosine"] or -1))
     for item in pool[:STABILITY_TOP]:
@@ -147,7 +148,8 @@ def run_clustering(comments: pd.DataFrame, dataset_id: str, embeddings: dict[str
     evaluation = {
         "selection_rule": {"max_noise": MAX_NOISE, "min_cluster_share": MIN_CLUSTER_SHARE, "max_k": MAX_K,
                            "stability_top": STABILITY_TOP, "stability_seeds": STABILITY_SEEDS,
-                           "score": "silhouette_cosine × stability_ari", "preferred_embedding": preferred},
+                           "score": "silhouette_cosine × stability_ari", "selection_family": family or "all representations",
+                           "baseline_only": sorted({i["embedding"] for i in cands} - set(family or [])) or None},
         "selected_run_id": best["run_id"], "selected_key": f"{best['embedding']}:{c.key}",
         "candidates": [{"run_id": r["run_id"], "embedding": r["embedding"], "algorithm": r["algorithm"],
                         "params": json.loads(r["params_json"]), "n_clusters": r["n_clusters"], "noise_rate": r["noise_rate"],

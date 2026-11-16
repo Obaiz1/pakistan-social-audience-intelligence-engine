@@ -48,7 +48,7 @@ class BuildConfig:
     hdbscan_sizes: list[int] = field(default_factory=list)
     hdbscan_reducer: str = "pca"
     truth: dict[str, np.ndarray] | None = None
-    preferred_embedding: str | None = None
+    preferred_embedding: str | list[str] | None = None
 
 
 def enrich_comments(comments: pd.DataFrame, text_permission: str, source: str) -> pd.DataFrame:
@@ -148,6 +148,9 @@ def build_dataset(posts: pd.DataFrame, comments: pd.DataFrame, campaigns: pd.Dat
     stored_comments = c.drop(columns=["norm_text", "embed_text"])
     if not show_text:
         stored_comments["comment_text"] = None
+        # date-only timestamps for withheld datasets (a full timestamp + video could single out a commenter)
+        stored_comments["published_at"] = stored_comments["published_at"].astype(str).str.slice(0, 10).where(
+            stored_comments["published_at"].notna(), None)
     dataset = {
         "dataset_id": cfg.dataset_id, "name": cfg.name, "mode": cfg.mode, "description": cfg.description,
         "product_category": cfg.product_category, "created_at": created, "snapshot_at": cfg.snapshot_at,
