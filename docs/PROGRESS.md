@@ -4,14 +4,14 @@
 |---|---|---|
 | 0 Environment discovery & upstream audit | DONE | `docs/UPSTREAM_AUDIT.md` (both suites re-run), `docs/assignment/PROJECT3_REQUIREMENTS.md` |
 | 1 Foundation & architecture | DONE | repo, venv, `pyproject.toml`, `.env.example`, `.gitignore`, ADRs, `/api/v1/health` |
-| 2 Normalized datasets & reproducible demo | DONE (synthetic) · observed BLOCKED | `data/synthetic.py`, `storage/schema.sql`, importer, `test_synthetic.py`, `test_storage.py`, `test_importer.py`; observed collector needs owner key (ADR-012) |
+| 2 Normalized datasets & reproducible demo | DONE (synthetic + observed YouTube snapshot) | `data/synthetic.py`, `storage/schema.sql`, importer, `test_synthetic.py`, `test_storage.py`, `test_importer.py`; observed collector needs owner key (ADR-012) |
 | 3 Content & campaign analytics (Q1) | DONE | `analytics/`, `test_engagement.py` |
 | 4 Multilingual NLP & comment clustering (Q2/Q4) | DONE | `nlp/`, `clustering/`, exploratory logs, `test_clustering.py`, `test_nlp.py` |
 | 5 Anomalies (Q3) | DONE | `anomalies/detect.py`, `test_anomalies.py`, `docs/ANOMALY_METHOD.md` |
 | 6 Recommendations (Q5) | DONE | `recommendations/engine.py`, `test_recommendations.py` |
 | 7 Frontend | DONE | lint/type/unit/build; journey 12/12; screens 40/40 (local + production) |
 | 8 QA, evaluation, academic report | DONE | `CLUSTERING_EVALUATION.md` (generated), `PROJECT3_FINAL_REPORT.md`, `TEST_EVIDENCE.md`, CI green |
-| 9 Deployment | DONE + VERIFIED | https://audienceiq-pk.vercel.app (commit 1d153e2), `docs/DEPLOYMENT.md` |
+| 9 Deployment | DONE + VERIFIED | https://audienceiq-pk.vercel.app (commit b7e902e, synthetic + observed datasets), `docs/DEPLOYMENT.md` |
 | 10 Final regression & handoff | DONE (owner actions listed in SESSION_HANDOFF) | PR `feat/project3-engine` → `main` |
 
 ## Environment (verified 2026-11-15)

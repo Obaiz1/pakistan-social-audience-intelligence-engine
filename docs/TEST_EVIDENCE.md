@@ -57,6 +57,14 @@ Visual review of screenshots led to three UI fixes before the final sweep: mobil
 | 43818030768 | 92cdcb8 | failure — expected: dataset bundle not yet committed (frontend build + manifest step) |
 | 43823355039 | 1d153e2 | **success** — backend (ruff, compile, manifest verification, pytest), frontend (lint, typecheck, vitest, build), e2e (journey on Linux) |
 
+## Production redeploy with observed dataset (commit b7e902e)
+| Command | Result |
+|---|---|
+| `vercel deploy --prod -e AUDIENCEIQ_BUILD_COMMIT=b7e902e` | READY, aliased to https://audienceiq-pk.vercel.app |
+| API checks (health + observed dataset, 10 routes) | health ok, 2 datasets; all 200; comment text null, `text_visible: false` |
+| `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=prod node frontend/e2e/journey.mjs` | **12/12**, 0 console errors, 0 API errors |
+| `… QA_TAG=prod-observed QA_DATASET=observed-youtube-20261116 node frontend/e2e/screens.mjs` | **40/40** |
+
 ## Production (https://audienceiq-pk.vercel.app, commit 1d153e2)
 | Command | Result |
 |---|---|

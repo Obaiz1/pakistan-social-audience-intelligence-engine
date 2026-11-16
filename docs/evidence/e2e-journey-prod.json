@@ -1,81 +1,81 @@
 {
   "base": "https://audienceiq-pk.vercel.app",
   "tag": "prod",
-  "at": "2026-11-16T07:26:06.225Z",
+  "at": "2026-11-16T07:51:33.520Z",
   "passed": 12,
   "total": 12,
   "steps": [
     {
       "name": "Overview loads with dataset banner and journey",
       "ok": true,
-      "ms": 2058,
+      "ms": 5690,
       "detail": "SYNTHETIC DEMO — NOT REAL SOCIAL MEDIA OBSERVATIONS\n· 3,000 posts · 33,776 comments · snap"
     },
     {
       "name": "Q1 content comparison renders with CI table parity",
       "ok": true,
-      "ms": 1590,
+      "ms": 2546,
       "detail": "6 content types; post drawer opened and closed with Escape"
     },
     {
       "name": "Q1 filter by platform updates the URL",
       "ok": true,
-      "ms": 10,
+      "ms": 25,
       "detail": "/content?platform=Instagram"
     },
     {
       "name": "Q2/Q4 audience clusters + cluster drill-down",
       "ok": true,
-      "ms": 1795,
+      "ms": 2729,
       "detail": "8 clusters; opened \"#1 · Price / cost\""
     },
     {
       "name": "Q2 comment explorer filters by language",
       "ok": true,
-      "ms": 1779,
+      "ms": 2231,
       "detail": "25 Urdu rows on page 1"
     },
     {
       "name": "Q3 anomalies list + detail with baseline",
       "ok": true,
-      "ms": 1767,
+      "ms": 2257,
       "detail": "Engagement rate 1.21% vs cohort median 7.38% (typical range P5–P95 4.85%–10.31%) among 30 mature Brand D Instagram styling video posts; robu"
     },
     {
       "name": "Q1/Q4 campaigns with needs-by-campaign table",
       "ok": true,
-      "ms": 1466,
+      "ms": 1893,
       "detail": "3 tables"
     },
     {
       "name": "Q5 recommendations with linked evidence",
       "ok": true,
-      "ms": 982,
+      "ms": 1441,
       "detail": "18 cards, 45 evidence links; followed one to /audience?cluster=1"
     },
     {
       "name": "Data page: quality audit + import preview (validation only)",
       "ok": true,
-      "ms": 1801,
+      "ms": 2264,
       "detail": "preview + validation rendered"
     },
     {
       "name": "Reports offer CSV/Excel/PDF downloads",
       "ok": true,
-      "ms": 944,
+      "ms": 1427,
       "detail": "8 export links; PDF application/pdf"
     },
     {
       "name": "Methodology shows the official Project 3 title",
       "ok": true,
-      "ms": 917,
+      "ms": 1387,
       "detail": "title visible"
     },
     {
       "name": "Health endpoint",
       "ok": true,
-      "ms": 299,
-      "detail": "Pakistan Audience & Campaign Intelligence v1.0.0 · production · writes_enabled=false · commit 1d153e2ec8c4d35bb60c8dca49a8634f5924a30b"
+      "ms": 327,
+      "detail": "Pakistan Audience & Campaign Intelligence v1.0.0 · production · writes_enabled=false · commit b7e902e6e260cad7946cc6f14e57cf87a3016750"
     }
   ],
   "consoleErrors": [],
