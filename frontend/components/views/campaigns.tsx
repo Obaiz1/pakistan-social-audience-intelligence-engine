@@ -22,7 +22,7 @@ export function CampaignsView() {
   const s = useApi<Resp>(datasetId ? "/analytics/campaigns" : null, { dataset_id: datasetId, ...filters });
   return (
     <div className="grid">
-      <PageHead eyebrow="Q1 · Q4 · Campaigns" title="How do campaigns compare, and what does each campaign's audience ask for?">
+      <PageHead eyebrow="Explore · Campaigns" title="How do campaigns compare, and what does each campaign's audience ask for?">
         Eid, 11.11, 12.12, sale and seasonal campaigns compared on the attention index, with the discovered audience needs that are over-represented in each campaign. Comparisons are associational: campaigns differ in budget, timing and product.
       </PageHead>
       <FilterBar show={["platform", "brand", "content_type", "date"]} />
@@ -42,7 +42,7 @@ export function CampaignsView() {
                 chart={<CIPlot rows={d.comparison.rows} />} table={<CompareTable rows={d.comparison.rows} />} />
             </Panel>
             <Panel title="Campaign summary" description="Posts, maturity and weighted engagement rate (Σ interactions ÷ Σ views, mature posts that report views).">
-              <div className="table-wrap"><table className="data">
+              <div className="table-wrap" tabIndex={0}><table className="data">
                 <thead><tr><th>Campaign</th><th>Window</th><th className="n">Posts</th><th className="n">Mature</th><th className="n">Weighted ER</th><th className="n">Median attention</th><th>Main formats</th></tr></thead>
                 <tbody>{d.campaigns.map((c) => (
                   <tr key={c.campaign}>
@@ -60,7 +60,7 @@ export function CampaignsView() {
               <p className="faint" style={{ marginTop: 8 }}>Needs shown: {needs.map((n) => label(NEED_LABEL, n)).join(", ")}.</p>
             </Panel>
             <Panel title="Campaign calendar" description="Campaign definitions in this dataset and how they were assigned.">
-              <div className="table-wrap"><table className="data"><thead><tr><th>Campaign</th><th>Type</th><th>Start</th><th>End</th><th>Source</th></tr></thead>
+              <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Campaign</th><th>Type</th><th>Start</th><th>End</th><th>Source</th></tr></thead>
                 <tbody>{d.campaign_calendar.length ? d.campaign_calendar.map((c) => <tr key={c.campaign_id}><td>{c.name}</td><td>{c.campaign_type}</td><td>{c.start_date ?? "—"}</td><td>{c.end_date ?? "—"}</td><td className="faint">{c.campaign_source.replace(/_/g, " ")}</td></tr>)
                   : <tr><td colSpan={5} className="faint">Campaigns come from the imported/collected data (no calendar table).</td></tr>}</tbody></table></div>
             </Panel>

@@ -1,12 +1,12 @@
 "use client";
 
-import { CheckCircle2, Download, Upload, XCircle } from "lucide-react";
+import { CheckCircle2, CircleDashed, Download, KeyRound, Upload, XCircle } from "lucide-react";
 import { Fragment, useState } from "react";
 import { API, deleteJson, errorText, postJson, useApi } from "@/lib/api";
 import { MODE_LABEL, date, num, pct } from "@/lib/format";
 import type { Meta } from "@/lib/types";
 import { useDataset } from "../dataset";
-import { Busy, ErrorState, Kpi, LoadingPage, ModeBadge, Notice, PageHead, Panel } from "../ui";
+import { Busy, ErrorState, Kpi, LoadingPage, ModeBadge, Notice, PageHead, Panel, Skeleton } from "../ui";
 
 type Quality = {
   meta: Meta;
@@ -16,6 +16,11 @@ type Quality = {
   comments: { total: number; posts_with_comments: number; text_permission: string; languages: Record<string, number>; median_chars: number | null };
   provenance: { mode: string; disclaimer: string; snapshot_at: string; expires_at: string | null; seed: number | null; generator_version: string | null };
   pipeline: { step: string; status: string }[];
+};
+type Sources = {
+  collector: { name: string; script: string; runs_where: string; configured_on_this_server: boolean; status: string; latest_snapshot: string | null; latest_expires_at: string | null; latest_expired: boolean | null; quota_note: string };
+  platforms: { platform: string; support: "observed" | "csv_import"; method: string; in_this_build: boolean; notes: string }[];
+  writes_enabled: boolean;
 };
 type Side = { rows_read: number; rows_valid: number; error_count: number; errors: { row: number | null; field: string; message: string }[]; warnings: string[]; columns: string[]; mapping: Record<string, string | null>; fields: Record<string, { required: boolean }>; sample: Record<string, unknown>[] };
 type Preview = { posts: Side | null; comments: Side | null; ready: boolean; ready_reason?: string };
@@ -47,11 +52,11 @@ function SideReport({ title, side }: { title: string; side: Side }) {
       <div className="row"><strong>{title}</strong><span className="badge num">{num(side.rows_valid)} / {num(side.rows_read)} valid</span>{side.error_count > 0 && <span className="badge critical">{side.error_count} errors</span>}</div>
       {side.warnings.map((w) => <Notice key={w} tone="warn">{w}</Notice>)}
       {side.errors.length > 0 && (
-        <div className="table-wrap"><table className="data"><thead><tr><th>Row</th><th>Field</th><th>Problem</th></tr></thead>
+        <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Row</th><th>Field</th><th>Problem</th></tr></thead>
           <tbody>{side.errors.slice(0, 12).map((e, i) => <tr key={i}><td className="num">{e.row ?? "—"}</td><td className="mono">{e.field}</td><td>{e.message}</td></tr>)}</tbody></table></div>
       )}
       {side.sample.length > 0 && (
-        <div className="table-wrap"><table className="data"><thead><tr>{Object.keys(side.sample[0]).slice(0, 8).map((k) => <th key={k}>{k}</th>)}</tr></thead>
+        <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr>{Object.keys(side.sample[0]).slice(0, 8).map((k) => <th key={k}>{k}</th>)}</tr></thead>
           <tbody>{side.sample.slice(0, 5).map((r, i) => <tr key={i}>{Object.keys(side.sample[0]).slice(0, 8).map((k) => <td key={k} className="bidi">{r[k] === null ? <span className="faint">null</span> : String(r[k]).slice(0, 60)}</td>)}</tr>)}</tbody></table></div>
       )}
     </div>
@@ -170,12 +175,50 @@ function DemoGenerator() {
   );
 }
 
+function SourcesPanel() {
+  const s = useApi<Sources>("/data/sources");
+  const [now] = useState(() => Date.now());
+  if (s.loading) return <Panel title="Source status"><Skeleton height={120} /></Panel>;
+  if (s.error || !s.data) return <ErrorState error={s.error ?? "No data"} status={s.status} onRetry={s.reload} />;
+  const c = s.data.collector;
+  const days = c.latest_expires_at ? Math.ceil((new Date(c.latest_expires_at).getTime() - now) / 86_400_000) : null;
+  return (
+    <Panel title="Source status" description="Which platforms are genuinely supported, and how fresh the observed data is. Only on/off status is reported here — API keys are never sent to the browser.">
+      <div className="grid cols-7-5">
+        <div className="table-wrap" tabIndex={0}><table className="data">
+          <caption className="sr-only">Platform support matrix</caption>
+          <thead><tr><th>Platform</th><th>Support</th><th>Method</th><th>In this build</th></tr></thead>
+          <tbody>{s.data.platforms.map((p) => (
+            <tr key={p.platform}>
+              <td><strong>{p.platform}</strong><div className="faint">{p.notes}</div></td>
+              <td>{p.support === "observed" ? <span className="badge ok">Observed API</span> : <span className="badge">CSV import only</span>}</td>
+              <td className="muted">{p.method}</td>
+              <td>{p.in_this_build ? <span className="row" style={{ gap: 6 }}><CheckCircle2 size={15} color="var(--ok)" aria-hidden="true" /> yes</span> : <span className="row faint" style={{ gap: 6 }}><CircleDashed size={15} aria-hidden="true" /> no</span>}</td>
+            </tr>
+          ))}</tbody>
+        </table></div>
+        <article className="rec" aria-labelledby="collector-t">
+          <div className="row"><KeyRound size={16} aria-hidden="true" /><h3 id="collector-t" style={{ margin: 0 }}>{c.name}</h3></div>
+          <dl className="kv">
+            <dt>Status</dt><dd>{c.configured_on_this_server ? <span className="badge ok">configured</span> : <span className="badge">not configured</span>} <span className="faint">{c.status}</span></dd>
+            <dt>Runs</dt><dd>{c.runs_where} · <code>{c.script}</code></dd>
+            <dt>Latest snapshot</dt><dd>{c.latest_snapshot ? date(c.latest_snapshot) : "none in this build"}</dd>
+            <dt>Expiry</dt><dd>{c.latest_expires_at ? <>{date(c.latest_expires_at)} {c.latest_expired ? <span className="badge critical">expired</span> : days !== null && <span className={`badge ${days <= 5 ? "warn" : ""}`}>{days} day{days === 1 ? "" : "s"} left</span>}</> : "—"}</dd>
+            <dt>Quota</dt><dd className="faint">{c.quota_note}</dd>
+          </dl>
+          {!c.configured_on_this_server && <Notice tone="info" title="No key on this server">That is expected: collection is an offline step. Set <code>YOUTUBE_API_KEY</code> in your own shell and run the script; the web app only reads the resulting bundle.</Notice>}
+        </article>
+      </div>
+    </Panel>
+  );
+}
+
 export function DataView() {
   const { datasets, datasetId, select, writesEnabled, refresh, health } = useDataset();
   const q = useApi<Quality>(datasetId ? "/data/quality" : null, { dataset_id: datasetId });
   return (
     <div className="grid">
-      <PageHead eyebrow="Data" title="Datasets, provenance and imports">
+      <PageHead eyebrow="Evidence & data · Data hub" title="Datasets, sources and imports">
         Observed, imported and synthetic records are never merged. Each dataset carries its source, collection method, reuse permission and snapshot date; observed API data expires after 30 days unless refreshed.
       </PageHead>
       <Panel title="Available datasets" description={health?.hosted ? "Public read-only demo." : "Local mode: imported datasets are stored in var/audienceiq_user.sqlite (git-ignored)."}>
@@ -201,6 +244,7 @@ export function DataView() {
         </div>
         <p className="faint" style={{ marginTop: 10 }}>Modes: {Object.values(MODE_LABEL).join(" · ")}. Instagram, TikTok and Facebook have no live connector here; their data can only enter through an authorised CSV export.</p>
       </Panel>
+      <SourcesPanel />
       {q.loading && <LoadingPage />}
       {q.error && <ErrorState error={q.error} status={q.status} onRetry={q.reload} />}
       {q.data && (
@@ -212,9 +256,9 @@ export function DataView() {
             <Kpi label="Checks" value={q.data.passed ? "Passed" : "Issues"} sub={`${q.data.checks.filter((c) => c.passed).length}/${q.data.checks.length} passed`} />
           </div>
           <div className="grid cols-2" style={{ marginTop: 14 }}>
-            <div className="table-wrap"><table className="data"><thead><tr><th>Check</th><th>Result</th></tr></thead>
+            <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Check</th><th>Result</th></tr></thead>
               <tbody>{q.data.checks.map((c) => <tr key={c.check}><td>{c.check}</td><td>{c.passed ? <span className="row" style={{ gap: 6 }}><CheckCircle2 size={15} color="var(--ok)" aria-hidden="true" /> pass <span className="faint">{c.detail}</span></span> : <span className="row" style={{ gap: 6 }}><XCircle size={15} color={c.severity === "error" ? "var(--critical)" : "var(--amber)"} aria-hidden="true" /> {c.severity} <span className="faint">{c.detail}</span></span>}</td></tr>)}</tbody></table></div>
-            <div className="table-wrap"><table className="data"><thead><tr><th>Post field</th><th className="n">Missing</th><th className="n">Zeros</th></tr></thead>
+            <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Post field</th><th className="n">Missing</th><th className="n">Zeros</th></tr></thead>
               <tbody>{Object.entries(q.data.posts.missing).map(([f, m]) => <tr key={f}><td className="mono">{f}</td><td className="n">{num(m.missing)} ({pct(m.share, 0)})</td><td className="n">{m.zeros === null ? "—" : num(m.zeros)}</td></tr>)}</tbody></table>
               <p className="faint" style={{ padding: "8px 10px" }}>Missing = not reported by the platform/export (kept null). Zeros are real zeros.</p></div>
           </div>

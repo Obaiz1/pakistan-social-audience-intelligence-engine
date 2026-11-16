@@ -6,6 +6,7 @@ import { LANGUAGE_LABEL, NEED_LABEL, label, num } from "@/lib/format";
 import type { CommentRow, Meta, PageInfo } from "@/lib/types";
 import { useDataset } from "../dataset";
 import { FilterBar, useFilters, useOptions } from "../filters";
+import { QuestionStepper } from "../story";
 import { Empty, ErrorState, LoadingPage, MethodNote, Notice, PageHead, Pager, Panel, TextCell } from "../ui";
 
 type Resp = {
@@ -18,6 +19,10 @@ type Resp = {
 
 const INTENTS = [{ value: "strong_intent", label: "Strong intent" }, { value: "possible_inquiry", label: "Possible inquiry" }, { value: "none", label: "None" }, { value: "unknown", label: "Unknown" }];
 const SENTIMENTS = ["positive", "neutral", "negative", "unknown"];
+const SORTS = [
+  { value: "comment_id", label: "Default order" }, { value: "-published_at", label: "Newest first" }, { value: "published_at", label: "Oldest first" },
+  { value: "-char_len", label: "Longest first" }, { value: "char_len", label: "Shortest first" }, { value: "cluster_id", label: "By cluster" },
+];
 
 export function CommentsView() {
   const { datasetId } = useDataset();
@@ -29,7 +34,7 @@ export function CommentsView() {
     return () => clearTimeout(t);
   }, [q, get, setParam]);
   const params = { dataset_id: datasetId, ...filters, cluster_id: get("cluster_id"), language: get("language"), topic: get("topic"),
-    intent: get("intent"), sentiment: get("sentiment"), q: get("q"), page: Number(get("page") ?? 1), page_size: 25 };
+    intent: get("intent"), sentiment: get("sentiment"), q: get("q"), sort: get("sort") ?? "comment_id", page: Number(get("page") ?? 1), page_size: 25 };
   const s = useApi<Resp>(datasetId ? "/comments" : null, params);
   const sel = (key: string, lab: string, options: { value: string | number; label: string }[]) => (
     <label className="field" htmlFor={`c-${key}`}>{lab}
@@ -41,7 +46,8 @@ export function CommentsView() {
   );
   return (
     <div className="grid">
-      <PageHead eyebrow="Q2 · Comment explorer" title="Read what the audience actually says">
+      <QuestionStepper current={2} />
+      <PageHead eyebrow="Explore · Comment explorer" title="Read what the audience actually says">
         Each comment carries its discovered cluster, detected language, a rule-based reference topic, a purchase-intent hint and a heuristic sentiment. Usernames are never stored; observed comment text is withheld where reuse is not permitted.
       </PageHead>
       <FilterBar />
@@ -51,6 +57,11 @@ export function CommentsView() {
         {sel("topic", "Reference topic", opts?.topics ?? [])}
         {sel("intent", "Purchase intent", INTENTS)}
         {sel("sentiment", "Sentiment", SENTIMENTS.map((x) => ({ value: x, label: x })))}
+        <label className="field" htmlFor="c-sort">Sort
+          <select id="c-sort" className="select" value={get("sort") ?? "comment_id"} onChange={(e) => setParam("sort", e.target.value === "comment_id" ? null : e.target.value)}>
+            {SORTS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+          </select>
+        </label>
         <label className="field" htmlFor="c-q">Search text<input id="c-q" className="input" value={q} onChange={(e) => setQ(e.target.value)} placeholder="e.g. delivery" maxLength={80} /></label>
       </div>
       {s.loading && <LoadingPage />}
@@ -76,7 +87,7 @@ export function CommentsView() {
           <Panel title="Comments" description="Purchase intent 'possible inquiry' is a question about buying — not a confirmed purchase. Sentiment is a supporting heuristic only.">
             {s.data.rows.length ? (
               <div className="stack">
-                <div className="table-wrap"><table className="data">
+                <div className="table-wrap" tabIndex={0}><table className="data">
                   <thead><tr><th>Comment</th><th>Language</th><th>Cluster</th><th>Reference topic</th><th>Intent</th><th>Sentiment</th><th>Post</th></tr></thead>
                   <tbody>{s.data.rows.map((c) => (
                     <tr key={c.comment_id}>

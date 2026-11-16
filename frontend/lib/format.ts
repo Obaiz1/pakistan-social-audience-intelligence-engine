@@ -104,3 +104,10 @@ export function metricValue(metric: string, v: number | null | undefined): strin
   if (metric.startsWith("share:")) return pct(v, 0);
   return ratio(v, 3);
 }
+
+/** Heat-cell opacity for a share in [0, 1]. Capped at 0.72 so cell text keeps ≥ 4.5:1 contrast in both themes (axe-checked). */
+export const HEAT_MAX_ALPHA = 0.72;
+export function heatAlpha(share: number | null | undefined): number {
+  if (!share || share < 0) return 0;
+  return Math.min(HEAT_MAX_ALPHA, share * 2.2);
+}

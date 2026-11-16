@@ -51,6 +51,17 @@ Commands were executed on Windows 11 (Python 3.12.15 venv, Node 24.14.1) unless 
 
 Visual review of screenshots led to three UI fixes before the final sweep: mobile-only menu buttons visible on desktop (CSS specificity), cramped mobile top bar, stacked toggle icons.
 
+## UI redesign ("Editorial Intelligence", branch `feat/ui-editorial-redesign`)
+| Date | Command | Result |
+|---|---|---|
+| 2026-11-16 | `python -m pytest -q` | **109 passed** (4 new tests for segments, data sources, gloss/linked posts, comment sort) |
+| 2026-11-16 | `tsc --noEmit` · `eslint .` · `vitest run` · `npm run build` | clean · clean · **17 passed** · 13 routes + not-found |
+| 2026-11-16 | `APP_URL=http://127.0.0.1:3000 QA_TAG=redesign-local node e2e/journey.mjs` | **11/11** (10 journeys + health), 0 console errors, 0 API errors — `docs/evidence/e2e-journey-redesign-local.json` |
+| 2026-11-16 | `QA_TAG=redesign-local node e2e/screens.mjs` | first run **16/68** (real axe contrast, name-mismatch and focusable-region issues) → fixed → **68/68, axe serious/critical 0** — `docs/evidence/qa-screens-redesign-local.json` |
+| 2026-11-16 | `QA_TAG=redesign-local-observed QA_DATASET=observed-youtube-20261116 node e2e/screens.mjs` | 66/68 (heat-cell contrast at high shares) → fixed → **68/68, axe 0** — `docs/evidence/qa-screens-redesign-local-observed.json` |
+
+Details and the full list of fixes: `docs/UI_QA_REPORT.md`.
+
 ## GitHub Actions
 | Run | Commit | Result |
 |---|---|---|

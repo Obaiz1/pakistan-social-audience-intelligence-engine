@@ -1,13 +1,15 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 import { useState } from "react";
-import { useApi } from "@/lib/api";
+import { exportUrl, useApi } from "@/lib/api";
 import { CONTENT_LABEL, KIND_LABEL, LANGUAGE_LABEL, NEED_LABEL, compact, date, label, num, pct, ratio } from "@/lib/format";
 import type { AnomalyFlag, CommentRow, Comparison, Meta, PageInfo, Post } from "@/lib/types";
 import { BoxRows, CIPlot, CompareTable, PlatformLabel } from "../charts";
 import { useDataset } from "../dataset";
 import { FilterBar, useFilters } from "../filters";
+import { QuestionStepper } from "../story";
+import { useToast } from "../toast";
 import { ChartTable, Drawer, Empty, ErrorState, LoadingPage, LowSample, MethodNote, PageHead, Pager, Panel, TextCell } from "../ui";
 
 type ContentResp = {
@@ -54,7 +56,7 @@ export function PostDrawer({ postId, onClose }: { postId: string | null; onClose
           )}
           <Panel flat title={`Retained comments (${s.data!.comments.length})`} description={s.data!.comments_note ?? "Cluster = discovered group; topic = rule-based reference label."}>
             {s.data!.comments.length ? (
-              <div className="table-wrap"><table className="data"><thead><tr><th>Comment</th><th>Language</th><th>Cluster</th></tr></thead>
+              <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Comment</th><th>Language</th><th>Cluster</th></tr></thead>
                 <tbody>{s.data!.comments.slice(0, 40).map((c) => <tr key={c.comment_id}><td><TextCell text={c.comment_text} /></td><td>{label(LANGUAGE_LABEL, c.language_type)}</td><td>{c.cluster_label ?? "—"}</td></tr>)}</tbody></table></div>
             ) : <Empty title="No retained comments" />}
             {Object.keys(s.data!.need_mix).length > 0 && <p className="faint" style={{ marginTop: 8 }}>Need mix: {Object.entries(s.data!.need_mix).map(([n, c]) => `${label(NEED_LABEL, n)} ${c}`).join(" · ")}</p>}
@@ -67,18 +69,22 @@ export function PostDrawer({ postId, onClose }: { postId: string | null; onClose
 
 function PostTable({ onOpen }: { onOpen: (id: string) => void }) {
   const { datasetId } = useDataset();
+  const toast = useToast();
   const { filters, get, setParam } = useFilters();
   const sort = get("sort") ?? "attention_index";
   const page = Number(get("page") ?? 1);
   const s = useApi<PostsResp>(datasetId ? "/posts" : null, { dataset_id: datasetId, ...filters, sort, order: sort === "published_at" ? "desc" : "desc", page, page_size: 15 });
   return (
     <Panel title="Post explorer" description="Every post in the current filter. Open a post for its metrics, comments and any anomaly flags."
-      actions={<label className="field" style={{ minWidth: 170 }}>Sort by<select className="select" value={sort} onChange={(e) => setParam("sort", e.target.value)}>{SORTS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>}>
+      actions={<>
+        <label className="field" style={{ minWidth: 170 }}>Sort by<select className="select" value={sort} onChange={(e) => setParam("sort", e.target.value)}>{SORTS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>
+        <a className="btn sm" style={{ alignSelf: "flex-end" }} href={exportUrl({ dataset_id: datasetId, ...filters, format: "csv", section: "posts" })} onClick={() => toast(`Downloading ${s.data ? s.data.page.total.toLocaleString("en-PK") : ""} filtered posts as CSV`)}><Download size={14} /> Filtered CSV</a>
+      </>}>
       {s.error && <ErrorState error={s.error} status={s.status} onRetry={s.reload} />}
       {s.loading && <div className="skeleton" style={{ height: 300 }} />}
       {s.data && (
         <div className="stack">
-          <div className="table-wrap">
+          <div className="table-wrap" tabIndex={0}>
             <table className="data">
               <thead><tr><th>Post</th><th>Platform</th><th>Type</th><th>Campaign</th><th className="n">Likes</th><th className="n">Comments</th><th className="n">Shares</th><th className="n">Views</th><th className="n">ER</th><th className="n">Attention</th><th className="n">Age (d)</th></tr></thead>
               <tbody>
@@ -108,7 +114,8 @@ export function ContentView() {
   const s = useApi<ContentResp>(datasetId ? "/analytics/content" : null, { dataset_id: datasetId, ...filters });
   return (
     <div className="grid">
-      <PageHead eyebrow="Q1 · Content performance" title="Which content attracts attention?">
+      <QuestionStepper current={1} />
+      <PageHead eyebrow="Question 1 · Attention" title="Which content attracts attention?">
         Compare reels, product photos, influencer posts, styling videos and sale announcements using each platform&apos;s own metrics. The attention index compares every post with its brand&apos;s typical post on the same platform, so formats can be compared fairly.
       </PageHead>
       <FilterBar />
@@ -132,7 +139,7 @@ export function ContentView() {
             <Panel title="Distribution of attention index" description="P10–P90 whiskers, P25–P75 box, median line. The vertical line marks 1.00 (typical post).">
               <ChartTable label="Attention index distribution" summary={s.data.distribution.map((d) => `${d.label} median ${ratio(d.p50)}`).join(", ")}
                 chart={<BoxRows rows={s.data.distribution} />}
-                table={<div className="table-wrap"><table className="data"><thead><tr><th>Type</th><th className="n">n</th><th className="n">P10</th><th className="n">P25</th><th className="n">Median</th><th className="n">P75</th><th className="n">P90</th></tr></thead>
+                table={<div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Type</th><th className="n">n</th><th className="n">P10</th><th className="n">P25</th><th className="n">Median</th><th className="n">P75</th><th className="n">P90</th></tr></thead>
                   <tbody>{s.data.distribution.map((d) => <tr key={d.group}><td>{d.label}</td><td className="n">{d.n}</td>{[d.p10, d.p25, d.p50, d.p75, d.p90].map((v, i) => <td key={i} className="n">{ratio(v)}</td>)}</tr>)}</tbody></table></div>} />
             </Panel>
             <Panel title="Engagement rate by platform" description="Each platform uses its own formula; do not rank platforms against each other on this alone.">
@@ -141,7 +148,7 @@ export function ContentView() {
             </Panel>
           </div>
           <Panel title="Platform × content type" description="Median attention index and weighted engagement rate per cell (mature posts). Cells with fewer than 20 posts are shown but flagged.">
-            <div className="table-wrap"><table className="data"><thead><tr><th>Platform</th><th>Content type</th><th className="n">Posts</th><th className="n">Median attention</th><th className="n">Median ER</th><th className="n">Weighted ER</th><th className="n">Views reported</th></tr></thead>
+            <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Platform</th><th>Content type</th><th className="n">Posts</th><th className="n">Median attention</th><th className="n">Median ER</th><th className="n">Weighted ER</th><th className="n">Views reported</th></tr></thead>
               <tbody>{s.data.platform_matrix.map((r) => (
                 <tr key={`${r.platform}${r.content_type}`}><td><PlatformLabel name={r.platform} /></td><td>{r.label}{!r.sufficient && <span className="badge" style={{ marginLeft: 6 }}>n&lt;20</span>}</td><td className="n">{r.n}</td><td className="n">{ratio(r.median_attention_index)}</td><td className="n">{pct(r.median_er_views, 2)}</td><td className="n">{pct(r.weighted_er, 2)}</td><td className="n">{pct(r.views_reported_share, 0)}</td></tr>
               ))}</tbody></table></div>

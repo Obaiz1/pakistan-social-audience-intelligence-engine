@@ -14,10 +14,10 @@ A web application that groups multilingual social-media comments (English, Roman
 | Q1 | Which content attracts attention? | `/content`, `/campaigns` | Platform-specific engagement formulas; attention index vs brand × platform baseline; medians, bootstrap CIs, Mann-Whitney + Cliff's δ + BH |
 | Q2 | What does the audience want? | `/audience`, `/comments` | Multilingual sentence embeddings → KMeans/HDBSCAN candidates → rule-based model selection → post-hoc naming with agreement |
 | Q3 | Which marketing patterns are unusual? | `/anomalies` | Peer-cohort robust z (median/MAD), comments-per-like, need-mix binomial test, Isolation Forest (secondary) |
-| Q4 | Which audience needs should the brand address? | `/audience` (needs by campaign), `/campaigns` | Cluster profiles: size, share, language mix, campaign/platform lift, exemplars, caveats |
-| Q5 | What should the marketing team do next? | `/recommendations` | Deterministic cards from gated evidence, each with sample size, limitations and an A/B or service test |
+| Q4 | Which audience needs should the brand address? | `/segments`, `/audience` (needs by campaign), `/campaigns` | Cluster profiles: size, share, language mix, campaign/platform lift, exemplars, caveats |
+| Q5 | What should the marketing team do next? | `/recommendations` (Action center) | Deterministic cards from gated evidence, each with sample size, limitations and an A/B or service test |
 
-The overview page has a guided **"Try this project"** path through Q1–Q5. `/data` (provenance, quality audit, CSV import), `/reports` (CSV/Excel/PDF) and `/methodology` (official title, formulas, model comparison, audit, limitations) complete the app.
+The overview answers all five questions from live data and links each answer to its screen; a question stepper ties Q1–Q5 together. `/data` (Data hub: provenance, source status, quality audit, CSV import), `/model` (Model lab: pipeline, selection, audit metric, error cases), `/reports` (CSV/Excel/PDF with metadata headers) and `/reports/brief` (printable executive brief), and `/methodology` (official title, formulas, demo walkthrough, limitations) complete the app. The UI follows an "Editorial Intelligence" design system with light/dark themes, Urdu right-to-left rendering and WCAG 2.1 AA checks — see `docs/UI_DESIGN_SYSTEM.md`.
 
 ## Headline results on the synthetic demo
 - **Q1 (2,895 mature posts; 93 younger than 7 days excluded):** median attention index (1.00 = the brand's typical post on that platform) — influencer posts **1.51** (95% CI 1.42–1.62), reels 1.27, styling videos 1.22, videos 0.90, sale announcements 0.80, product photos **0.64** (0.59–0.69); all differences vs the rest are BH-significant, effects small–medium. Eid ul Fitr (1.55) and Eid ul Adha (1.37) are the only campaigns significantly above the rest. Weighted engagement rate: TikTok 9.4 %, Instagram 6.6 %, Facebook 4.0 %, YouTube 1.9 % (platform formulas differ).
@@ -30,7 +30,7 @@ The overview page has a guided **"Try this project"** path through Q1–Q5. `/da
 The synthetic numbers describe a simulation designed to contain discoverable structure; they are **not** findings about real brands or audiences. See `docs/CLUSTERING_EVALUATION.md` and `docs/PROJECT3_FINAL_REPORT.md`.
 
 ## Tech stack
-- **Frontend:** Next.js 16.4 (App Router), React 19.3, TypeScript 5.9, Tailwind CSS 4.3, Recharts 3.10, lucide-react; vitest; Playwright for E2E/visual QA.
+- **Frontend:** Next.js 16.4 (App Router), React 19.3, TypeScript 5.9, Tailwind CSS 4.3, Recharts 3.10, lucide-react; Newsreader, Geist and Noto Naskh Arabic fonts (self-hosted); vitest; Playwright + axe-core for E2E, visual and accessibility QA.
 - **Backend:** Python 3.12, FastAPI 0.121, pydantic 2.12, pandas 2.3, NumPy 2.3, SciPy 1.16, scikit-learn 1.7, fpdf2, openpyxl. SQLite canonical store.
 - **Offline ML (not deployed):** sentence-transformers 5 + torch (CPU), `paraphrase-multilingual-mpnet-base-v2` (Apache-2.0), umap-learn.
 - **Hosting:** Vercel (Next.js + Python function in one project, layout reused from SignalSpend).
@@ -78,10 +78,10 @@ npm --prefix frontend run lint
 npm --prefix frontend run typecheck
 npm --prefix frontend test               # vitest
 npm --prefix frontend run build
-APP_URL=http://127.0.0.1:3000 node frontend/e2e/journey.mjs   # five-question browser journey
-APP_URL=http://127.0.0.1:3000 node frontend/e2e/screens.mjs   # 10 routes × 375/1440 × dark/light
+APP_URL=http://127.0.0.1:3000 node frontend/e2e/journey.mjs   # ten user journeys (Q1–Q5, model lab, data hub, brief, mobile, keyboard)
+APP_URL=http://127.0.0.1:3000 node frontend/e2e/screens.mjs   # 13 routes × 390/1440 × dark/light with axe-core, + key screens at 320/375/768/1280
 ```
-Latest executed results: `docs/TEST_EVIDENCE.md`.
+Latest executed results: `docs/TEST_EVIDENCE.md` and `docs/UI_QA_REPORT.md`.
 
 ## Keys and environment
 None are required. Optional names are documented in `.env.example`: `YOUTUBE_API_KEY` (collector only), `NVIDIA_API_KEY` + `AUDIENCEIQ_ENABLE_LLM` (local, number-locked wording only), `AUDIENCEIQ_HOSTED`, `AUDIENCEIQ_ALLOW_WRITES`, `AUDIENCEIQ_MAX_UPLOAD_BYTES`, `API_ORIGIN`. Secrets live in `.env` (git-ignored) or the Vercel/GitHub secret stores.
@@ -103,7 +103,7 @@ None are required. Optional names are documented in `.env.example`: `YOUTUBE_API
 - **Optional AI wording** (NVIDIA API, number-locked) is off by default and never enabled on the public demo; **no API key is required** for any core feature.
 
 ## Documentation
-[Upstream audit](docs/UPSTREAM_AUDIT.md) · [Traceability](docs/TRACEABILITY_MATRIX.md) · [Architecture](docs/ARCHITECTURE.md) · [Decisions](docs/DECISIONS.md) · [Data dictionary](docs/DATA_DICTIONARY.md) · [Provenance](docs/DATA_PROVENANCE.md) · [Clustering evaluation](docs/CLUSTERING_EVALUATION.md) · [Anomaly method](docs/ANOMALY_METHOD.md) · [Methodology](docs/METHODOLOGY.md) · [Final report](docs/PROJECT3_FINAL_REPORT.md) · [Test evidence](docs/TEST_EVIDENCE.md) · [QA checklist](docs/QA_CHECKLIST.md) · [Deployment](docs/DEPLOYMENT.md) · [Demo script & viva](docs/DEMO_SCRIPT_AND_VIVA.md) · [Progress](docs/PROGRESS.md) · [Handoff](docs/SESSION_HANDOFF.md)
+[Upstream audit](docs/UPSTREAM_AUDIT.md) · [Traceability](docs/TRACEABILITY_MATRIX.md) · [Architecture](docs/ARCHITECTURE.md) · [Decisions](docs/DECISIONS.md) · [Data dictionary](docs/DATA_DICTIONARY.md) · [Provenance](docs/DATA_PROVENANCE.md) · [Clustering evaluation](docs/CLUSTERING_EVALUATION.md) · [Anomaly method](docs/ANOMALY_METHOD.md) · [Methodology](docs/METHODOLOGY.md) · [Final report](docs/PROJECT3_FINAL_REPORT.md) · [Test evidence](docs/TEST_EVIDENCE.md) · [QA checklist](docs/QA_CHECKLIST.md) · [Deployment](docs/DEPLOYMENT.md) · [Demo script & viva](docs/DEMO_SCRIPT_AND_VIVA.md) · [Progress](docs/PROGRESS.md) · [Handoff](docs/SESSION_HANDOFF.md) · UI: [audit](docs/UI_AUDIT.md) · [design system](docs/UI_DESIGN_SYSTEM.md) · [route matrix](docs/UI_ROUTE_MATRIX.md) · [QA report](docs/UI_QA_REPORT.md) · [progress](docs/UI_PROGRESS.md) · [handoff](docs/UI_FINAL_HANDOFF.md)
 
 ## Credits and reuse
 Built on two earlier projects by the same author: [pakistani-social-media-content-detective](https://github.com/Obaiz1/pakistani-social-media-content-detective) (@957e3b6f) and [signalspend-ai](https://github.com/Obaiz1/signalspend-ai) (@9c5f4152). Reused files carry provenance headers; the reuse table is in `docs/UPSTREAM_AUDIT.md`. Built with AI assistance (Claude Code) under the author's direction.

@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { LANGUAGE_LABEL, NEED_LABEL, label, num, pct, ratio } from "@/lib/format";
+import { LANGUAGE_LABEL, NEED_LABEL, heatAlpha, label, num, pct, ratio } from "@/lib/format";
 import type { CompareRow, NeedsBy } from "@/lib/types";
 
 export const SERIES = ["var(--c1)", "var(--c2)", "var(--c3)", "var(--c4)", "var(--c5)", "var(--c6)", "var(--c7)", "var(--c8)", "var(--c9)", "var(--c10)"];
@@ -83,7 +83,7 @@ export function CIPlot({ rows, reference = 1, fmt = (v: number) => ratio(v) }: {
 
 export function CompareTable({ rows, fmt = (v: number | null) => ratio(v) }: { rows: CompareRow[]; fmt?: (v: number | null) => string }) {
   return (
-    <div className="table-wrap">
+    <div className="table-wrap" tabIndex={0}>
       <table className="data">
         <thead><tr><th>Group</th><th className="n">n (mature)</th><th className="n">Median</th><th className="n">95% CI</th><th className="n">Rest median</th><th className="n">Cliff&apos;s δ</th><th className="n">BH p</th><th>Verdict</th></tr></thead>
         <tbody>
@@ -213,7 +213,7 @@ export function BoxRows({ rows, fmt = (v: number) => ratio(v), reference = 1 }: 
 /** Need × group heat table: share with lift vs overall; insufficient groups marked. Accessible by construction. */
 export function NeedHeat({ rows, dim, needs, caption }: { rows: NeedsBy[]; dim: "campaign" | "platform"; needs: string[]; caption: string }) {
   return (
-    <div className="table-wrap">
+    <div className="table-wrap" tabIndex={0}>
       <table className="data">
         <caption className="sr-only">{caption}</caption>
         <thead><tr><th>{dim === "campaign" ? "Campaign" : "Platform"}</th><th className="n">Comments</th>{needs.map((n) => <th key={n} className="n">{label(NEED_LABEL, n)}</th>)}</tr></thead>
@@ -228,7 +228,7 @@ export function NeedHeat({ rows, dim, needs, caption }: { rows: NeedsBy[]; dim: 
                   const cell = by[n];
                   if (!r.sufficient) return <td key={n} className="heat-cell faint">n&lt;30</td>;
                   if (!cell) return <td key={n} className="heat-cell faint">0%</td>;
-                  const alpha = Math.min(0.85, cell.share * 2.2);
+                  const alpha = heatAlpha(cell.share);
                   const strong = cell.lift >= 1.5;
                   return (
                     <td key={n} className="heat-cell" style={{ background: `rgba(var(--heat), ${alpha})`, fontWeight: strong ? 800 : 500 }} title={`${pct(cell.share)} of comments; ${cell.lift.toFixed(2)}× the overall share`}>

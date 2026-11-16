@@ -1,0 +1,77 @@
+{
+  "base": "http://127.0.0.1:3000",
+  "tag": "redesign-local",
+  "at": "2026-11-16T09:24:00.514Z",
+  "passed": 11,
+  "total": 11,
+  "steps": [
+    {
+      "name": "J1 Overview: mode banner, five answers, KPI drill-through",
+      "ok": true,
+      "ms": 1593,
+      "detail": "5 answers; first KPI opened /content"
+    },
+    {
+      "name": "J2 Q1 Attention: CI table, post drawer, platform filter, filtered CSV with metadata",
+      "ok": true,
+      "ms": 1882,
+      "detail": "6 content types; drawer closed with Escape; CSV header carries disclaimer, mode, run and filters"
+    },
+    {
+      "name": "J3 Q2 Needs: price cluster → Roman-Urdu gloss → linked post → recommended action",
+      "ok": true,
+      "ms": 2881,
+      "detail": "\"#1 · Price / cost\" · gloss used for embedding: price what is · linked post opened · action #REC-4197736F"
+    },
+    {
+      "name": "J4 Q3 Anomaly lab: ranked flags, baseline, cohort and caveat",
+      "ok": true,
+      "ms": 929,
+      "detail": "Engagement rate 1.21% vs cohort median 7.38% (typical range P5–P95 4.85%–10.31%) among 30 mature Bra · focus trapped in drawer"
+    },
+    {
+      "name": "J5 Q4 Segments: comment-level unit, cards, compare by brand",
+      "ok": true,
+      "ms": 2990,
+      "detail": "7 segments; compare table by brand rendered"
+    },
+    {
+      "name": "J6 Q5 Action center: evidence link + workflow status persists",
+      "ok": true,
+      "ms": 1588,
+      "detail": "status saved across reload; 39 evidence links; followed one to /audience"
+    },
+    {
+      "name": "J7 Model lab: audit metric definition, candidates, error cases",
+      "ok": true,
+      "ms": 1585,
+      "detail": "audit metric defined; 52 table rows across candidates/errors/methods"
+    },
+    {
+      "name": "J8 Data hub: source status without a key, import preview validates only",
+      "ok": true,
+      "ms": 404,
+      "detail": "collector not configured (no key); preview + validation rendered"
+    },
+    {
+      "name": "J9 Reports → printable brief with the five answers and limitations",
+      "ok": true,
+      "ms": 1534,
+      "detail": "8 export links; brief has Q1–Q5 + limitations; print hides navigation; PDF application/pdf"
+    },
+    {
+      "name": "J10 Mobile (390px) navigation + keyboard, Urdu RTL and theme",
+      "ok": true,
+      "ms": 2852,
+      "detail": "no overflow at 390px; mobile menu navigates; skip link first in tab order; 25 Urdu cells rtl; sort + theme toggle work"
+    },
+    {
+      "name": "API health",
+      "ok": true,
+      "ms": 14,
+      "detail": "Pakistan Audience & Campaign Intelligence v1.0.0 · local · writes_enabled=true · commit n/a"
+    }
+  ],
+  "consoleErrors": [],
+  "apiErrors": []
+}

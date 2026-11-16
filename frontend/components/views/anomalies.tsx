@@ -4,7 +4,8 @@ import { ExternalLink } from "lucide-react";
 import { useApi } from "@/lib/api";
 import { CONTENT_LABEL, KIND_LABEL, NEED_LABEL, date, label, metricValue, num, pct, ratio } from "@/lib/format";
 import type { AnomalyFlag, Meta, PageInfo, Post } from "@/lib/types";
-import { Histogram, PlatformLabel } from "../charts";
+import { HBar, Histogram, PlatformLabel } from "../charts";
+import { QuestionStepper } from "../story";
 import { useDataset } from "../dataset";
 import { FilterBar, useFilters } from "../filters";
 import { ChartTable, Drawer, Empty, ErrorState, Kpi, LoadingPage, MethodNote, Notice, PageHead, Pager, Panel, Segmented } from "../ui";
@@ -38,6 +39,8 @@ function FlagDrawer({ id, onClose }: { id: string | null; onClose: () => void })
       {d && (
         <>
           <Notice tone={d.flag.direction === "positive" ? "ok" : "warn"} title={`${d.flag.direction === "positive" ? "Above" : "Below"} comparable posts · severity ${d.flag.severity}`}>{d.flag.reason}</Notice>
+          {d.flag.cohort_level !== "brand_platform_type" && <Notice tone="warn" title="Broader comparison group">This post had fewer than 20 same-brand peers of its type, so it was compared with a wider cohort ({d.flag.cohort_level.replace(/_/g, " ")}). The baseline is less specific; read the reason with care.</Notice>}
+          {d.flag.cohort_size < 30 && <Notice tone="warn" title="Small cohort">Only {d.flag.cohort_size} comparable posts; the typical range is less precise.</Notice>}
           <dl className="kv">
             <dt>Metric</dt><dd>{d.flag.metric}</dd>
             <dt>Value</dt><dd className="num">{metricValue(d.flag.metric, d.flag.value)}</dd>
@@ -55,7 +58,7 @@ function FlagDrawer({ id, onClose }: { id: string | null; onClose: () => void })
           )}
           {Object.keys(d.need_mix_post).length > 0 && (
             <Panel flat title="Comment needs: this post vs its cohort">
-              <div className="table-wrap"><table className="data"><thead><tr><th>Need</th><th className="n">This post</th><th className="n">Cohort share</th></tr></thead>
+              <div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Need</th><th className="n">This post</th><th className="n">Cohort share</th></tr></thead>
                 <tbody>{Object.entries(d.need_mix_post).map(([n, c]) => <tr key={n}><td>{label(NEED_LABEL, n)}</td><td className="n">{c}</td><td className="n">{pct(d.need_mix_cohort[n] ?? 0, 0)}</td></tr>)}</tbody></table></div>
             </Panel>
           )}
@@ -82,7 +85,8 @@ export function AnomaliesView() {
   const flagId = get("flag");
   return (
     <div className="grid">
-      <PageHead eyebrow="Q3 · Unusual patterns" title="Which marketing patterns are unusual?">
+      <QuestionStepper current={3} />
+      <PageHead eyebrow="Question 3 · Anomaly lab" title="Which marketing patterns are unusual?">
         Each post is compared with comparable posts (same brand, platform and content type when there are at least 20; otherwise a broader peer group). Flags are statistical outliers for investigation — never accusations of fraud or bot activity.
       </PageHead>
       <FilterBar />
@@ -103,15 +107,20 @@ export function AnomaliesView() {
             <Kpi label="Above / below peers" value={`${num(s.data.summary.by_direction.positive ?? 0)} / ${num(s.data.summary.by_direction.negative ?? 0)}`} />
             <Kpi label="High severity" value={num(s.data.summary.by_severity.high ?? 0)} sub="|z| ≥ 5 or p < 0.001" />
           </div>
+          <Panel title="Strongest flags (ranked)" description="Absolute anomaly score of the flags on this page: robust z for engagement and comment-pattern flags, −log10 adjusted p for need-mix flags. Click a row in the table below for the full baseline.">
+            <ChartTable label="Ranked anomaly scores" summary={s.data.rows.slice(0, 5).map((f) => `${f.post_id} ${Math.abs(f.score).toFixed(1)}`).join(", ")}
+              chart={<HBar data={[...s.data.rows].sort((a, b) => Math.abs(b.score) - Math.abs(a.score)).slice(0, 12).map((f) => ({ label: `${f.post_id} · ${f.kind.replace("_", " ")}`, value: Math.abs(f.score), n: f.cohort_size }))} valueKey="value" fmt={(v) => v.toFixed(1)} colorKey={(r) => String(r.label).includes("engagement") ? "var(--c8)" : "var(--c3)"} />}
+              table={<div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>Post</th><th>Kind</th><th className="n">|score|</th><th className="n">Cohort n</th></tr></thead><tbody>{[...s.data.rows].sort((a, b) => Math.abs(b.score) - Math.abs(a.score)).slice(0, 12).map((f) => <tr key={f.flag_id}><td className="mono">{f.post_id}</td><td>{label(KIND_LABEL, f.kind)}</td><td className="n">{Math.abs(f.score).toFixed(2)}</td><td className="n">{f.cohort_size}</td></tr>)}</tbody></table></div>} />
+          </Panel>
           <Panel title="Robust z-score distribution (engagement)" description="Every scored post's engagement relative to its peer cohort; bars beyond ±3.5 contain flagged posts.">
             <ChartTable label="Robust z distribution" summary={`${num(s.data.summary.posts_scored)} scored posts; threshold |z| ≥ 3.5.`}
               chart={<Histogram data={s.data.z_histogram} fmtX={(v) => v.toFixed(1)} highlight={(b) => b.to <= -3.5 || b.from >= 3.5} />}
-              table={<div className="table-wrap"><table className="data"><thead><tr><th>z from</th><th>z to</th><th className="n">Posts</th></tr></thead><tbody>{s.data.z_histogram.filter((b) => b.n).map((b) => <tr key={b.from}><td>{b.from}</td><td>{b.to}</td><td className="n">{b.n}</td></tr>)}</tbody></table></div>} />
+              table={<div className="table-wrap" tabIndex={0}><table className="data"><thead><tr><th>z from</th><th>z to</th><th className="n">Posts</th></tr></thead><tbody>{s.data.z_histogram.filter((b) => b.n).map((b) => <tr key={b.from}><td>{b.from}</td><td>{b.to}</td><td className="n">{b.n}</td></tr>)}</tbody></table></div>} />
           </Panel>
           <Panel title="Flagged posts" description="Open a flag for the comparator cohort, expected range, score and caveat.">
             {s.data.rows.length ? (
               <div className="stack">
-                <div className="table-wrap"><table className="data">
+                <div className="table-wrap" tabIndex={0}><table className="data">
                   <thead><tr><th>Post</th><th>Kind</th><th>Direction</th><th>Platform</th><th>Type · campaign</th><th className="n">Value</th><th className="n">Cohort median</th><th className="n">Score</th><th className="n">Cohort n</th></tr></thead>
                   <tbody>{s.data.rows.map((f) => (
                     <tr key={f.flag_id}>
