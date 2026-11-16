@@ -1,0 +1,101 @@
+audit_id,text,need,language
+A001,whats the rate for the peach 3pc?,price,english
+A002,can u pls tell the cost of unstitched version,price,english
+A003,price range for this range?,price,english
+A004,expensive yaar last season was cheaper,price,mixed
+A005,iska rate kia hai behen,price,roman_urdu
+A006,kitne rupay ka hai ye wala jora,price,roman_urdu
+A007,qeemat batain shirt ki,price,roman_urdu
+A008,اس جوڑے کی قیمت کتنی ہے,price,urdu
+A009,پرائس بتا دیں,price,urdu
+A010,rate kya hai is outfit ka?,price,roman_urdu
+A011,is there any off going on,discount,english
+A012,will there be a black friday deal on lawn,discount,english
+A013,promo code for first order?,discount,english
+A014,sale kab start ho rahi hai,discount,roman_urdu
+A015,koi offer ya discount chal rha hai?,discount,roman_urdu
+A016,11.11 per kitna discount mile ga,discount,roman_urdu
+A017,کیا سیل لگ رہی ہے,discount,urdu
+A018,رعایت ملے گی کیا,discount,urdu
+A019,any discount for 2 suits?,discount,english
+A020,flat 40% wali sale kab tak hai,discount,roman_urdu
+A021,do u ship to islamabad and how long,delivery,english
+A022,can i get it delivered by friday,delivery,english
+A023,shipping cost to sialkot?,delivery,english
+A024,multan me kitne dino me pohanchta hai,delivery,roman_urdu
+A025,cash on delivery ka option hai?,delivery,roman_urdu
+A026,dubai bhejte hain aap log?,delivery,roman_urdu
+A027,پشاور تک کتنے دن لگیں گے,delivery,urdu
+A028,ڈیلیوری کے چارجز کیا ہیں,delivery,urdu
+A029,how many working days for delivery to quetta,delivery,english
+A030,eid se pehle deliver ho jaye ga na?,delivery,roman_urdu
+A031,is the mint one still in stock?,availability,english
+A032,restock when? missed it,availability,english
+A033,can i find this at dolmen mall outlet,availability,english
+A034,lahore k store pe hai ye?,availability,roman_urdu
+A035,yeh dobara kab aye ga stock mein,availability,roman_urdu
+A036,online khatam ho gaya kya,availability,roman_urdu
+A037,کیا یہ اسٹاک میں ہے,availability,urdu
+A038,کراچی کے آؤٹ لیٹ پر دستیاب ہے؟,availability,urdu
+A039,sold out already?? so fast,availability,english
+A040,ye available hai abhi bhi ya nahi,availability,roman_urdu
+A041,do you have it in extra large?,size_fit,english
+A042,whats the shirt length in medium,size_fit,english
+A043,does it come in petite sizing,size_fit,english
+A044,size chart share kardo plz,size_fit,roman_urdu
+A045,mera size L hai kya fit aye ga,size_fit,roman_urdu
+A046,fitting loose hai ya tight,size_fit,roman_urdu
+A047,اس میں ایکسٹرا لارج سائز ہے؟,size_fit,urdu
+A048,قمیض کی لمبائی بتائیں,size_fit,urdu
+A049,XXL milay ga is ka?,size_fit,roman_urdu
+A050,last time medium was too small,size_fit,english
+A051,is the material breathable for summer,fabric_quality,english
+A052,does the color bleed after washing,fabric_quality,english
+A053,the lawn feels so soft,fabric_quality,english
+A054,kapra mota hai ya patla,fabric_quality,roman_urdu
+A055,quality pichli dafa achi nahi thi,fabric_quality,roman_urdu
+A056,dupatta kis cheez ka hai,fabric_quality,roman_urdu
+A057,کپڑے کی کوالٹی کیسی ہے,fabric_quality,urdu
+A058,کڑھائی ہاتھ کی ہے یا مشین کی,fabric_quality,urdu
+A059,embroidery threads came off after one wash,fabric_quality,english
+A060,lawn pure cotton hai?,fabric_quality,roman_urdu
+A061,please dm me the details,purchase_inquiry,english
+A062,how can i place an order,purchase_inquiry,english
+A063,i need this one how do i buy,purchase_inquiry,english
+A064,mujhe order karwana hai kaise karun,purchase_inquiry,roman_urdu
+A065,whatsapp pe details de dein,purchase_inquiry,roman_urdu
+A066,inbox kar diya hai check karein,purchase_inquiry,roman_urdu
+A067,مجھے یہ آرڈر کرنا ہے,purchase_inquiry,urdu
+A068,تفصیلات ان باکس کر دیں,purchase_inquiry,urdu
+A069,where can i buy this online,purchase_inquiry,english
+A070,link share kr den order ka,purchase_inquiry,roman_urdu
+A071,its been 10 days and no parcel,order_issue,english
+A072,you sent the wrong colour,order_issue,english
+A073,order still not shipped no one replies,order_issue,english
+A074,mera order abhi tak nahi aya,order_issue,roman_urdu
+A075,ghalat article bhej diya aap ne,order_issue,roman_urdu
+A076,paise wapis kab milenge,order_issue,roman_urdu
+A077,میرا آرڈر ابھی تک نہیں آیا,order_issue,urdu
+A078,غلط سائز بھیج دیا گیا,order_issue,urdu
+A079,received a torn shirt very disappointed,order_issue,english
+A080,complaint number 4 times call ki koi jawab nahi,order_issue,roman_urdu
+A081,absolutely gorgeous colours,compliment,english
+A082,this is so elegant love it,compliment,english
+A083,🔥🔥🔥,compliment,other
+A084,kya kamal ki dress hai,compliment,roman_urdu
+A085,mashallah bohat hi khoobsurat,compliment,roman_urdu
+A086,bohat zabardast collection,compliment,roman_urdu
+A087,بہت ہی خوبصورت ڈیزائن,compliment,urdu
+A088,کیا بات ہے,compliment,urdu
+A089,stunning as always ❤️,compliment,english
+A090,😍😍,compliment,other
+A091,what is the name of this song,other,english
+A092,who is the model,other,english
+A093,first comment,other,english
+A094,eid mubarak everyone,other,english
+A095,gana kis ka hai,other,roman_urdu
+A096,jumma mubarak sab ko,other,roman_urdu
+A097,عید مبارک,other,urdu
+A098,آمین,other,urdu
+A099,which mall is this shoot in,other,english
+A100,follow back plz,other,english

@@ -1,0 +1,44 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Local runtime state (user imports, caches) — never committed
+var/
+data/observed/private/
+data/cache/
+*.sqlite
+*.sqlite-journal
+*.npy
+*.parquet
+
+# Node / Next.js
+node_modules/
+frontend/.next/
+frontend/.backend/
+frontend/.vercel/
+.vercel/
+*.tsbuildinfo
+frontend/next-env.d.ts
+frontend/test-results/
+frontend/playwright-report/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
