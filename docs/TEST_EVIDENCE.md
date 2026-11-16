@@ -60,6 +60,10 @@ Visual review of screenshots led to three UI fixes before the final sweep: mobil
 | 2026-11-16 | `QA_TAG=redesign-local node e2e/screens.mjs` | first run **16/68** (real axe contrast, name-mismatch and focusable-region issues) → fixed → **68/68, axe serious/critical 0** — `docs/evidence/qa-screens-redesign-local.json` |
 | 2026-11-16 | `QA_TAG=redesign-local-observed QA_DATASET=observed-youtube-20261116 node e2e/screens.mjs` | 66/68 (heat-cell contrast at high shares) → fixed → **68/68, axe 0** — `docs/evidence/qa-screens-redesign-local-observed.json` |
 
+| 2026-11-16 | Production `80bf070`: `APP_URL=https://audienceiq-pk.vercel.app QA_TAG=redesign-prod node e2e/journey.mjs` | **11/11**, 0 console/API errors (first run 10/11 from two test-timing waits, fixed in the test) |
+| 2026-11-16 | Production: `screens.mjs` synthetic + observed | **68/68 + 68/68**, axe serious/critical 0 — `docs/evidence/qa-screens-redesign-prod*.json` |
+| 2026-11-16 | GitHub Actions on PR #3 | backend ✓ frontend ✓ e2e ✓ (journeys + axe sweep) |
+
 Details and the full list of fixes: `docs/UI_QA_REPORT.md`.
 
 ## GitHub Actions

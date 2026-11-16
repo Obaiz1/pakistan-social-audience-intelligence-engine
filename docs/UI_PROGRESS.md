@@ -12,9 +12,9 @@ Branch: `feat/ui-editorial-redesign` · started 2026-11-16 from `main` @ `c9824d
 | 5 New screens | Segments (Q4), Action center (Q5 with workflow status), Model lab, Data hub source status, printable brief | Done |
 | 6 Explore/evidence | Comment sort, methodology demo walkthrough, reports → brief link | Done |
 | 7 Accessibility & bidi | Urdu `dir="rtl" lang="ur"`, isolate for mixed text, focus trap in drawers, axe-driven fixes | Done |
-| 8 QA | 10 journeys 11/11; screen + axe sweep 68/68 on both datasets (`UI_QA_REPORT.md`) | Done (local) |
+| 8 QA | 10 journeys 11/11; screen + axe sweep 68/68 on both datasets, locally and in production (`UI_QA_REPORT.md`) | Done |
 | 9 Docs | `UI_AUDIT`, `UI_DESIGN_SYSTEM`, `UI_ROUTE_MATRIX`, `UI_QA_REPORT`, `UI_PROGRESS`, `UI_FINAL_HANDOFF` | Done |
-| 10 Ship | Commit, push, PR, Vercel production deploy, production QA | See `UI_FINAL_HANDOFF.md` |
+| 10 Ship | Pushed; PR #3 open (not merged); production deployed at `80bf070` and verified; CI green | Done — see `UI_FINAL_HANDOFF.md` |
 
 ## Decisions
 - **No `frontend-design` plugin run.** It is not installed and cannot be installed non-interactively; the brief's written spec was followed and this is stated wherever the plugin is mentioned.

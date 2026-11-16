@@ -68,3 +68,6 @@ Would require a durable store (e.g. Neon Postgres through the Vercel marketplace
 - `/api/v1/*` returns 404 on Vercel → check the rewrite in `frontend/vercel.json` and that `api/index.py` exists in the deployment.
 - 500 on cold start mentioning `data/datasets` → `prepare-backend.mjs` did not run or `data/datasets` was not uploaded (enable files outside root).
 - Bundle too large → confirm `frontend/requirements.txt` has no torch/sentence-transformers.
+
+## UI redesign deploy (2026-11-16)
+`vercel deploy --prod --yes -e AUDIENCEIQ_BUILD_COMMIT=80bf070` from the repo root, branch `feat/ui-editorial-redesign` (PR #3, not merged). `/api/v1/health` reports `build_commit 80bf070…`, `problems: []`. Production QA: 10 journeys 11/11; screen + axe sweep 68/68 on both datasets. See `docs/UI_FINAL_HANDOFF.md`.

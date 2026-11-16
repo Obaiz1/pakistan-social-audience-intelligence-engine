@@ -1,6 +1,6 @@
 # UI QA report — Editorial Intelligence redesign
 
-All results below were produced in this session against a local production build (`next build` + `next start` on :3000, FastAPI on :8000 serving the committed dataset bundles). Production results are added in `UI_FINAL_HANDOFF.md` after deployment. Raw evidence is in `docs/evidence/`.
+All results below were produced in this session against a local production build (`next build` + `next start` on :3000, FastAPI on :8000 serving the committed dataset bundles). Production results are in the section below and in `UI_FINAL_HANDOFF.md`. Raw evidence is in `docs/evidence/`.
 
 ## Automated checks
 | Check | Command | Result |
@@ -52,6 +52,14 @@ The first axe run was **16/68** — the failures were real and are recorded here
 
 ### Visual review (screenshots read by eye, not only by script)
 Fixed after review: rail tagline was cut off (now wraps); pipeline steps were shown alphabetically (now in run order: normalise → enrich → embed → cluster → anomalies → recommendations); mixed comments that begin with an Urdu word flipped the whole line RTL (`unicode-bidi: plaintext` → `isolate`, so a Latin-majority sentence stays LTR); the mobile question stepper showed bare numbers (now shows short labels). The "UMAP/HDBSCAN" wording on the Model lab was checked against the shipped candidate runs (`reducer: umap`) and is accurate.
+
+## Production (https://audienceiq-pk.vercel.app, build `80bf070`)
+| Check | Result | Evidence |
+|---|---|---|
+| 10 journeys + health | **11/11**, 0 console errors, 0 API errors (first run 10/11: two test-timing waits fixed, see handoff) | `docs/evidence/e2e-journey-redesign-prod.json` |
+| Screen + axe sweep, synthetic | **68/68**, axe serious/critical 0 | `docs/evidence/qa-screens-redesign-prod.json` |
+| Screen + axe sweep, observed | **68/68**, axe serious/critical 0 | `docs/evidence/qa-screens-redesign-prod-observed.json` |
+| GitHub Actions on PR #3 | backend, frontend, e2e (journeys + axe sweep) all pass | runs 43842912448, 43842925353 |
 
 ## Not covered / limits of this QA
 - Browsers: Chromium only (Playwright). Safari and Firefox were not tested.
