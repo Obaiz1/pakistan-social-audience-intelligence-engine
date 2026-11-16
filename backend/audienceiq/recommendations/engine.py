@@ -84,6 +84,10 @@ BASE_LIMITATIONS = [
 ]
 
 
+def fmt_p(p: float) -> str:
+    return "< 0.001" if p < 0.001 else f"= {p:.3f}"
+
+
 def _rid(*parts) -> str:
     return "REC-" + hashlib.sha1("|".join(map(str, parts)).encode()).hexdigest()[:8].upper()
 
@@ -210,7 +214,7 @@ def content_cards(content_comparison: dict) -> list[dict]:
             why_it_matters=(f"Mature {label.lower()} posts have median attention index {r['median']:.2f} (95% CI "
                             f"{r['ci_low']:.2f}–{r['ci_high']:.2f}) vs {r['rest_median']:.2f} for all other posts (1.00 = the "
                             f"brand's typical post on that platform); Cliff's δ {r['cliffs_delta']:+.2f} ({r['effect']}), "
-                            f"BH-adjusted p = {r['p_adj']:.3f}, n = {r['n']}."),
+                            f"BH-adjusted p {fmt_p(r['p_adj'])}, n = {r['n']}."),
             audience_need=None, where={"content_type": r["group"]},
             linked_evidence=[{"type": "content_comparison", "dimension": "content_type", "group": r["group"]}],
             priority=1 if r["effect"] in {"medium", "large"} else 2,

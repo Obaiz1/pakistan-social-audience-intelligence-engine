@@ -82,3 +82,17 @@ def test_audit_set_langid_and_rule_accuracy():
     assert lang_acc >= 0.85, lang_acc
     assert rule_acc >= 0.60, rule_acc
     assert isinstance(a, pd.DataFrame)
+
+
+def test_gloss_translates_roman_urdu_without_inserting_need_labels():
+    from audienceiq.nlp.gloss import embedding_text, gloss
+
+    assert gloss("delivery kitne din mein hogi ?") == "delivery how many days in will be ?"
+    assert gloss("order kiya tha abhi tak nahi mila") == "i placed an order still not yet not received"
+    # a gloss is a translation: no need label appears unless the source word means it
+    for text in ["ye wala bohat pyara hai", "size chart bhej dein", "kab tak aayega"]:
+        out = gloss(text)
+        for label in ("price", "discount", "delivery", "availability"):
+            assert label not in out, (text, out)
+    assert embedding_text("price please ?", "english") == "price please ?"          # English untouched
+    assert embedding_text("قیمت کیا ہے", "urdu") == "قیمت کیا ہے"                 # Urdu script untouched

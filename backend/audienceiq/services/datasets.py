@@ -13,6 +13,7 @@ from audienceiq.constants import LANGUAGES, NEED_LABELS
 from audienceiq.data import importer
 from audienceiq.data.synthetic import CATEGORY, GENERATOR_VERSION, generate
 from audienceiq.nlp.embeddings import hybrid
+from audienceiq.nlp.gloss import embedding_text
 from audienceiq.nlp.intent import label_need
 from audienceiq.nlp.langid import detect_language
 from audienceiq.nlp.normalize import normalize_text, strip_boilerplate
@@ -37,7 +38,7 @@ def audit_set() -> pd.DataFrame:
 
 def transform_like_selected(texts: list[str], result: dict, encoder=None) -> np.ndarray | None:
     emb = result["clustering"].selected["embedding"]
-    stripped = [strip_boilerplate(normalize_text(t)) for t in texts]
+    stripped = [embedding_text(strip_boilerplate(normalize_text(t)), detect_language(t)) for t in texts]
     if emb == "lexical":
         return result["lexical"].transform(stripped)
     if encoder is None:

@@ -107,7 +107,7 @@ function Frame({ children }: { children: ReactNode }) {
         <div className="row" style={{ justifyContent: "space-between", flexWrap: "nowrap" }}>
           <Link href="/" className="brand" aria-label="AudienceIQ PK home">
             <span className="brand-mark" aria-hidden="true">AQ</span>
-            <span className="brand-name">AudienceIQ PK<small>Audience &amp; campaign intelligence</small></span>
+            <span className="brand-name">AudienceIQ PK<small>Audience intelligence</small></span>
           </Link>
           <button className="btn ghost sm menu-toggle" type="button" aria-label="Close navigation" onClick={() => setOpen(false)} style={{ color: "#fff" }}>
             <X size={18} />

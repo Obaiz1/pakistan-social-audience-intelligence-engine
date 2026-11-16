@@ -18,6 +18,7 @@ from audienceiq.anomalies.detect import detect
 from audienceiq.clustering.pipeline import run_clustering
 from audienceiq.constants import IMPORTED_DISCLAIMER, OBSERVED_DISCLAIMER, SYNTHETIC_DISCLAIMER
 from audienceiq.nlp.embeddings import LEXICAL_NAME, LexicalEmbedder, hybrid
+from audienceiq.nlp.gloss import embedding_text
 from audienceiq.nlp.intent import label_need, purchase_intent, sentiment
 from audienceiq.nlp.langid import detect_language
 from audienceiq.nlp.normalize import normalize_text, strip_boilerplate
@@ -55,8 +56,9 @@ def enrich_comments(comments: pd.DataFrame, text_permission: str, source: str) -
     c = comments.copy()
     c["comment_text"] = c["comment_text"].fillna("").astype(str)
     c["norm_text"] = c["comment_text"].map(normalize_text)
-    c["embed_text"] = c["norm_text"].map(strip_boilerplate)
+    c["display_text"] = c["norm_text"].map(strip_boilerplate)
     c["language_type"] = c["comment_text"].map(detect_language)
+    c["embed_text"] = [embedding_text(t, lg) for t, lg in zip(c["display_text"], c["language_type"], strict=True)]
     labels = [label_need(None, t) for t in c["norm_text"]]
     c["topic"] = [lab.topic for lab in labels]
     c["topic_confidence"] = [lab.confidence for lab in labels]
@@ -126,7 +128,7 @@ def build_dataset(posts: pd.DataFrame, comments: pd.DataFrame, campaigns: pd.Dat
 
     show_text = cfg.text_permission in {"full", "illustrative"}
     clu = run_clustering(c[["comment_id", "comment_text", "norm_text", "language_type", "topic", "published_at"]]
-                         .assign(norm_text=c["embed_text"]), cfg.dataset_id, embeddings, cfg.k_values,
+                         .assign(norm_text=c["display_text"]), cfg.dataset_id, embeddings, cfg.k_values,
                          cfg.hdbscan_sizes, seed=cfg.seed, show_text=show_text, truth=cfg.truth,
                          preferred=cfg.preferred_embedding, hdbscan_reducer=cfg.hdbscan_reducer)
     t = _step(log, "cluster", t, candidates=len(clu.runs), selected=clu.evaluation["selected_key"])
@@ -145,7 +147,7 @@ def build_dataset(posts: pd.DataFrame, comments: pd.DataFrame, campaigns: pd.Dat
                                  cfg.dataset_id, cfg.mode)
     t = _step(log, "recommendations", t, cards=len(recs))
 
-    stored_comments = c.drop(columns=["norm_text", "embed_text"])
+    stored_comments = c.drop(columns=["norm_text", "embed_text", "display_text"])
     if not show_text:
         stored_comments["comment_text"] = None
         # date-only timestamps for withheld datasets (a full timestamp + video could single out a commenter)
