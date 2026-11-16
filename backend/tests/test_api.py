@@ -92,7 +92,10 @@ def test_exports(api_client, fmt, ctype):
     r = api_client.get(f"/api/v1/reports/export?format={fmt}&section=posts")
     assert r.status_code == 200 and ctype in r.headers["content-type"] and len(r.content) > 500
     if fmt == "csv":
-        assert "SYNTHETIC DEMO" in r.content.decode("utf-8-sig").splitlines()[1]
+        head = r.content.decode("utf-8-sig").splitlines()[:12]
+        assert any("SYNTHETIC DEMO" in line for line in head)
+        assert any(line.startswith("# filters: section=") or line.startswith("# filters:") for line in head)
+        assert any(line.startswith("# clustering run: clu-") for line in head)
 
 
 def test_import_preview_and_confirm_local(api_client):
@@ -143,3 +146,45 @@ def test_concurrent_catalogue_requests_are_consistent(api_client):
     with ThreadPoolExecutor(max_workers=8) as pool:
         codes = list(pool.map(lambda p: api_client.get(p).status_code, paths))
     assert set(codes) == {200}
+
+
+
+def test_segments_are_comment_groups_with_honest_denominators(api_client):
+    body = api_client.get("/api/v1/audience/segments?compare_by=platform").json()
+    assert "not people" in " ".join(body["meta"]["assumptions"])
+    segs = body["segments"]
+    assert segs and sum(s["comments"] for s in segs) == body["valid_comments"]
+    assert abs(sum(s["share_of_valid"] for s in segs) - 1.0) < 1e-4
+    for s in segs:
+        assert s["clusters"] and s["name"] and isinstance(s["uncertain"], bool)
+    assert body["compare"]["dimension"] == "platform"
+    assert api_client.get("/api/v1/audience/segments?compare_by=__x").status_code == 422
+
+
+def test_cluster_detail_has_gloss_and_linked_posts(api_client):
+    c = next(x for x in api_client.get("/api/v1/audience/clusters").json()["clusters"] if x["cluster_id"] != -1)
+    d = api_client.get(f"/api/v1/audience/clusters/{c['cluster_id']}?page_size=50").json()
+    assert d["linked_posts"] and d["linked_posts"][0]["cluster_comments"] >= d["linked_posts"][-1]["cluster_comments"]
+    assert all("gloss" in r for r in d["comments"])
+    for r in d["comments"]:
+        if r["gloss"] is not None:
+            assert r["language_type"] in {"roman_urdu", "mixed"}
+
+
+def test_comment_sort_and_overview_needs(api_client):
+    rows = api_client.get("/api/v1/comments?sort=-char_len&page_size=10").json()["rows"]
+    assert len(rows) == 10
+    assert api_client.get("/api/v1/comments?sort=bogus").status_code == 422
+    ov = api_client.get("/api/v1/analytics/overview").json()
+    assert ov["needs"] and ov["pipeline"] and all("step" in s for s in ov["pipeline"])
+    assert sum(n["comments"] for n in ov["needs"]) == ov["kpis"]["comments"]
+
+
+def test_data_sources_reports_booleans_never_keys(api_client, monkeypatch):
+    monkeypatch.setenv("YOUTUBE_API_KEY", "AIzaFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKE00")
+    r = api_client.get("/api/v1/data/sources")
+    body = r.json()
+    assert "AIza" not in r.text
+    assert body["collector"]["configured_on_this_server"] is True
+    assert {p["platform"] for p in body["platforms"]} == {"YouTube", "Instagram", "TikTok", "Facebook"}
+    assert all(p["support"] in {"observed", "csv_import"} for p in body["platforms"])
